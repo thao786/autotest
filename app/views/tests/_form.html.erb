@@ -1,0 +1,39 @@
+<%= form_for(test) do |f| %>
+  <% if test.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(test.errors.count, "error") %> prohibited this test from being saved:</h2>
+
+      <ul>
+      <% test.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :suite_id %>
+
+    <%= f.select(:suite_id, [],{},{:class => "chosen-select", :id => 'test_suite',
+                                   :style => "width:350px;"}) do %>
+        <% current_user.suites.each do |suite| %>
+            <%= content_tag(:option, suite.title, value: suite.name) %>
+        <% end %>
+    <% end %>
+
+  </div>
+
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

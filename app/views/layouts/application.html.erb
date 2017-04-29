@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Autotest</title>
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+<body>
+<%= render 'layouts/copyable' %>
+
+<% if user_signed_in? %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-6"><%= link_to "Dashboard", root_path %>  |
+      <%= link_to 'All Suites', suites_path %>
+      (<%= current_user.suites.count %> total)
+    </div>
+
+
+    <div class="col-xs-4">
+      hi <b><%= current_user.email %></b>
+    </div>
+
+    <div class="col-xs-2"><%= link_to('Logout', destroy_user_session_path, :method => :delete) %> </div>
+  </div>
+</div>
+<% end %>
+
+  <%= yield %>
+</body>
+</html>

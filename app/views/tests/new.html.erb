@@ -1,0 +1,10 @@
+<h1>New Test</h1>
+
+<%= render 'form', test: @test %>
+
+<% if @suite %>
+  <script>
+      $('#test_suite').val('<%= @suite.name %>');
+      $('#test_suite').trigger("chosen:updated");
+  </script>
+<% end %>

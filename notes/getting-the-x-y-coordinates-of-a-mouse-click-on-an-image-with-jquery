@@ -1,0 +1,13 @@
+You can use pageX and pageY to get the position of the mouse in the window. You can also use jQuery's offset to get the position of an element.
+
+So, it should be pageX - offset.left for how far from the left of the image and pageY - offset.top for how far from the top of the image.
+
+Here is an example:
+
+$(document).ready(function() {
+  $('img').click(function(e) {
+    var offset = $(this).offset();
+    alert(e.pageX - offset.left);
+    alert(e.pageY - offset.top);
+  });
+});

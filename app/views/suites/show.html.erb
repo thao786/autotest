@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @suite.title %>
+</p>
+
+<%= link_to raw('<span class="glyphicon glyphicon-plus"></span> Add Test') %>
+
+<div class="container">
+  <h2>All Tests in this Suite (<%= @suite.tests.count %> total)</h2>
+
+  <% @tests = @suite.tests %>
+  <%= render file: "tests/index" %>
+</div>
+

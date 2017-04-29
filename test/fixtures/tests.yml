@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  suite: one
+  title: MyString
+  name: MyString
+  session_id: MyString
+  session_expired_at: 2017-03-04 22:58:50
+  description: MyText
+
+two:
+  suite: two
+  title: MyString
+  name: MyString
+  session_id: MyString
+  session_expired_at: 2017-03-04 22:58:50
+  description: MyText

@@ -1,0 +1,28 @@
+
+<div class="step-list-item <%= step.complete? ? '' : 'non-complete-step' %>" data-step="<%= step.id %>">
+  Wait <span class="editable wait"><%= step.wait %></span> millisec: <br>
+  <%= Step.web_step_types[step.action_type] %>
+
+  <% case step.action_type
+       when 'pageload' %> <span class="editable webpage"><%= step.webpage %></span>
+
+      <button class="hover-edit-btn btn visible-hover">
+        <span class="glyphicon glyphicon-edit"></span> Edit
+      </button>
+  <% when 'scroll' %> to
+      <span class="editable scrollTop"><%= step.scrollTop %></span>px
+      <span class="editable scrollLeft"><%= step.scrollLeft %></span>px
+
+  <% when 'click' %> on <strong><%= step.selector %></strong>
+      <button class="hover-edit-btn btn visible-hover">
+        <span class="glyphicon glyphicon-edit"></span> Edit
+      </button>
+  <% else %>
+  <% end %>
+
+  <button class="add-step-after btn visible-hover">
+    <span class="glyphicon glyphicon-plus"></span> Step after
+  </button>
+
+  <button class="delete-step visible-hover">x</button>
+</div>

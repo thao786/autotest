@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<h2>All Suites (<%= @suites.count %> total)</h2>
+<%= link_to raw('<span class="glyphicon glyphicon-plus"></span> Add Suite'), new_suite_path %>
+
+<div class="container">
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Suite Title</th>
+      <th>Test Count</th>
+      <th>Last Updated</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @suites.each do |suite| %>
+      <tr>
+        <td><%= link_to "#{suite.title}", controller: "suites", action: "show", id: suite.name %>
+            <span class="glyphicon glyphicon-edit"></span>
+        </td>
+        <td><%= link_to "#{suite.tests.count}", controller: "suites", action: "show", id: suite.name %></td>
+        <td><%= time_ago_in_words suite.updated_at %></td>
+
+        <td><%= link_to raw('<span class="glyphicon glyphicon-remove"></span> Delete'), suite_path(suite.name), method: :delete, data: { confirm: 'Are you sure?' } %>
+          |
+          <a href="<%= new_test_url %>?suite_id=<%= suite.id %>">
+            <span class="glyphicon glyphicon-plus"></span> Add Test</a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+
+<br>
+
+

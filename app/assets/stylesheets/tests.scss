@@ -1,0 +1,52 @@
+// Place all the styles related to the Tests controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.step-list-item {
+  position: relative;
+  min-height: 25px;
+  background: #f5f4f4;
+  margin: 5px;
+  padding: 5px;
+  cursor: move
+}
+.delete-step {
+  position: absolute;
+  background: transparent;
+  color: #aaa;
+  border: none;
+  top: 5px;
+  right: 5px;
+}
+.editable, .editable-click-span {
+  border-bottom: gray dotted 2px;
+  cursor: text;
+  font-weight: bold;
+}
+#step-list .glyphicon-ok, #step-list .glyphicon-remove, #step-list li {
+  cursor: pointer;
+}
+#step-list .glyphicon-ok, #step-list .glyphicon-remove {
+  color: darkslategray;
+}
+#step-list .edit, .classes-select {
+  display: none;
+}
+#validation_err {
+  display: none;
+  border: red dotted;
+}
+.step-class {
+  font-weight: bold;
+}
+.empty-header-params input, .empty-pageload-params input {
+   width: 200px;
+   display: inline;
+}
+
+.empty-test-params input{
+  width: 150px;
+  display: inline;
+}
+
+

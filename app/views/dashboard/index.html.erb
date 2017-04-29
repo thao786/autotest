@@ -1,0 +1,21 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-6">
+      <button class="btn btn-primary">
+        <%= link_to 'Create New Suite', 'new_suite_path' %>
+      </button>
+    </div>
+
+    <div class="col-xs-6">
+      <p>
+        <button class="btn btn-primary">
+          <%= link_to 'Create New Test', 'new_test_path' %>
+        </button>
+      </p>
+    </div>
+  </div>
+</div>
+
+search by: suites/after-before updated_at/title/description
+<span class="glyphicon glyphicon-search"></span>
+<%= render file: "tests/index", locals: { test: @tests } %>

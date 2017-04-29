@@ -1,0 +1,73 @@
+is it just easier to record coordination in web page just like mobile?
+probably should have both
+
+actions on PHONE that needs to be tracked:
+- swipe left/right/up/down: use onmousemoveto detect these
+- hold down a button for how long
+
+
+
+
+tap on screen: 
+Appium::TouchAction.new.tap(x: 300, y: 600 fingers:1).release.perform
+
+
+HOW TO CAPTURE UI-AUTOMATOR ALL Device Screenshot?
+
+
+
+
+USEFUL COMMANDS:
+Rails.application.config.assets.paths
+
+
+monkeyrunner commands that might be useful:
+findViewWithText
+device.touch(By.id('view_id'), MonkeyDevice.DOWN_AND_UP)
+
+view = vc.findViewWithText('Dsiplay')
+view.touch()
+
+check the order of LinearLayout that user clicked on
+
+
+
+HOW TO DETECT WHICH ELEMENT UESR CLICKED ON?
+you can use uiautomator to channel the ui to user's view somehow. 
+
+
+ITS BETTER TO TEST CLICKING COORDINATION, SINCE IT'S NON-TECH PEOPLE ARE GOING TO CREATE TEST SUITES
+
+
+INSTALL AndroidViewClient FROM https://github.com/dtmilano/AndroidViewClient
+MUST TURN ON 'ADB SHELL' FOR EVERYTHING TO WORK
+
+GET IDS AND POSITIONS OF ALL ELEMENTS: dump -x
+take screenshot pictures: dump --save-screenshot=/home/thao/a.jpg
+
+
+
+
+
+PROCESS mobile:
+1. SHOW USER SCREENSHOT
+2. LET THEM CLICK, RECORD COORDINATION/ or choose an id
+3. APPLY WITH MONKEYRUNNER, GET RESULT
+4. SHOW NEW SCREENSHOT TO USER, BACK TO STEP 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

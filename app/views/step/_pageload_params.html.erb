@@ -1,0 +1,10 @@
+<% if step.config and step.config[:params].present? %>
+  <% step.config[:params].each do |key, value| %>
+      <div class="hash-pair">
+        <%= key %> : <%= value %>
+
+        <span class="glyphicon glyphicon-remove remove-pageload-param"
+              data-key="<%= key %>"></span>
+      </div>
+  <% end %>
+<% end %>

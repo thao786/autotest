@@ -1,0 +1,51 @@
+<div class="modal fade" id="modal" data-step="<%= @step.id %>">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit page load </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="edit-pageload-form">
+
+      <div class="modal-body">
+            <div class="form-group">
+              <label>Method: </label>
+              <select name="method" class="form-control">
+                <option <%= (@step.config.present? and @step.config[:method] == 'GET') ? 'selected' : '' %>>GET</option>
+                <option <%= (@step.config.present? and @step.config[:method] == 'POST') ? 'selected' : '' %>>POST</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="webpage">Webpage:</label>
+              <input name="webpage" type="text" class="form-control" value="<%= @step.webpage %>">
+            </div>
+
+            <div class="form-group">
+              <label for="webpage">Headers:
+                <%= render "step/headers", step: @step %>
+              </label> <br>
+              <a id="add-headers"> Add New Header</a>
+            </div>
+            <div id="header-list" class="form-group"></div>
+
+            <div class="form-group">
+              <label for="webpage">Params:
+                <%= render "step/pageload_params", step: @step %>
+              </label> <br>
+              <a id="add-pageload-param"> Add New Param</a>
+            </div>
+            <div id="pageload-param-list" class="form-group"></div>
+          </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary submit" >Save changes</button>
+      </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
