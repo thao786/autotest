@@ -10,16 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170422044249) do
+ActiveRecord::Schema.define(version: 20170429052228) do
 
   create_table "drafts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint   "stamp"
     t.string   "webpage"
     t.string   "action_type"
     t.string   "session_id"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.string   "tag_name"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.string   "typed"
     t.integer  "scrollTop"
     t.integer  "scrollLeft"
@@ -29,7 +28,8 @@ ActiveRecord::Schema.define(version: 20170422044249) do
     t.integer  "y"
     t.string   "chrome_tab"
     t.string   "selector"
-    t.text     "explanation",        limit: 65535
+    t.integer  "screenwidth"
+    t.integer  "screenheight"
   end
 
   create_table "plans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -49,12 +49,14 @@ ActiveRecord::Schema.define(version: 20170422044249) do
     t.integer  "wait"
     t.string   "webpage"
     t.integer  "order"
-    t.text     "config",      limit: 65535
+    t.text     "config",       limit: 65535
     t.string   "device_type"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.boolean  "active"
     t.string   "chrome_tab"
+    t.integer  "screenwidth"
+    t.integer  "screenheight"
     t.index ["test_id"], name: "index_steps_on_test_id", using: :btree
   end
 

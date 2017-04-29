@@ -84,6 +84,8 @@ function reportEvent(data) {
     data.stamp = Date.now();
     data.webpage = window.location.href;
     data.chrome_tab = tabId + '-' + windowId;
+    data.screenwidth = screen.width;
+    data.screenheight = screen.height;
 
     console.log(data);
 
@@ -189,4 +191,10 @@ function bindEvents() {
         data.scrollLeft = $(window).scrollLeft();
         reportEvent(data);
 	});
+
+
+    $(window).resize(function() {
+        var data = {action_type: 'resize'};
+        reportEvent(data);
+    });
 }

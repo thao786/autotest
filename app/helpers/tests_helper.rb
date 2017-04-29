@@ -44,8 +44,13 @@ module TestsHelper
           if Step.where(chrome_tab: chrome_tab).count > 1
             step.destroy
           else
-            step.update(webpage: first_event.webpage)
+            step.update(webpage: first_event.webpage,
+                        screenwidth: first_event.screenwidth, screenheight: first_event.screenheight)
           end
+          first_event.destroy!
+        when 'resize'
+          step.update(webpage: first_event.webpage,
+                      screenwidth: first_event.screenwidth, screenheight: first_event.screenheight)
           first_event.destroy!
         when 'scroll' # merge homogeneously increasing scrollTop or scrollLeft into 1 step
           # for now, just pick the last position

@@ -19,7 +19,7 @@ class ApiController < ActionController::Base
       params[:draft] = hash
 
       Draft.create(params.require(:draft).permit(:webpage, :stamp, :apk, :activity,
-                 :action_type, :session_id, :typed,
+                 :action_type, :session_id, :typed, :screenwidth, :screenheight,
                  :scrollTop, :scrollLeft, :x, :y, :chrome_tab, :selector))
 
       render json: true

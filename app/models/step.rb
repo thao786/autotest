@@ -7,7 +7,7 @@ class Step < ApplicationRecord
 
   def self.web_step_types
     {'pageload' => 'load page', 'scroll' => 'scroll', 'keypress' => 'type',
-                'click' => 'click'}
+         'click' => 'click', 'resize' => 'resize'}
   end
 
   def complete?
