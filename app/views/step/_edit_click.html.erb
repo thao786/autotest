@@ -21,7 +21,7 @@
         </form>
 
         <form>
-          <div class="form-group">
+          <div class="form-group form-inline">
             <label>Click Coordination: </label>
             <br>
             <label>x: </label>
@@ -29,9 +29,8 @@
 
             <label>y: </label>
             <input name="selector" type="text" class="form-control" value="<%= @step.config[:y] %>">
-
-            <button type="button" class="btn btn-default save-click-step">Save</button>
-          </div><hr>
+          </div>
+          <button type="button" class="btn btn-default save-click-step">Save</button><hr>
         </form>
 
         <form>

@@ -60,13 +60,17 @@
 
     <div class="col-sm-7">
       <p>Steps (move to change order, hover to edit)</p>
-      <%= render "step/show_step", step: @test.steps.first %>
-      <div id="step-list">
-        <% @test.steps.where('steps.order > ?', 1).order('steps.order').each do |step| %>
-            <%= render "step/show_step", step: step %>
-        <% end %>
-      </div>
+
+      <% if @test.steps.count > 0 %>
+          <%= render "step/show_step", step: @test.steps.first %>
+          <div id="step-list">
+            <% @test.steps.where('steps.order > ?', 1).order('steps.order').each do |step| %>
+                <%= render "step/show_step", step: step %>
+            <% end %>
+          </div>
+      <% end %>
     </div>
+
   </div>
 </div>
 
