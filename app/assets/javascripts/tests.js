@@ -35,9 +35,6 @@ $('#startRecording').click(function() {
     });
 });
 
-
-
-
 $('#stopRecording').click(function() {
     // set the session ID expired rate
     $.ajax({
@@ -374,6 +371,11 @@ function modalFunction() {
     $('.modal.fade').on('hidden.bs.modal', function () {
         $('.modal.fade').remove();
     });
+
+    $('#selectorType').on('change', function() {
+        var selectorType = this.value;
+        $('#custom-click-selector').html($('#choose-by-' + selectorType).html());
+    })
 }
 
 $(document).on("click", ".remove-webpage-param", function(e) {
