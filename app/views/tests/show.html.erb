@@ -48,12 +48,13 @@
         <a id="add-assertion" class="pointer"> Add Assertion</a><br>
 
         <div id="assertion-list">
-          <div class="form-group">
-            <label><span class="glyphicon glyphicon-remove"></span>
-              <input class="default-assertion" type="checkbox" checked> All tabs return 200 status</label>
-            <label><span class="glyphicon glyphicon-remove"></span>
-              <input class="default-assertion" type="checkbox" checked> All ajax requests return 200 status</label>
-          </div>
+          <% @test.assertions.each do |assertion| %>
+              <%= render "tests/show_assertion", assertion: assertion %>
+          <% end %>
+          <label><span class="glyphicon glyphicon-remove"></span>
+            <input class="default-assertion" type="checkbox" checked> All tabs return 200 status</label>
+          <label><span class="glyphicon glyphicon-remove"></span>
+            <input class="default-assertion" type="checkbox" checked> All ajax requests return 200 status</label>
         </div>
       </div>
     </div>

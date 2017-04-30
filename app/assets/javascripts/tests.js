@@ -525,9 +525,57 @@ $(document).on("click", "#add-assertion", function(e) {
     });
 });
 
+$(document).on("click", ".add-new-assertion", function(e) {
+    var form = $(this).closest('form');
 
+    $.ajax({
+        type: "GET",
+        url: '/tests/addAssertion',
+        data: {test_id: test_id, form: form.serialize()},
+        success: function(html, status, xhr) {
+            $('#assertion-list').prepend(html);
+            $('.modal.fade').modal('hide');
+        },
+        error: function(result, status, xhr) {
+            alert('Sorry, we could not add the assertion at this time.');
+        }
+    });
+});
 
+$(document).on("click", ".remove-assertion", function(e) {
+    var assertionLabel = $(this).closest('.assertion');
+    var assertion_id = assertionLabel.data('id');
 
+    $.ajax({
+        type: "GET",
+        url: '/tests/removeAssertion',
+        data: {assertion_id: assertion_id, test_id: test_id},
+        success: function(html, status, xhr) {
+            $('.modal.fade').modal('hide');
+            assertionLabel.remove();
+        },
+        error: function(result, status, xhr) {
+            alert('Sorry, we could not remove the assertion at this time.');
+        }
+    });
+});
+
+$(document).on("click", ".disable-assertion", function(e) {
+    var assertionLabel = $(this).closest('.assertion');
+    var assertion_id = assertionLabel.data('id');
+
+    $.ajax({
+        type: "GET",
+        url: '/tests/disableAssertion',
+        data: {assertion_id: assertion_id, test_id: test_id},
+        success: function(html, status, xhr) {
+            $('.modal.fade').modal('hide');
+        },
+        error: function(result, status, xhr) {
+            alert('Sorry, we could not remove a parameter at this time.');
+        }
+    });
+});
 
 
 

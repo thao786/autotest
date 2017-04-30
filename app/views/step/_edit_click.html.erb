@@ -10,7 +10,7 @@
       <div class="modal-body">
         <form>
             <div class="form-group">
-              <label>Possible selectors: </label>
+              <label>Selectors of clicked elements: </label>
               <select name="selector" class="form-control">
                 <% @step.config[:selectors].each do |selector| %>
                     <option value="<%= selector %>"><%= selector %></option>
@@ -22,26 +22,111 @@
 
         <form>
           <div class="form-group form-inline">
+            <label>Selectors of clicked elements: </label>
+            <select name="selectorType" class="form-control">
+              <option value="id">ID</option>
+              <option value="class">Class Name</option>
+              <option value="tag">Tag Name</option>
+              <option value="name">Name</option>
+              <option value="partialLink">Partial Link Text</option>
+              <option value="css">CSS Selector</option>
+              <option value="coordination">Coordination</option>
+            </select>
+          </div>
+
+          <button type="button" class="btn btn-primary save-click-step" disabled>Save</button>
+        </form>
+
+        <div id="choose-by-css" style="display: none;">
+          <div class="form-group form-inline">
+            <label>Choose by CSS Selector: </label>
+            <input name="selector" type="text" class="form-control">
+          </div>
+
+          <div class="form-group form-inline">
+            <label>Index: </label>
+            <input name="index" type="text" class="form-control">
+
+            <button type="button" class="btn btn-primary save-click-step">Save</button>
+          </div>
+        </div>
+
+        <div id="choose-by-partialLink" style="display: none;">
+          <div class="form-group form-inline">
+            <label>Choose by Partial Link Text: </label>
+            <input name="selector" type="text" class="form-control">
+          </div>
+
+          <div class="form-group form-inline">
+            <label>Index: </label>
+            <input name="index" type="text" class="form-control">
+
+            <button type="button" class="btn btn-primary save-click-step">Save</button>
+          </div>
+        </div>
+
+        <div id="choose-by-name" style="display: none;">
+          <div class="form-group form-inline">
+            <label>Choose by Names: </label>
+            <input name="selector" type="text" class="form-control">
+          </div>
+
+          <div class="form-group form-inline">
+            <label>Index: </label>
+            <input name="index" type="text" class="form-control">
+
+            <button type="button" class="btn btn-primary save-click-step">Save</button>
+          </div>
+        </div>
+
+        <div id="choose-by-tag" style="display: none;">
+          <div class="form-group form-inline">
+            <label>Choose by Tag Names: </label>
+            <input name="selector" type="text" class="form-control">
+          </div>
+
+          <div class="form-group form-inline">
+            <label>Index: </label>
+            <input name="index" type="text" class="form-control">
+
+            <button type="button" class="btn btn-primary save-click-step">Save</button>
+          </div>
+        </div>
+
+        <div id="choose-by-class" style="display: none;">
+          <div class="form-group form-inline">
+            <label>Choose by Class Names: </label>
+            <input name="selector" type="text" class="form-control">
+          </div>
+
+          <div class="form-group form-inline">
+            <label>Index: </label>
+            <input name="index" type="text" class="form-control">
+
+            <button type="button" class="btn btn-primary save-click-step">Save</button>
+          </div>
+        </div>
+
+        <div id="choose-by-id" style="display: none;">
+          <div class="form-group form-inline">
+            <label>Choose by ID: </label>
+            <input name="selector" type="text" class="form-control">
+          </div>
+        </div>
+
+        <div id="choose-by-coordination" style="display: none;">
+          <div class="form-group form-inline">
             <label>Click Coordination: </label>
             <br>
             <label>x: </label>
-            <input name="selector" type="text" class="form-control" value="<%= @step.config[:x] %>">
+            <input name="x" type="text" class="form-control" value="<%= @step.config[:x] %>">
 
             <label>y: </label>
-            <input name="selector" type="text" class="form-control" value="<%= @step.config[:y] %>">
+            <input name="y" type="text" class="form-control" value="<%= @step.config[:y] %>">
+            <button type="button" class="btn btn-primary save-click-step">Save</button>
           </div>
-          <button type="button" class="btn btn-default save-click-step">Save</button><hr>
-        </form>
+        </div>
 
-        <form>
-            <div class="form-group">
-              <label>Enter your own
-                (If there're more than 1 match, default to the 1st one)</label>
-              <input name="selector" type="text" class="form-control" value="<%= @step.selector %>">
-
-              <button type="button" class="btn btn-default save-click-step">Save</button>
-            </div>
-        </form>
       </div>
     </div>
   </div>

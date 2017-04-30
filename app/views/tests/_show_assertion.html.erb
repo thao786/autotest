@@ -1,0 +1,14 @@
+<div class="assertion" data-id="<%= assertion.id %>">
+    <span class="glyphicon glyphicon-remove remove-assertion" title="Delete This Assertion"></span>
+
+      <input class="default-assertion disable-assertion" type="checkbox"
+             <%= assertion.active ? 'checked' : '' %> >
+      <%= assertion.condition %>
+
+  <% if assertion.webpage.present?  %>
+      <span style="font-weight: normal;">on </span>
+      <%= assertion.webpage %>
+  <% end %>
+
+</div>
+       

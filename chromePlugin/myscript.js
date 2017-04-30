@@ -124,7 +124,7 @@ function analyzeClick(obj) {
     else if (data.tag_name == 'button' && text.length > 0) {
         var buttonArray = $("button:contains('"+text+"')").toArray();
         eq = buttonArray.indexOf(obj[0]);
-        data.selector = "button:contains('" + text + "'):eq(" + eq + ')';
+        data.selector = "button:contains('" + text + "']:eq(" + eq + ')';
     }
     else if (objId && objId.trim().length > 0) {
         data.selector = '#' + obj.prop("id");

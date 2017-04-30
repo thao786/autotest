@@ -10,6 +10,12 @@ class Step < ApplicationRecord
          'click' => 'click', 'resize' => 'resize'}
   end
 
+  after_initialize :set_defaults, unless: :persisted? # The set_defaults will only work if the object is new
+
+  def set_defaults
+    self.active  ||= true
+  end
+
   def complete?
     case action_type
       when 'pageload'

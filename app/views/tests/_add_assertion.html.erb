@@ -9,27 +9,18 @@
       </div>
       <div class="modal-body add-assertion-form">
         <form id="web-assertion-form">
-          <input name="webpage" type="hidden" value="web">
-
           <div class="form-group">
-            <label title="if none provided, all webpages will be tried">
+            <label title="If none provided, all webpages will be tried">
               The web address in which these conditions applies
               <span class="glyphicon glyphicon-info-sign"></span></label>
             <input name="webpage" type="text" placeholder="http://" class="form-control">
           </div>
 
-          <div class="form-group form-inline">
-            <label>There must be
-            <input name="condition" type="text" value=">= 1" class="form-control" style="width: 100px;">
-            elements with selector
-            <input name="selector" placeholder="#DOM_id" type="text" class="form-control"></label>
-          </div>
-
-          <label>or</label>
-
           <div class="form-group">
-            <label>Your own assertion:</label>
-            <input name="assertion" type="text" placeholder="Ex: $('body').length > 0" class="form-control">
+            <label title="Ex: $('body').length > 0; document.getElementById('container').style.backgroundColor == 'green'">
+              Assertion:
+              <span class="glyphicon glyphicon-info-sign"></span></label>
+            <input name="condition" type="text" placeholder="Ex: $('body').length > 0" class="form-control">
           </div>
 
           <button type="button" class="btn btn-default add-new-assertion">Save</button>

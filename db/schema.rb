@@ -10,15 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170429052228) do
+ActiveRecord::Schema.define(version: 20170430034905) do
+
+  create_table "assertions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "webpage"
+    t.boolean  "active"
+    t.string   "condition"
+    t.integer  "test_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["test_id"], name: "index_assertions_on_test_id", using: :btree
+  end
 
   create_table "drafts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint   "stamp"
     t.string   "webpage"
     t.string   "action_type"
     t.string   "session_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.string   "typed"
     t.integer  "scrollTop"
     t.integer  "scrollLeft"
@@ -28,8 +38,8 @@ ActiveRecord::Schema.define(version: 20170429052228) do
     t.integer  "y"
     t.string   "chrome_tab"
     t.string   "selector"
-    t.integer  "screenwidth"
-    t.integer  "screenheight"
+    t.integer  "screenwidth",  null: false
+    t.integer  "screenheight", null: false
   end
 
   create_table "plans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -104,6 +114,7 @@ ActiveRecord::Schema.define(version: 20170429052228) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "assertions", "tests"
   add_foreign_key "suites", "users"
   add_foreign_key "tests", "suites"
   add_foreign_key "users", "plans"
