@@ -11,13 +11,19 @@ module TestsHelper
   end
 
   def score(selector)
-    case selector.selectorType
-      when 'href' -1000
-      when 'button' -900
-      when 'id' -800
-      when 'css' -700
-      when 'tag' -500
-      else 0
+    case selector[:selectorType]
+      when 'href'
+        -1000
+      when 'button'
+        -900
+      when 'id'
+        -800
+      when 'css'
+        -700
+      when 'tag'
+        -500
+      else
+        0
     end
   end
 

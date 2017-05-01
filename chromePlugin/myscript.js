@@ -131,7 +131,7 @@ function analyzeClick(obj) {
         data.selectorType = 'button';
     }
     else if (objId && objId.trim().length > 0) {
-        data.selector = '#' + obj.prop("id");
+        data.selector = obj.prop("id");
         data.selectorType = 'id';
     }
     else if (classes.trim().length > 0) {
