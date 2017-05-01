@@ -14,7 +14,7 @@
       <span class="editable scrollLeft"><%= step.scrollLeft %></span>px
       <span class="editable scrollTop"><%= step.scrollTop %></span>px
 
-  <% when 'click' %> on <strong><%= step.selector %></strong>
+  <% when 'click' %> on <strong><%= translateClickSelector JSON.parse(step.selector,:symbolize_names => true) %></strong>
       <button class="hover-edit-btn btn visible-hover">
         <span class="glyphicon glyphicon-edit"></span> Edit
       </button>

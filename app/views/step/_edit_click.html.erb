@@ -13,8 +13,12 @@
               <label>CSS Selectors of clicked elements: </label>
               <select name="selector" class="form-control">
                 <% @step.config[:selectors].each do |selector| %>
-                    <option value="<%= selector %>"><%= selector %></option>
+                    <option value="<%= selector %>">
+                      <%= translateClickSelector selector %>
+                      </option>
                 <% end %>
+                    <option value="{'x': <%= @step.config[:x] %>, 'y': <%= @step.config[:y] %>}">
+                      Coordination [<%= @step.config[:x] %>, <%= @step.config[:y] %>] </option>
               </select>
               <button type="button" class="btn btn-primary save-click-step">Save</button>
             </div><hr>
