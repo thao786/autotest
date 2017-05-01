@@ -11,16 +11,13 @@ module TestsHelper
   end
 
   def score(selector)
-    if selector.index('a[href=') and selector.index('a[href=') == 0
-      -1000
-    elsif selector.index('button:contains(') and selector.index('button:contains(') == 0
-      -500
-    elsif selector.index('#') and selector.index('#') == 0
-      -300
-    elsif selector.index('.') and selector.index('.') == 0
-      -200
-    else
-      0
+    case selector.selectorType
+      when 'href' -1000
+      when 'button' -900
+      when 'id' -800
+      when 'css' -700
+      when 'tag' -500
+      else 0
     end
   end
 
@@ -83,7 +80,7 @@ module TestsHelper
           selectors = chunk.collect {|click| click.selector }.uniq.compact.reject { |c| c.empty? }
                .sort! { |x,y| score(x) <=> score(y)}
           step.update(config: {selectors: selectors, x: first_event.x, y: first_event.y},
-                  selector: selectors.first)
+                  selector: selectors.first.to_json)
         else
             order = order - 1
       end

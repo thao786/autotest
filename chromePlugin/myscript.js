@@ -118,16 +118,21 @@ function analyzeClick(obj) {
     if (data.tag_name == 'a' && href.length > 0) {
         var linkArray = $("a[href='" + href + "']").toArray();
         eq = linkArray.indexOf(obj[0]);
-        data.selector = "a[href='" + href + "'):eq(" + eq + ')';
+        data.selector = href;
+        data.eq = eq;
+        data.selectorType = 'href';
     }
     // if <button>, report text
     else if (data.tag_name == 'button' && text.length > 0) {
         var buttonArray = $("button:contains('"+text+"')").toArray();
         eq = buttonArray.indexOf(obj[0]);
-        data.selector = "button:contains('" + text + "']:eq(" + eq + ')';
+        data.selector = text;
+        data.eq = eq;
+        data.selectorType = 'button';
     }
     else if (objId && objId.trim().length > 0) {
         data.selector = '#' + obj.prop("id");
+        data.selectorType = 'id';
     }
     else if (classes.trim().length > 0) {
         var classArray = classes.split(/\s+/g);
@@ -139,7 +144,9 @@ function analyzeClick(obj) {
 
         var objArray = $(selectorClass).toArray();
         eq = objArray.indexOf(obj[0]);
-        data.selector = selectorClass + ':eq(' + eq + ')';
+        data.selector = selectorClass;
+        data.eq = eq;
+        data.selectorType = 'css';
     }
     else { // report tag, search by text
         if (data.tag_name == 'html' || data.tag_name == 'body')
@@ -147,7 +154,9 @@ function analyzeClick(obj) {
         else {
             var tagArray = $(data.tag_name).toArray();
             eq = tagArray.indexOf(obj[0]);
-            data.selector = data.tag_name + ":eq(" + eq + ')';
+            data.selector = data.tag_name;
+            data.eq = eq;
+            data.selectorType = 'tag';
         }
     }
 

@@ -18,9 +18,11 @@ class ApiController < ActionController::Base
       hash = params.to_unsafe_h
       params[:draft] = hash
 
-      Draft.create(params.require(:draft).permit(:webpage, :stamp, :apk, :activity,
+      draft = Draft.create(params.require(:draft).permit(:webpage, :stamp, :apk, :activity,
                  :action_type, :session_id, :typed, :screenwidth, :screenheight,
-                 :scrollTop, :scrollLeft, :x, :y, :chrome_tab, :selector))
+                 :scrollTop, :scrollLeft, :x, :y, :chrome_tab))
+      draft.update(selector: {selector: params[:selector], eq: params[:eq],
+                   selectorType: params[:selectorType]})
 
       render json: true
     else

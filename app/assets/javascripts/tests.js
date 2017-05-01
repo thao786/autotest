@@ -375,6 +375,7 @@ function modalFunction() {
     $('#selectorType').on('change', function() {
         var selectorType = this.value;
         $('#custom-click-selector').html($('#choose-by-' + selectorType).html());
+        $('#custom-click-selector input[name="index"]').val(1);
     })
 }
 
