@@ -540,7 +540,7 @@ $(document).on("click", ".add-new-assertion", function(e) {
             $('.modal.fade').modal('hide');
         },
         error: function(result, status, xhr) {
-            alert('Sorry, we could not add the assertion at this time.');
+            alert('Assertion body cannot be blank.');
         }
     });
 });

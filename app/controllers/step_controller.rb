@@ -27,10 +27,9 @@ class StepController < ApplicationController
 
   def change_selector
     form = Rack::Utils.parse_nested_query(params[:form])
-    if form['id'].present?
-      @step.update(selector: form['id'])
-    elsif form['classes'].present?
-      @step.update(selector: form['classes'])
+    if form['selectorType'].present?
+      @step.update(selector: {selectorType: form['selectorType'], eq: form['eq'],
+                              selector: form['selector']}.to_json)
     else
       @step.update(selector: form['selector'])
     end

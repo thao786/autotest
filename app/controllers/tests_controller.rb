@@ -137,7 +137,7 @@ class TestsController < ApplicationController
   def addAssertion
     form = Rack::Utils.parse_nested_query(params[:form])
     assertion = Assertion.create(webpage: form['webpage'], condition: form['condition'], test: @test)
-    if assertion
+    if assertion.save
       render partial: "tests/show_assertion", :locals => {:assertion => assertion}
     else
       render json: false, :status => 404
