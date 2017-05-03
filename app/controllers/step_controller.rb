@@ -30,11 +30,13 @@ class StepController < ApplicationController
     if form['selectorType'].present?
       @step.update(selector: {selectorType: form['selectorType'], eq: form['eq'],
                               selector: form['selector']}.to_json)
+    elsif form['selector'] == 'coordination'
+      @step.update(selector: {x: @step.config[:x], y: @step.config[:y]})
     else
-      @step.update(selector: form['selector'])
+      @step.update(selector: @step.config[:selectors][form['selector'].to_i].to_json)
     end
 
-    render json: true
+    render partial: "step/show_step", :locals => {:step => @step}
   end
 
   def edit_view

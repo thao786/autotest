@@ -187,14 +187,12 @@ $(".selector-select li").hover(
     }
 );
 
-$(".step-list-item").hover(
-    function() {
-        // $('.visible-hover').show();
-        $(this).find('.visible-hover').show();
-    }, function() {
-        $('.visible-hover').hide();
-    }
-);
+
+$("body").on('mouseenter', '.step-list-item', function() {
+    $(this).find('.visible-hover').show();
+}).on('mouseleave', '.step-list-item', function() {
+    $('.visible-hover').hide();
+});
 
 
 /*
@@ -217,63 +215,6 @@ $(document).on("click", ".step-classes .step-class", function(e) {
 // user cancel class picking
 $(document).on("click", ".step-classes .glyphicon-remove", function(e) {
     $(this).closest('.classes-select').remove();
-});
-
-// select ids, update selector when click on ids
-$(document).on("click", ".step-ids li", function(e) {
-    var step_id = $(this).closest('.step-list-item').data('step');
-    var li = $(this);
-
-    // find id selector value
-    var selector = $(this).html();
-    $(this).closest('.selector-select.edit').hide();
-
-    $.ajax({
-        type: "GET",
-        url: '/step/change_selector',
-        dataType: "json",
-        data: {step_id: step_id, selector: selector},
-        success: function(result, status, xhr) {
-            // update span selector value
-            var selector_span = li.closest('.step-list-item').find('.editable.selector');
-            selector_span.html(selector);
-            selector_span.show();
-        },
-        error: function(html) {
-            $('#validation_err').html('Sorry we cannot save new selector at this time.');
-        }
-    });
-});
-
-
-// select classes, update selector when click click on ok glyphicon
-$(document).on("click", ".step-classes .glyphicon-ok", function(e) {
-    // find data
-    var glyp = $(this);
-    var index = $(this).prev().val();
-    var classes = $(this).parent().prev().html();
-    var step_id = $(this).closest('.step-list-item').data('step');
-    console.log('user select classes selector '+ index + classes + ' for step ' + step_id);
-
-    $.ajax({
-        type: "GET",
-        url: '/step/change_selector',
-        dataType: "json",
-        data: {step_id: step_id, classes: classes, index: index},
-        success: function(result, status, xhr) {
-            // update editable span
-            var selector_span = glyp.closest('.step-list-item').find('.editable.selector');
-            selector_span.html(classes);
-            selector_span.show();
-        },
-        error: function(html) {
-            $('#validation_err').html('Sorry we cannot save new selector at this time.');
-        }
-    });
-
-    // hide the big selector form
-    $(this).closest('.classes-select').remove();
-    $('.selector-select.edit').hide();
 });
 
 
@@ -465,6 +406,7 @@ $(document).on("click", ".save-click-step", function(e) {
         },
         success: function(html, status, xhr) {
             $('.modal.fade').modal('hide');
+            $("#step-list [data-step='" + step_id + "']").replaceWith(html);
         },
         error: function(result, status, xhr) {
             alert('Sorry, we could not save step data at this time.');
