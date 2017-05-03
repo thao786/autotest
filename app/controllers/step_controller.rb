@@ -31,7 +31,7 @@ class StepController < ApplicationController
       @step.update(selector: {selectorType: form['selectorType'], eq: form['eq'],
                               selector: form['selector']}.to_json)
     elsif form['selector'] == 'coordination'
-      @step.update(selector: {x: @step.config[:x], y: @step.config[:y]})
+      @step.update(selector: {selectorType: 'coordination', x: @step.config[:x], y: @step.config[:y]})
     else
       @step.update(selector: @step.config[:selectors][form['selector'].to_i].to_json)
     end

@@ -1,4 +1,3 @@
-
 <div class="step-list-item <%= step.complete? ? '' : 'non-complete-step' %>" data-step="<%= step.id %>">
   Wait <span class="editable wait"><%= step.wait %></span> millisec: <br>
   <%= Step.web_step_types[step.action_type] %>
