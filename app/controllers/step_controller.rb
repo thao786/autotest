@@ -31,7 +31,8 @@ class StepController < ApplicationController
       @step.update(selector: {selectorType: form['selectorType'], eq: form['eq'],
                               selector: form['selector']}.to_json)
     elsif form['selector'] == 'coordination'
-      @step.update(selector: {selectorType: 'coordination', x: @step.config[:x], y: @step.config[:y]})
+      @step.update(selector:
+           {selectorType: 'coordination', x: @step.config[:x], y: @step.config[:y]}.to_json)
     else
       @step.update(selector: @step.config[:selectors][form['selector'].to_i].to_json)
     end
@@ -93,14 +94,21 @@ class StepController < ApplicationController
   end
 
   def save_new_step
-    # make room: increase all order by 1
-    steps = Step.where("steps.order > ?", @step.order).where(test: @test)
-    steps.each { |step|
-      step.update(order: step.order + 1)
-    }
     form = Rack::Utils.parse_nested_query(params[:form])
-    new_step = Step.create(test: @test, order: @step.order + 1,
-                action_type: form['action_type'], wait: form['wait'])
+
+    if @step
+      # make room: increase all order by 1
+      steps = Step.where("steps.order > ?", @step.order).where(test: @test)
+      steps.each { |step|
+        step.update(order: step.order + 1)
+      }
+      new_step = Step.create(test: @test, order: @step.order + 1,
+                             action_type: form['action_type'], wait: form['wait'])
+    else
+      new_step = Step.create(test: @test, order: @test.steps.maximum('order') + 1,
+                             action_type: form['action_type'], wait: form['wait'])
+    end
+
     render partial: "step/show_step", :locals => {:step => new_step}
   end
 

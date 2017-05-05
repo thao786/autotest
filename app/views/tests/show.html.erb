@@ -11,6 +11,7 @@
 <% else %>
     <button id="startRecording" class="btn-primary btn">Start recording steps</button>
     <button id="runTest" class="btn-primary btn">Run Test</button>
+    <button id="addNewStep" class="btn-primary btn">Add Step</button>
 <% end %>
 
 <h4 style="display: block; width:300px; margin: 0 auto;">Test: <%= @test.title %> <span class="glyphicon glyphicon-edit"></span></h4>
@@ -62,14 +63,13 @@
     <div class="col-sm-7">
       <p>Steps (move to change order, hover to edit)</p>
 
-      <% if @test.steps.count > 0 %>
-          <%= render "step/show_step", step: @test.steps.first %>
-          <div id="step-list">
-            <% @test.steps.where('steps.order > ?', 1).order('steps.order').each do |step| %>
+      <div id="step-list">
+        <% if @test.steps.count > 0 %>
+            <% @test.steps.order('steps.order').each do |step| %>
                 <%= render "step/show_step", step: step %>
             <% end %>
-          </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
 
   </div>

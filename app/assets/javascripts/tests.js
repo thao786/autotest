@@ -414,7 +414,7 @@ $(document).on("click", ".save-click-step", function(e) {
     });
 });
 
-$(document).on("click", ".add-step-after", function(e) {
+$(document).on("click", ".add-step-after, #addNewStep", function(e) {
     var step_id = $(this).closest('.step-list-item').data('step');
 
     $.ajax({
@@ -446,7 +446,10 @@ $(document).on("click", ".add-new-step", function(e) {
             $('.modal.fade').modal('hide');
 
             // append the new step right after
-            $(".step-list-item[data-step='" + step_id + "']").after(html);
+            if (step_id)
+                $(".step-list-item[data-step='" + step_id + "']").after(html);
+            else
+                $("#step-list").append(html);
         },
         error: function(result, status, xhr) {
             alert('Sorry, we could not save step data at this time.');
