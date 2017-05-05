@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   match 'step/remove_pageload_param', to: 'step#remove_pageload_param', via: [:post]
   get 'step/add_step_view', to: 'step#add_step_view'
   match 'step/save_new_step', to: 'step#save_new_step', via: [:post]
+  match 'step/save_keypress', to: 'step#save_keypress', via: [:post]
 
   match 'tests/addTestParams', to: 'tests#addTestParams', via: [:post]
   match 'tests/removeTestParams', to: 'tests#removeTestParams', via: [:post]

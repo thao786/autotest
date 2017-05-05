@@ -17,6 +17,12 @@
       <button class="hover-edit-btn btn visible-hover">
         <span class="glyphicon glyphicon-edit"></span> Edit
       </button>
+
+  <% when 'keypress' %>
+      <b><%= step.typed %></b>
+      <button class="hover-edit-btn btn visible-hover">
+        <span class="glyphicon glyphicon-edit"></span> Edit
+      </button>
   <% else %>
   <% end %>
 

@@ -70,10 +70,10 @@ module TestsHelper
           chunk = Draft.where("id < ?", next_id).where(session_id: session_id, action_type: 'keypress')
 
           # compress into 1 string
-          str = chunk.inject { |str, draft|
-            str + draft.typed
+          typed = chunk.inject('') { |str, draft|
+            "#{str}#{draft.typed}"
           }
-          step.update(typed: str)
+          step.update(typed: typed)
         when 'click' # use x,y coordination to find same clicks
           next_event = Draft.where.not(x: first_event.x, y: first_event.y)
                            .where(session_id: session_id).first
@@ -95,5 +95,7 @@ module TestsHelper
         chunk.destroy_all
       end
     end
+
+    Draft.destroy_all(session_id: session_id)
   end
 end

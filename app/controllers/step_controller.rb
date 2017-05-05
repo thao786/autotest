@@ -77,6 +77,16 @@ class StepController < ApplicationController
     @step.update(config: hash)
   end
 
+  def save_keypress
+    form = Rack::Utils.parse_nested_query(params[:form])
+    if form['typed'].present?
+      @step.update(typed: form['typed'])
+      render partial: "step/show_step", :locals => {:step => @step}
+    else
+      render json: false
+    end
+  end
+
   def remove_header_param
     hash = @step.config ||= {}
     hash[:headers].delete params[:key]

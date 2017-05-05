@@ -356,6 +356,27 @@ $(document).on("click", "#edit-pageload-form .submit", function(e) {
     $('.modal.fade').modal('hide');
 });
 
+$(document).on("click", "#edit-keypress-form .submit", function(e) {
+    var step_id = $(this).closest('.modal.fade').data('step');
+
+    $.ajax({
+        type: "POST",
+        url: '/step/save_keypress',
+        data: {step_id: step_id,
+            form: $('#edit-keypress-form').serialize()
+        },
+        success: function(html, status, xhr) {
+            $('.modal.fade').modal('hide');
+            $("#step-list [data-step='" + step_id + "']").replaceWith(html);
+        },
+        error: function(result, status, xhr) {
+            alert('Sorry, we could not step data at this time.');
+        }
+    });
+
+    $('.modal.fade').modal('hide');
+});
+
 $(document).on("click", ".hash-pair .remove-header-param", function(e) {
     var step_id = $(this).closest('.modal.fade').data('step');
     var glyp = $(this);
