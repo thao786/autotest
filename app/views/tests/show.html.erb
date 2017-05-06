@@ -36,6 +36,20 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-5">
+      <div>Perform before the actual test (Ex: Log in)
+        <select data-placeholder="Select Tests" id="selectAges" class="chosen-select" style="width: 100%" multiple name="ages[]">
+          <% Suite.where(user: current_user).each do |s| %>
+              <optgroup label="<%= suite.title %>">
+                <% s.tests.each do |test| %>
+                    <% if @test != test %>
+                        <option value="<%= test.id %>"><%= test.title %></option>
+                    <% end %>
+                <% end %>
+              </optgroup>
+          <% end %>
+        </select>
+      </div>
+
       <div><br> Define your test parameters (can override when run)<br>
         <div id="test_params"><%= render "tests/test_params" %></div>
 
