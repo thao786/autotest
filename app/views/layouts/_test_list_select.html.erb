@@ -1,0 +1,13 @@
+<div>Perform before the actual test (Ex: Log in)
+  <select data-placeholder="Select Tests" id="selectAges" class="chosen-select" style="width: 100%" multiple name="ages[]">
+    <% Suite.where(user: current_user).each do |s| %>
+        <optgroup label="<%= s.title %>">
+          <% s.tests.each do |test| %>
+              <% if @test != test %>
+                  <option value="<%= test.id %>"><%= test.title %></option>
+              <% end %>
+          <% end %>
+        </optgroup>
+    <% end %>
+  </select>
+</div>

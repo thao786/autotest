@@ -54,12 +54,6 @@ $('#stopRecording').click(function() {
     });
 });
 
-$("#step-list").sortable({
-    update: function( event, ui ) {
-        console.log('list order updated');
-    }
-});
-
 $(document).on("click", ".delete-step", function(e) {
     var step_id = $(this).closest('.step-list-item').data('step');
     var list_item = $(this).parent();

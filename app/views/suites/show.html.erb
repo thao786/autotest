@@ -7,6 +7,8 @@
 
 <%= link_to raw('<span class="glyphicon glyphicon-plus"></span> Add Test') %>
 
+<%= render partial: "layouts/test_list_select" %>
+
 <div class="container">
   <h2>All Tests in this Suite (<%= @suite.tests.count %> total)</h2>
 
