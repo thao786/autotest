@@ -19,6 +19,4 @@
 
 
 $(document).on('turbolinks:load', function() {
-    $(".chosen-select").chosen({max_selected_options: 5});
-    $('.chosen-container').css('width', '100%');
 });

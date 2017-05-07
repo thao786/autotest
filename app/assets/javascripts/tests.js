@@ -311,7 +311,10 @@ function modalFunction() {
         var selectorType = this.value;
         $('#custom-click-selector').html($('#choose-by-' + selectorType).html());
         $('#custom-click-selector input[name="index"]').val(1);
-    })
+    });
+
+    $(".chosen-select").chosen();
+    $('.chosen-container').css('width', '100%');
 }
 
 $(document).on("click", ".remove-webpage-param", function(e) {
@@ -329,6 +332,12 @@ $(document).on("click", "#add-pageload-param", function(e) {
     e.preventDefault();
     var inputCombo = $('#copyable .empty-pageload-params')[0].outerHTML;
     $("#pageload-param-list").append(inputCombo);
+});
+
+$(document).on("click", "#add-empty-extract", function(e) {
+    e.preventDefault();
+    var inputCombo = $('#copyable .empty-extract-param')[0].outerHTML;
+    $("#empty-extract-list").append(inputCombo);
 });
 
 $(document).on("click", "#edit-pageload-form .submit", function(e) {
@@ -407,6 +416,12 @@ $(document).on("click", ".hash-pair .remove-pageload-param", function(e) {
             alert('Sorry, we could not save step data at this time.');
         }
     });
+});
+
+$(document).on("click", ".empty-header-params .remove-header-param," +
+    ".empty-pageload-params .empty-pageload-params," +
+    " .empty-extract-param .remove-extract-param", function(e) {
+    $(this).parent().remove();
 });
 
 $(document).on("click", ".save-click-step", function(e) {

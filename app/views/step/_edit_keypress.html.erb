@@ -9,6 +9,8 @@
       </div>
       <form id="edit-keypress-form">
           <div class="modal-body">
+              <%= render partial: "layouts/test_list_select" %>
+
               <div class="form-group">
                 <label for="typed">Typed String:</label>
                 <textarea name="typed" class="form-control" rows="3"><%= @step.typed %></textarea>

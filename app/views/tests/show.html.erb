@@ -36,8 +36,6 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-5">
-      <%= render partial: "layouts/test_list_select" %>
-
       <div><br> Define your test parameters (can override when run)<br>
         <div id="test_params"><%= render "tests/test_params" %></div>
 
@@ -63,7 +61,7 @@
     </div>
 
     <div class="col-sm-7">
-      <p>Steps (move to change order, hover to edit)</p>
+      <p>Steps</p>
 
       <div id="step-list">
         <% if @test.steps.count > 0 %>

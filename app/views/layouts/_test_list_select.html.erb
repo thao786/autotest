@@ -1,5 +1,7 @@
-<div>Perform before the actual test (Ex: Log in)
-  <select data-placeholder="Select Tests" id="selectAges" class="chosen-select" style="width: 100%" multiple name="ages[]">
+<div class="form-group">
+  <label for="pre_run_tests">Perform before the actual test (Ex: Log in)</label>
+
+  <select data-placeholder="Select Tests" class="chosen-select form-control" multiple name="pre_run_tests[]">
     <% Suite.where(user: current_user).each do |s| %>
         <optgroup label="<%= s.title %>">
           <% s.tests.each do |test| %>
