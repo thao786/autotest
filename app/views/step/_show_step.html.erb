@@ -3,7 +3,7 @@
   <%= Step.web_step_types[step.action_type] %>
 
   <% case step.action_type
-       when 'pageload' %> <span class="editable webpage"><%= step.webpage %></span><br>
+       when 'pageload' %> <b><%= step.webpage %></b><br>
       <span>screen size: <%= step.screenwidth %> x <%= step.screenheight %></span>
 
       <button class="hover-edit-btn btn visible-hover">

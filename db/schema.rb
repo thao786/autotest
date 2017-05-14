@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170507025303) do
+ActiveRecord::Schema.define(version: 20170514210000) do
 
   create_table "assertions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "webpage"
@@ -47,6 +47,26 @@ ActiveRecord::Schema.define(version: 20170507025303) do
     t.integer  "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "prep_test_for_suites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "order"
+    t.integer  "test_id"
+    t.integer  "suite_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["suite_id"], name: "index_prep_test_for_suites_on_suite_id", using: :btree
+    t.index ["test_id"], name: "index_prep_test_for_suites_on_test_id", using: :btree
+  end
+
+  create_table "prep_tests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "order"
+    t.integer  "test_id"
+    t.integer  "step_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["step_id"], name: "index_prep_tests_on_step_id", using: :btree
+    t.index ["test_id"], name: "index_prep_tests_on_test_id", using: :btree
   end
 
   create_table "steps", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -116,6 +136,10 @@ ActiveRecord::Schema.define(version: 20170507025303) do
   end
 
   add_foreign_key "assertions", "tests"
+  add_foreign_key "prep_test_for_suites", "suites"
+  add_foreign_key "prep_test_for_suites", "tests"
+  add_foreign_key "prep_tests", "steps"
+  add_foreign_key "prep_tests", "tests"
   add_foreign_key "suites", "users"
   add_foreign_key "tests", "suites"
   add_foreign_key "users", "plans"
