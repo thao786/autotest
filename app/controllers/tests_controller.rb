@@ -18,7 +18,7 @@ class TestsController < ApplicationController
   def new
     @test = Test.new
     @suite = Suite.find(params[:suite_id]) if params[:suite_id].present?
-    render template: "tests/new"
+    render template: "tests/new", :layout => false
   end
 
   # GET /tests/1/edit

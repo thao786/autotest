@@ -24,7 +24,7 @@
 
         <td><%= link_to raw('<span class="glyphicon glyphicon-remove"></span> Delete'), suite_path(suite.name), method: :delete, data: { confirm: 'Are you sure?' } %>
           |
-          <a href="<%= new_test_url %>?suite_id=<%= suite.id %>">
+          <a class="add-test-modal pointer" data-suite="<%= suite.id %>">
             <span class="glyphicon glyphicon-plus"></span> Add Test</a>
         </td>
       </tr>
