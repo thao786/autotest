@@ -31,6 +31,8 @@ Rails.application.routes.draw do
   match 'api/check', to: 'api#check', via: [:get, :post]
   match 'api/saveEvent', to: 'api#saveEvent', via: [:post]
 
+  match 'suites/saveConfig', to: 'suites#saveConfig', via: [:post]
+
   root to: 'dashboard#index'
 
   devise_for :users

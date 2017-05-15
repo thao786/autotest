@@ -39,7 +39,7 @@ module TestsHelper
       chrome_tab = first_event.chrome_tab
       step = Step.create(wait: first_event.stamp - start_time, webpage: first_event.webpage,
                          order: order, test: test, device_type: 'browser', active: true,
-                         chrome_tab: chrome_tab, action_type: first_event.action_type,
+                         tabId: tabId, windowId: windowId, action_type: first_event.action_type,
                          screenwidth: first_event.screenwidth, screenheight: first_event.screenheight)
       Extract.create(title: "body_text#{step.id}", step: step,
                      command: 'document.getElementsByTagName("body")[0].textContent')

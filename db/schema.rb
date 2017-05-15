@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170514222408) do
+ActiveRecord::Schema.define(version: 20170515022035) do
 
   create_table "assertions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "webpage"
@@ -36,16 +36,17 @@ ActiveRecord::Schema.define(version: 20170514222408) do
     t.string   "activity"
     t.integer  "x"
     t.integer  "y"
-    t.string   "chrome_tab"
     t.string   "selector"
     t.integer  "screenwidth",  null: false
     t.integer  "screenheight", null: false
+    t.string   "tabId"
+    t.string   "windowId"
   end
 
   create_table "extracts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "title"
     t.integer  "step_id"
-    t.string   "sourcetype",       default: "webpage"
+    t.string   "sourcetype", default: "webpage"
     t.string   "command"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
@@ -94,9 +95,10 @@ ActiveRecord::Schema.define(version: 20170514222408) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.boolean  "active"
-    t.string   "chrome_tab"
     t.integer  "screenwidth"
     t.integer  "screenheight"
+    t.string   "tabId"
+    t.string   "windowId"
     t.index ["test_id"], name: "index_steps_on_test_id", using: :btree
   end
 

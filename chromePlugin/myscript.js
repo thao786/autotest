@@ -83,7 +83,8 @@ function reportEvent(data) {
     data.session_id = sessionId;
     data.stamp = Date.now();
     data.webpage = window.location.href;
-    data.chrome_tab = tabId + '-' + windowId;
+    data.tabId = tabId;
+    data.windowId = windowId;
     data.screenwidth = screen.width;
     data.screenheight = screen.height;
 

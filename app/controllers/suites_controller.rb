@@ -25,6 +25,10 @@ class SuitesController < ApplicationController
   def edit
   end
 
+  def saveConfig
+    render json: 5
+  end
+
   # POST /suites
   # POST /suites.json
   def create
