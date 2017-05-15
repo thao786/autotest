@@ -5,19 +5,20 @@
   <%= @suite.title %>
 </p>
 
-<%= link_to raw('<span class="glyphicon glyphicon-plus"></span> Add Test') %>
+<div class="add-test-modal pointer" data-suite="<%= @suite.id %>">
+  <span class="glyphicon glyphicon-plus"></span> Add Test</div>
 
 <div class="container-fluid">
   <div class="col-sm-6"><br>
     <label>Suite config:</label>
 
-    <form id="suite-config-form" action="/suites/saveConfig" method="post">
+    <%= form_tag("/suites/saveConfig", method: "post") do %>
       <div id="pretest-for-suite">
         <%= render partial: "layouts/test_list_select", suite: @suite %>
       </div>
 
       <button type="submit" class="btn btn-primary">Save</button>
-    </form>
+    <% end %>
   </div>
 
   <div class="col-sm-6">

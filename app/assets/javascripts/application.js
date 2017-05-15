@@ -20,6 +20,21 @@
 
 $(document).on('turbolinks:load', function() {
 
+    $(document).on("click", ".add-test-modal", function(e) {
+        var suite_id = $(this).data('suite');
+
+        $.ajax({
+            type: "GET",
+            url: '/tests/new',
+            data: {suite_id: suite_id},
+            success: function(html, status, xhr) {
+                $('body').append(html);
+                $('#newTestModal').modal();
+            }
+        });
+    });
+
+
 });
 
 

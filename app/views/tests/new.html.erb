@@ -1,10 +1,47 @@
-<h1>New Test</h1>
+<div class="modal fade" id="newTestModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">New Test</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_tag("/tests/saveTest", method: "post") do %>
+            <div class="form-group">
+              <label>Test Title: </label>
+              <input name="title" type="text" class="form-control">
+            </div>
 
-<%= render 'form', test: @test %>
+            <div class="form-group">
+              <label>Test Description: </label>
+              <input name="description" type="text" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label>Suite: </label>
+              <select id="test_suite" name="suite" class="form-control">
+                <% current_user.suites.each do |suite| %>
+                    <option value="<%= suite.id %>"><%= suite.title %></option>
+                <% end %>
+              </select>
+            </div>
+
+            <div>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary submit" >Save</button>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 
 <% if @suite %>
-  <script>
-      $('#test_suite').val('<%= @suite.name %>');
-      $('#test_suite').trigger("chosen:updated");
-  </script>
+    <script>
+        $('#test_suite').val('<%= @suite.id %>');
+        $('#test_suite').trigger("chosen:updated");
+    </script>
 <% end %>

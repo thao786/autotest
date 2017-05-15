@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   match 'step/save_keypress', to: 'step#save_keypress', via: [:post]
   match 'step/removeExtract', to: 'step#removeExtract', via: [:post]
 
+
   match 'tests/addTestParams', to: 'tests#addTestParams', via: [:post]
   match 'tests/removeTestParams', to: 'tests#removeTestParams', via: [:post]
   get 'test/:name/:id', to: 'tests#show'
@@ -27,6 +28,7 @@ Rails.application.routes.draw do
   get 'tests/addAssertion', to: 'tests#addAssertion'
   get 'tests/removeAssertion', to: 'tests#removeAssertion'
   get 'tests/disableAssertion', to: 'tests#disableAssertion'
+  match 'tests/newTestModal', to: 'tests#newTestModal', via: [:post]
 
   match 'api/check', to: 'api#check', via: [:get, :post]
   match 'api/saveEvent', to: 'api#saveEvent', via: [:post]
