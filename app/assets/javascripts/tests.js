@@ -290,8 +290,8 @@ function modalFunction() {
         $('#custom-click-selector input[name="index"]').val(1);
     });
 
-    $(".chosen-select").chosen();
-    $('.chosen-container').css('width', '100%');
+    $("#modal .chosen-select").chosen();
+    $('#modal .chosen-container').css('width', '100%');
 }
 
 $(document).on("click", ".remove-webpage-param", function(e) {

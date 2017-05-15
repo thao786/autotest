@@ -26,7 +26,10 @@
   <% else %>
   <% end %>
 
-  <div>extract text as result-<%= step.order %>
+  <div>extracts:
+    <% step.extracts.each do |extract| %>
+          <span class="hash-pair"><%= extract.title %></span>
+    <% end %>
   </div>
 
   <button class="add-step-after btn visible-hover">
