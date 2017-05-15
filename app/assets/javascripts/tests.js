@@ -107,9 +107,6 @@ $(document).on("click", ".input-combo .glyphicon-remove", function(e) {
 });
 
 
-
-
-
 /*
     save editable fields by clicking on glyphicon-ok symbols
  */
@@ -142,32 +139,12 @@ $(document).on("click", ".glyphicon-ok", function(e) {
                 $('#validation_err').html(errors[0]);
             }
         });
-    } else if (editableSpan.hasClass('webpage')) {
-        var webpage = $(this).prev().val();
-
-        $.ajax({
-            type: "GET",
-            url: '/step/change_webpage',
-            dataType: "json",
-            data: {step_id: step_id, webpage: webpage},
-            success: function(result, status, xhr) {
-                glyp.parent().prev().show();
-                glyp.parent().prev().html(webpage);
-                glyp.parent().hide();
-            },
-            error: function(html) {
-                $('#validation_err').show();
-                $('#validation_err').html('Url cannot be empty');
-            }
-        });
     } else if (editableSpan.hasClass('scrollTop')) {
 
     } else if (editableSpan.hasClass('scrollLeft')) {
 
     }
 });
-
-
 
 
 /*
@@ -430,7 +407,7 @@ $(document).on("click", ".save-click-step", function(e) {
 
     $.ajax({
         type: "POST",
-        url: '/step/change_selector',
+        url: '/step/save_click',
         data: {step_id: step_id,
             form: form.serialize()
         },
@@ -462,7 +439,7 @@ $(document).on("click", ".add-step-after, #addNewStep", function(e) {
     });
 });
 
-$(document).on("click", ".add-new-step", function(e) {
+$(document).on("click", "#new-step-form .submit", function(e) {
     var step_id = $(this).closest('.modal.fade').data('step');
     var form = $(this).closest('form');
 
@@ -555,6 +532,19 @@ $(document).on("click", ".disable-assertion", function(e) {
     });
 });
 
+$(document).on("click", ".remove-extract", function(e) {
+    var extract_id = $(this).data('id');
+    var step_id = $('#modal').data('step');
+    $(this).remove();
+
+    $.ajax({
+        type: "GET",
+        url: '/step/removeExtract',
+        data: {extract_id: extract_id, step_id: step_id},
+        success: function(html, status, xhr) {
+        }
+    });
+});
 
 
 });

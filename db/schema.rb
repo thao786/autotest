@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170514210000) do
+ActiveRecord::Schema.define(version: 20170514222408) do
 
   create_table "assertions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "webpage"
@@ -40,6 +40,16 @@ ActiveRecord::Schema.define(version: 20170514210000) do
     t.string   "selector"
     t.integer  "screenwidth",  null: false
     t.integer  "screenheight", null: false
+  end
+
+  create_table "extracts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "title"
+    t.integer  "step_id"
+    t.string   "sourcetype",       default: "webpage"
+    t.string   "command"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.index ["step_id"], name: "index_extracts_on_step_id", using: :btree
   end
 
   create_table "plans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -87,7 +97,6 @@ ActiveRecord::Schema.define(version: 20170514210000) do
     t.string   "chrome_tab"
     t.integer  "screenwidth"
     t.integer  "screenheight"
-    t.text     "extracts",     limit: 65535
     t.index ["test_id"], name: "index_steps_on_test_id", using: :btree
   end
 
@@ -136,6 +145,7 @@ ActiveRecord::Schema.define(version: 20170514210000) do
   end
 
   add_foreign_key "assertions", "tests"
+  add_foreign_key "extracts", "steps"
   add_foreign_key "prep_test_for_suites", "suites"
   add_foreign_key "prep_test_for_suites", "tests"
   add_foreign_key "prep_tests", "steps"

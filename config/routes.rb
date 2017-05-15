@@ -7,8 +7,7 @@ Rails.application.routes.draw do
 
   get 'step/delete_step', to: 'step#delete_step'
   get 'step/change_wait', to: 'step#change_wait'
-  get 'step/change_webpage', to: 'step#change_webpage'
-  match 'step/change_selector', to: 'step#change_selector', via: [:post]
+  match 'step/save_click', to: 'step#save_click', via: [:post]
   get 'step/edit_view', to: 'step#edit_view'
   match 'step/save_pageload', to: 'step#save_pageload', via: [:post]
   match 'step/remove_header_param', to: 'step#remove_header_param', via: [:post]
@@ -16,6 +15,7 @@ Rails.application.routes.draw do
   get 'step/add_step_view', to: 'step#add_step_view'
   match 'step/save_new_step', to: 'step#save_new_step', via: [:post]
   match 'step/save_keypress', to: 'step#save_keypress', via: [:post]
+  match 'step/removeExtract', to: 'step#removeExtract', via: [:post]
 
   match 'tests/addTestParams', to: 'tests#addTestParams', via: [:post]
   match 'tests/removeTestParams', to: 'tests#removeTestParams', via: [:post]

@@ -8,9 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
-            <%= render partial: "layouts/test_list_select" %>
-
+        <form id="new-step-form">
             <div class="form-group">
               <label>Step Type: </label>
               <select name="action_type" class="form-control">
@@ -26,9 +24,7 @@
               <input name="wait" type="text" class="form-control" value="100">
             </div>
 
-            <%= render partial: "step/extract_step_result" %>
-
-            <button type="button" class="btn btn-default add-new-step">Save</button>
+            <button type="button" class="btn btn-default submit">Save</button>
         </form>
       </div>
     </div>

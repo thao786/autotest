@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  step: one
+  type: 
+  command: MyString
+
+two:
+  title: MyString
+  step: two
+  type: 
+  command: MyString

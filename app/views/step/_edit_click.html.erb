@@ -8,9 +8,12 @@
         </button>
       </div>
       <div class="modal-body">
-        <%= render partial: "layouts/test_list_select" %>
-
         <form>
+            <div id="common-modal-form">
+              <%= render partial: "layouts/test_list_select" %>
+              <%= render partial: "step/extract_step_result" %><hr>
+            </div>
+
             <div class="form-group">
               <label>CSS Selectors of clicked elements: </label>
               <select name="selector" class="form-control">
@@ -155,7 +158,6 @@
             <input name="y" type="text" class="form-control" value="<%= @step.config[:y] %>">
           </div>
         </div>
-
       </div>
     </div>
   </div>

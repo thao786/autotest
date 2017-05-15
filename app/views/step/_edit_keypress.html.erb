@@ -7,20 +7,22 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form id="edit-keypress-form">
-          <div class="modal-body">
-              <%= render partial: "layouts/test_list_select" %>
+      <div class="modal-body">
+         <form id="edit-keypress-form">
+            <%= render partial: "layouts/test_list_select" %>
+            <%= render partial: "step/extract_step_result" %><hr>
 
-              <div class="form-group">
-                <label for="typed">Typed String:</label>
-                <textarea name="typed" class="form-control" rows="3"><%= @step.typed %></textarea>
-              </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary submit" >Save changes</button>
-          </div>
-      </form>
+            <div class="form-group">
+              <label for="typed">Typed String:</label>
+              <textarea name="typed" class="form-control" rows="3"><%= @step.typed %></textarea>
+            </div>
+
+            <div>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary submit" >Save changes</button>
+            </div>
+        </form>
+      </div>
       </div>
     </div>
   </div>

@@ -1,6 +1,7 @@
 class StepController < ApplicationController
   before_action :set_step, :set_test
   before_action :authorize?
+  before_action :saveCommonModalForm, only: [:save_click, :save_pageload, :save_keypress]
 
   def delete_step
     @step.destroy
@@ -16,16 +17,7 @@ class StepController < ApplicationController
     end
   end
 
-  def change_webpage
-    if params[:webpage].empty?
-      render json: false, :status => 404
-    else
-      @step.update(webpage: params[:webpage])
-      render json: true
-    end
-  end
-
-  def change_selector
+  def save_click
     form = Rack::Utils.parse_nested_query(params[:form])
     if form['selectorType'].present?
       @step.update(selector: {selectorType: form['selectorType'], eq: form['eq'],
@@ -120,6 +112,13 @@ class StepController < ApplicationController
     end
 
     render partial: "step/show_step", :locals => {:step => new_step}
+  end
+
+  def removeExtract
+    Extract.destroy(id: params[:extract_id])
+  end
+
+  def saveCommonModalForm
   end
 
   def set_test

@@ -7,9 +7,10 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form id="edit-pageload-form">
-        <div class="modal-body">
+      <div class="modal-body">
+        <form id="edit-pageload-form">
             <%= render partial: "layouts/test_list_select" %>
+            <%= render partial: "step/extract_step_result" %><hr>
 
             <div class="form-group">
               <label>Method: </label>
@@ -57,13 +58,13 @@
               <a id="add-pageload-param" class="pointer"> Add New Param</a>
             </div>
             <div id="pageload-param-list" class="form-group"></div>
-          </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary submit" >Save changes</button>
-      </div>
+            <div>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary submit" >Save changes</button>
+            </div>
       </form>
+      </div>
       </div>
     </div>
   </div>

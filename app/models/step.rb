@@ -1,6 +1,7 @@
 class Step < ApplicationRecord
   belongs_to :test
   serialize :config
+  has_many :extracts, dependent: :destroy
 
   validates :wait, numericality: true
   validates :action_type, presence: true
