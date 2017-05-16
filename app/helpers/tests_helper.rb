@@ -36,10 +36,9 @@ module TestsHelper
     while Draft.where(session_id: session_id).count > 0
       first_event = Draft.where(session_id: session_id).first
       order = order + 1
-      chrome_tab = first_event.chrome_tab
       step = Step.create(wait: first_event.stamp - start_time, webpage: first_event.webpage,
                          order: order, test: test, device_type: 'browser', active: true,
-                         tabId: tabId, windowId: windowId, action_type: first_event.action_type,
+                         tabId: first_event.tabId, windowId: first_event.windowId, action_type: first_event.action_type,
                          screenwidth: first_event.screenwidth, screenheight: first_event.screenheight)
       Extract.create(title: "body_text#{step.id}", step: step,
                      command: 'document.getElementsByTagName("body")[0].textContent')
@@ -47,7 +46,7 @@ module TestsHelper
       case first_event.action_type
         when 'pageload'
           # is this a link click or user load page in browser (this chrome-tab has existed before in this session)
-          if Step.where(chrome_tab: chrome_tab).count > 1
+          if Step.where(tabId: first_event.tabId, windowId: first_event.windowId).count > 1
             step.destroy
           end
           first_event.destroy!
