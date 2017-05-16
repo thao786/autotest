@@ -13,12 +13,10 @@
 
       <tr>
         <td><%= link_to suite.title, controller: "suites", action: "show", id: suite.name %></td>
-        <td><a href="<%= showUrl test %>"> <%= test.title %></a>
-            <span class="glyphicon glyphicon-edit"></span>
-        </td>
+        <td><a href="<%= showUrl test %>"> <%= test.title %></a></td>
         <td>
-          <%= link_to raw('<span class="glyphicon glyphicon-remove"></span> Delete'), "#{test.name}",
-                        method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <a class="pointer remove-test-tr" data-test="<%= test.id %>">
+            <span class="glyphicon glyphicon-remove"></span> Delete</a>
       </tr>
     <% end %>
   </tbody>

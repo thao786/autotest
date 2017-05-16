@@ -28,53 +28,39 @@ class TestsController < ApplicationController
   # POST /tests
   # POST /tests.json
   def create
-    title = makeNameId test_params[:title]
+    title = makeNameId params[:title]
     name = title
-    while Test.find_by(name: name, suite: @suite)
+    while Test.find_by(name: name)
       random = rand 10000
       name = "#{title}_#{random}"
     end
-    test_params[:name] = name
-    test_params[:suite_id] = @suite.id
 
-    @test = Test.new(test_params)
+    @test = Test.new(title: title, name: name, description: params[:description],
+                     suite_id: params[:suite])
 
-    respond_to do |format|
-      if @test.save
-        format.html { redirect_to "/suites/#{@suite.name}/tests/#{@test.name}", notice: 'Test was successfully created.' }
-        format.json { render :show, status: :created, location: @test }
-      else
-        format.html { render :new }
-        format.json { render json: @test.errors, status: :unprocessable_entity }
-      end
+    if @test.save
+      redirect_to "/test/#{@test.name}/#{@test.id}", notice: 'Test was successfully created.'
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /tests/1
-  # PATCH/PUT /tests/1.json
   def update
     @test = Test.find_by(id: params[:id], suite: @suite)
     test_params[:suite_id] = @suite.id
 
-    respond_to do |format|
-      if @test.update(test_params)
-        format.html { redirect_to "/suites/#{@suite.name}/tests/#{@test.name}", notice: 'Test was successfully updated.' }
-        format.json { render :show, status: :ok, location: @test }
-      else
-        format.html { render :edit }
-        format.json { render json: @test.errors, status: :unprocessable_entity }
-      end
+    if @test.update(test_params)
+      redirect_to "/test/#{@test.name}/#{@test.id}", notice: 'Test was successfully updated.'
+    else
+      render :edit
     end
   end
 
   # DELETE /tests/1
-  # DELETE /tests/1.json
   def destroy
     @test.destroy
-    respond_to do |format|
-      format.html { redirect_to tests_url, notice: 'Test was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    render json: true
   end
 
   # generate an unique session ID

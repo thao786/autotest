@@ -3,10 +3,11 @@
 
 <div style="display: none;" id="page_info" data-test="<%= @test.id %>"></div>
 
-<%= link_to raw('<span class="glyphicon glyphicon-remove"></span> Delete This Test'), "#{@test.name}",
-            method: :delete, data: { confirm: 'Are you sure?' } %> |
+<a class="pointer remove-test" data-test="<%= @test.id %>">
+  <span class="glyphicon glyphicon-remove"></span> Delete</a> |
 
-<% if @test.session_expired_at.to_formatted_s(:number) > Time.now.to_formatted_s(:number) %>
+<% if @test.session_expired_at and
+    @test.session_expired_at.to_formatted_s(:number) > Time.now.to_formatted_s(:number) %>
     <button id="stopRecording" class="btn btn-danger">Stop recording steps</button>
 <% else %>
     <button id="startRecording" class="btn-primary btn">Start recording steps</button>
