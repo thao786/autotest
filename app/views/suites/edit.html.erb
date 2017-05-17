@@ -1,6 +1,18 @@
-<h1>Editing Suite</h1>
+<label for="pre_run_tests">Perform before the actual test (Ex: Log in)</label>
 
-<%= render 'form', suite: @suite %>
+<select data-placeholder="Select Tests" class="chosen-select form-control"
+        multiple name="pre_run_tests[]">
+  <% Suite.where(user: current_user).each do |s| %>
+      <% if s != @suite %>
+        <optgroup label="<%= s.title %>">
+          <% s.tests.each do |test| %>
+              <% if @suite != test.suite %>
+                  <option value="<%= test.id %>"><%= test.title %></option>
+              <% end %>
+          <% end %>
+        </optgroup>
+      <% end %>
+  <% end %>
+</select>
 
-<%= link_to 'Show', @suite %> |
-<%= link_to 'Back', suites_path %>
+

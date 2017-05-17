@@ -15,7 +15,7 @@
     <%= form_tag("/suites/saveConfig", method: "post") do %>
         <input type="hidden" name="id" value="<%= @suite.id %>">
         <div id="pretest-for-suite">
-          <%= render partial: "layouts/test_list_select", suite: @suite %>
+          <%= render template: "suites/edit" %>
         </div>
 
         <button type="submit" class="btn btn-primary">Save</button>

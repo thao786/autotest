@@ -9,7 +9,8 @@
 
 
 
-  <select data-placeholder="Select Tests" class="chosen-select form-control" multiple name="pre_run_tests[]">
+  <select data-placeholder="Select Tests" class="chosen-select form-control"
+          multiple name="pre_run_tests[]">
     <% Suite.where(user: current_user).each do |s| %>
         <optgroup label="<%= s.title %>">
           <% s.tests.each do |test| %>
