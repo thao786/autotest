@@ -26,7 +26,16 @@ class SuitesController < ApplicationController
   end
 
   def saveConfig
-    render json: 5
+    PrepTestForSuite.destroy_all(suite: @suite)
+    params[:pre_run_tests].each { |test_id|
+      test = Test.find test_id
+      order = PrepTestForSuite.where(suite: @suite, test: test).maximum(:order)
+      order ||= 0
+      PrepTestForSuite.create(suite: @suite, test: test, order: order+1)
+    }
+
+    redirect_to controller: 'suites', action: 'show', id: @suite.name,
+                notice: 'Suite config was successfully saved.'
   end
 
   # POST /suites

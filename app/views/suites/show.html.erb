@@ -13,11 +13,12 @@
     <label>Suite config:</label>
 
     <%= form_tag("/suites/saveConfig", method: "post") do %>
-      <div id="pretest-for-suite">
-        <%= render partial: "layouts/test_list_select", suite: @suite %>
-      </div>
+        <input type="hidden" name="id" value="<%= @suite.id %>">
+        <div id="pretest-for-suite">
+          <%= render partial: "layouts/test_list_select", suite: @suite %>
+        </div>
 
-      <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary">Save</button>
     <% end %>
   </div>
 
