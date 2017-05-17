@@ -3,9 +3,6 @@
 
 <div style="display: none;" id="page_info" data-test="<%= @test.id %>"></div>
 
-<a class="pointer remove-test" data-test="<%= @test.id %>">
-  <span class="glyphicon glyphicon-remove"></span> Delete</a> |
-
 <% if @test.session_expired_at and
     @test.session_expired_at.to_formatted_s(:number) > Time.now.to_formatted_s(:number) %>
     <button id="stopRecording" class="btn btn-danger">Stop recording steps</button>

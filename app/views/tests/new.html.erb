@@ -21,7 +21,7 @@
 
             <div class="form-group">
               <label>Suite: </label>
-              <select id="test_suite" name="suite" class="form-control">
+              <select name="suite" class="form-control">
                 <% current_user.suites.each do |suite| %>
                     <option value="<%= suite.id %>"><%= suite.title %></option>
                 <% end %>
@@ -41,7 +41,7 @@
 
 <% if @suite %>
     <script>
-        $('#test_suite').val('<%= @suite.id %>');
-        $('#test_suite').trigger("chosen:updated");
+        $("#newTestModal select[name*='suite']").val('<%= @suite.id %>');
+        $("#newTestModal select[name*='suite']").trigger("chosen:updated");
     </script>
 <% end %>

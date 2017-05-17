@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20170515022035) do
   end
 
   create_table "suites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.text   "description"
     t.string   "name"
     t.integer  "user_id"
     t.datetime "created_at", null: false
