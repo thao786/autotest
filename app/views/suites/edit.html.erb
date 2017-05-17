@@ -7,7 +7,8 @@
         <optgroup label="<%= s.title %>">
           <% s.tests.each do |test| %>
               <% if @suite != test.suite %>
-                  <option value="<%= test.id %>"><%= test.title %></option>
+                  <option value="<%= test.id %>" <%= @suite.prep_tests.include?(test) ? 'selected' : '' %>>
+                    <%= test.title %></option>
               <% end %>
           <% end %>
         </optgroup>
