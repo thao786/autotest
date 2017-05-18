@@ -61,6 +61,22 @@ $(document).on('turbolinks:load', function() {
         }
     });
 
+    $(document).on("click", ".remove-suite", function(e) {
+        if (confirm('Are you sure to delete this suite and its tests?')) {
+            var suite_id = $(this).data('test');
+            var tr = $(this).closest('tr');
+
+            $.ajax({
+                type: "DELETE",
+                url: '/tests/' + test_id,
+                data: {test_id: test_id},
+                success: function(html, status, xhr) {
+                    tr.remove();
+                }
+            });
+        }
+    });
+
 });
 
 

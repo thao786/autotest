@@ -72,7 +72,7 @@ class SuitesController < ApplicationController
   # DELETE /suites/1
   def destroy
     @suite.destroy
-    render json: true
+    redirect_to controller: 'suites', action: 'index'
   end
 
   private

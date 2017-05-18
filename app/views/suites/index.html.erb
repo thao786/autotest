@@ -22,7 +22,11 @@
         <td><%= link_to "#{suite.tests.count}", controller: "suites", action: "show", id: suite.name %></td>
         <td><%= time_ago_in_words suite.updated_at %></td>
 
-        <td><%= link_to raw('<span class="glyphicon glyphicon-remove"></span> Delete'), suite_path(suite.name), method: :delete, data: { confirm: 'Are you sure?' } %>
+        <td>
+          <%= form_for suite, method: :delete, data: { confirm: 'Are you sure?' } do |f|  %>
+              <input type="hidden" name="id" value="<%= suite.id %>">
+              <button type="submit" class="btn btn-default">Delete</button>
+          <% end %>
           |
           <a class="add-test-modal pointer" data-suite="<%= suite.id %>">
             <span class="glyphicon glyphicon-plus"></span> Add Test</a>
