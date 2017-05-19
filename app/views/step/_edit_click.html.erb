@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal" data-step="<%= @step.id %>">
+<div class="modal fade" id="stepModal" data-step="<%= @step.id %>">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -9,10 +9,6 @@
       </div>
       <div class="modal-body">
         <form>
-            <div id="common-modal-form">
-              <%= render partial: "step/common_step_form" %>
-            </div>
-
             <div class="form-group">
               <label>CSS Selectors of clicked elements: </label>
               <select name="selector" class="form-control">

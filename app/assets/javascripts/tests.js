@@ -270,7 +270,7 @@ $(".step-list-item .hover-edit-btn").on("click", function(e) { // add more heade
         data: {step_id: step_id},
         success: function(html, status, xhr) {
             $('body').append(html);
-            $('.modal.fade').modal();
+            $('#stepModal').modal();
             modalFunction();
         },
         error: function(result, status, xhr) {
@@ -290,8 +290,8 @@ function modalFunction() {
         $('#custom-click-selector input[name="index"]').val(1);
     });
 
-    $("#modal .chosen-select").chosen();
-    $('#modal .chosen-container').css('width', '100%');
+    $(".modal.fade .chosen-select").chosen();
+    $('.modal.fade .chosen-container').css('width', '100%');
 }
 
 $(document).on("click", ".remove-webpage-param", function(e) {
@@ -430,7 +430,7 @@ $(document).on("click", ".add-step-after, #addNewStep", function(e) {
         data: {step_id: step_id},
         success: function(html, status, xhr) {
             $('body').append(html);
-            $('.modal.fade').modal();
+            $('#newStepModal').modal();
             modalFunction();
         },
         error: function(result, status, xhr) {
@@ -545,6 +545,23 @@ $(document).on("click", ".remove-extract", function(e) {
         }
     });
 });
+
+$(document).on("click", ".show-config-modal", function(e) {
+    var step_id = $(this).closest('.step-list-item').data('step');
+
+    $.ajax({
+        type: "GET",
+        url: '/step/configModal',
+        data: {step_id: step_id},
+        success: function(html, status, xhr) {
+            $('body').append(html);
+            $('#stepConfigModal').modal();
+            modalFunction();
+        }
+    });
+});
+
+
 
 
 });

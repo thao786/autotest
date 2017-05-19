@@ -1,7 +1,6 @@
 class StepController < ApplicationController
   before_action :set_step, :set_test
   before_action :authorize?
-  before_action :saveCommonModalForm, only: [:save_click, :save_pageload, :save_keypress]
 
   def delete_step
     @step.destroy
@@ -118,7 +117,11 @@ class StepController < ApplicationController
     Extract.destroy(id: params[:extract_id])
   end
 
-  def saveCommonModalForm
+  def saveConfig
+  end
+
+  def configModal
+    render partial: 'step/common_step_form'
   end
 
   def set_test

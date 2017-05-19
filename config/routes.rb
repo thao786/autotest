@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   match 'step/save_new_step', to: 'step#save_new_step', via: [:post]
   match 'step/save_keypress', to: 'step#save_keypress', via: [:post]
   match 'step/removeExtract', to: 'step#removeExtract', via: [:post]
+  get 'step/configModal', to: 'step#configModal'
+  match 'step/saveConfig', to: 'step#saveConfig', via: [:post]
 
 
   match 'tests/addTestParams', to: 'tests#addTestParams', via: [:post]
