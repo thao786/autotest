@@ -7,7 +7,7 @@ class Step < ApplicationRecord
   validates :action_type, presence: true
 
   has_many :prep_tests, dependent: :destroy
-  has_many :prep_tests, class_name: 'Test', through: :prep_tests, :source => :test
+  has_many :pre_tests, class_name: 'Test', through: :prep_tests, :source => :test
 
   def self.web_step_types
     {'pageload' => 'load page', 'scroll' => 'scroll', 'keypress' => 'type',

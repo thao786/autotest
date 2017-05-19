@@ -17,7 +17,7 @@
             <% Suite.where(user: current_user).each do |s| %>
                 <optgroup label="<%= s.title %>">
                   <% s.tests.each do |test| %>
-                      <% if @test != test %>
+                      <% if @step.test != test %>
                           <option value="<%= test.id %>"><%= test.title %></option>
                       <% end %>
                   <% end %>
