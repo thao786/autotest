@@ -26,12 +26,12 @@ class SuitesController < ApplicationController
   end
 
   def saveConfig
-    PrepTestForSuite.destroy_all(suite: @suite)
+    PrepTest.destroy_all(suite: @suite)
     params[:pre_run_tests].each { |test_id|
       test = Test.find test_id
-      order = PrepTestForSuite.where(suite: @suite, test: test).maximum(:order)
+      order = PrepTest.where(suite: @suite, test: test).maximum(:order)
       order ||= 0
-      PrepTestForSuite.create(suite: @suite, test: test, order: order+1)
+      PrepTest.create(suite: @suite, test: test, order: order+1)
     }
 
     redirect_to controller: 'suites', action: 'show', id: @suite.name,

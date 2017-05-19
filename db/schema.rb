@@ -60,20 +60,11 @@ ActiveRecord::Schema.define(version: 20170515022035) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "prep_test_for_suites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer  "order"
-    t.integer  "test_id"
-    t.integer  "suite_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["suite_id"], name: "index_prep_test_for_suites_on_suite_id", using: :btree
-    t.index ["test_id"], name: "index_prep_test_for_suites_on_test_id", using: :btree
-  end
-
   create_table "prep_tests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "order"
     t.integer  "test_id"
     t.integer  "step_id"
+    t.integer  "suite_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["step_id"], name: "index_prep_tests_on_step_id", using: :btree
