@@ -36,7 +36,7 @@ class TestsController < ApplicationController
                      suite_id: params[:suite])
 
     if @test.save
-      redirect_to "/test/#{@test.name}/#{@test.id}", notice: 'Test was successfully created.'
+      redirect_to @test.url, notice: 'Test was successfully created.'
     else
       render :new
     end
@@ -48,7 +48,7 @@ class TestsController < ApplicationController
     test_params[:suite_id] = @suite.id
 
     if @test.update(test_params)
-      redirect_to "/test/#{@test.name}/#{@test.id}", notice: 'Test was successfully updated.'
+      redirect_to @test.url, notice: 'Test was successfully updated.'
     else
       render :edit
     end

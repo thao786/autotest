@@ -16,7 +16,7 @@
 
 <p>
   <strong>Suite:</strong>
-  <%= link_to @test.suite.title, controller: "suites", action: "show", id: @test.suite.name %>
+  <%= link_to suite.title, controller: "suites", action: "show", id: suite.name %>
   <span class="glyphicon glyphicon-edit"></span>
 </p>
 <p><strong>Lastest Run:</strong> N/A</p>
@@ -28,8 +28,16 @@
     </p>
 <% end %>
 
-<br>
 <div id="validation_err"></div>
+
+<% if suite.pre_tests.count > 0 %>
+    <div>To run before the test:
+      <% suite.pre_tests.each do |test| %>
+          <a class="hash-pair" href="<%= test.url %>"><%= test.title %></a>
+        <% end %>
+    </div>
+<% end %>
+
 
 <div class="container-fluid">
   <div class="row">

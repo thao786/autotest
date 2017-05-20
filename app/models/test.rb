@@ -12,4 +12,8 @@ class Test < ApplicationRecord
 
   serialize :cachesteps, Hash
   serialize :params, Hash
+
+  def url
+    "/test/#{name}/#{id}"
+  end
 end
