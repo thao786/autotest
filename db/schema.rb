@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20170515022035) do
   create_table "extracts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "title"
     t.integer  "step_id"
-    t.string   "sourcetype", default: "webpage"
+    t.string   "source_type", default: "webpage"
     t.string   "command"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
@@ -63,9 +63,9 @@ ActiveRecord::Schema.define(version: 20170515022035) do
 
   create_table "prep_tests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "order"
-    t.integer  "test_id"
+    t.integer  "test_id", default: 0
     t.integer  "step_id"
-    t.integer  "suite_id"
+    t.integer  "suite_id", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["step_id"], name: "index_prep_tests_on_step_id", using: :btree

@@ -114,14 +114,35 @@ class StepController < ApplicationController
   end
 
   def removeExtract
-    Extract.destroy(id: params[:extract_id])
+    @extract = Extract.find params[:extract_id]
+    if helpers.own? @extract
+      @extract.destroy
+      render json: true
+    end
+
+    render json: false
   end
 
   def saveConfig
+    # save pre-steps
+    PrepTest.destroy_all(step: @step)
+    params[:pre_run_tests].each { |test_id|
+      test = Test.find test_id
+      order = PrepTest.where(suite: @suite, test: test).maximum(:order)
+      order ||= 0
+      PrepTest.create(step: @step, test: test, order: order+1)
+    } if params[:pre_run_tests].present?
+
+    # save extracts
+    params[:extract_names].each_with_index { |name, index|
+      Extract.create(step: @step, title: name, command: params[:extract_js][index])
+    } if params[:extract_names].present?
+
+    redirect_to "/test/#{@step.test.name}/#{@step.test.id}"
   end
 
   def configModal
-    render partial: 'step/common_step_form'
+    render partial: 'step/config'
   end
 
   def set_test
@@ -143,7 +164,7 @@ class StepController < ApplicationController
   end
 
   def authorize?
-    if  !helpers.own?(@step)
+    if !helpers.own?(@step)
       render json: false
     end
   end

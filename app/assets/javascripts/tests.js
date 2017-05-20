@@ -522,13 +522,12 @@ $(document).on("click", ".disable-assertion", function(e) {
 
 $(document).on("click", ".remove-extract", function(e) {
     var extract_id = $(this).data('id');
-    var step_id = $('#modal').data('step');
-    $(this).remove();
+    $(this).parent().remove();
 
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: '/step/removeExtract',
-        data: {extract_id: extract_id, step_id: step_id},
+        data: {extract_id: extract_id},
         success: function(html, status, xhr) {
         }
     });

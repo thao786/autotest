@@ -2,8 +2,10 @@ module UsersHelper
   def own? (object)
     if object
       case object.class.name
-        when 'Assertion'
+        when 'Extract'
           current_user == object.step.test.suite.user
+        when 'Assertion'
+          current_user == object.test.suite.user
         when 'Step'
           current_user == object.test.suite.user
         when 'Test'
