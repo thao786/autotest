@@ -1,0 +1,71 @@
+<div class="modal fade" id="addAssertionModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add New Assertion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body add-assertion-form">
+        <%= form_tag("/assertions/addAssertion", method: "post") do %>
+            <div class="form-group">
+              <label title="If none provided, all webpages will be tried">
+                The web address in which these conditions applies
+                <span class="glyphicon glyphicon-info-sign"></span></label>
+              <input name="webpage" type="text" placeholder="http://" class="form-control">
+            </div>
+
+            <input type="hidden" name="test_id" value="<%= @test.id %>">
+
+            <div class="form-group">
+              <label>Type of assertions: </label>
+              <select name="assertionType" class="form-control">
+                  <% Assertion.assertion_types.keys.each do |type| %>
+                      <option value="<%= type %>">
+                        <%= Assertion.assertion_types[type] %></option>
+                  <% end %>
+              </select>
+            </div>
+
+            <div id="assertion-condition">
+              <div class="form-group">
+                <label>Text Contained in Page:</label>
+                <input name="condition" type="text" class="form-control" required>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+        <% end %>
+
+        <div id="assertion-by-text" style="display: none;">
+          <div class="form-group">
+            <label>Text Contained in Page:</label>
+            <input name="condition" type="text" class="form-control" required>
+          </div>
+        </div>
+
+        <div id="assertion-by-page-title" style="display: none;">
+          <div class="form-group">
+            <label>Page Title:</label>
+            <input name="condition" type="text" class="form-control" required>
+          </div>
+        </div>
+
+        <div id="assertion-by-status-code" style="display: none;">
+          <div class="form-group">
+            <label>Status Code:</label>
+            <input name="condition" type="text" class="form-control" required>
+          </div>
+        </div>
+
+        <div id="assertion-by-self-enter" style="display: none;">
+          <div class="form-group">
+            <label>Enter your own assertion:</label>
+            <input name="condition" type="text" class="form-control" required>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

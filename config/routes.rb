@@ -26,11 +26,12 @@ Rails.application.routes.draw do
   get 'tests/generateSession', to: 'tests#generateSession'
   get 'tests/stopSession', to: 'tests#stopSession'
   get 'tests/runTest', to: 'tests#runTest'
-  get 'tests/newAssertionView', to: 'tests#newAssertionView'
-  get 'tests/addAssertion', to: 'tests#addAssertion'
-  get 'tests/removeAssertion', to: 'tests#removeAssertion'
-  get 'tests/disableAssertion', to: 'tests#disableAssertion'
   match 'tests/newTestModal', to: 'tests#newTestModal', via: [:post]
+
+  get 'assertions/newAssertionView', to: 'assertions#newAssertionView'
+  match 'assertions/addAssertion', to: 'assertions#addAssertion', via: [:post]
+  get 'assertions/removeAssertion', to: 'assertions#removeAssertion'
+  get 'assertions/disableAssertion', to: 'assertions#disableAssertion'
 
   match 'api/check', to: 'api#check', via: [:get, :post]
   match 'api/saveEvent', to: 'api#saveEvent', via: [:post]

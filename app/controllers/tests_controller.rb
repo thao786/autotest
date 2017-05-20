@@ -2,13 +2,11 @@ class TestsController < ApplicationController
   before_action :set_test, except: [:index, :new, :create, :show]
 
   # GET /tests
-  # GET /tests.json
   def index
     @tests = Test.joins(:suite).where(suites: {user: current_user})
   end
 
   # GET /tests/1
-  # GET /tests/1.json
   def show
     @test = Test.find(params[:id])
     @suite = @test.suite
@@ -26,7 +24,6 @@ class TestsController < ApplicationController
   end
 
   # POST /tests
-  # POST /tests.json
   def create
     title = makeNameId params[:title]
     name = title
@@ -115,35 +112,6 @@ class TestsController < ApplicationController
 
   def runTest
 
-  end
-
-  def newAssertionView
-    render partial: "add_assertion"
-  end
-
-  def addAssertion
-    form = Rack::Utils.parse_nested_query(params[:form])
-    assertion = Assertion.create(webpage: form['webpage'], condition: form['condition'], test: @test)
-    if assertion.save
-      render partial: "tests/show_assertion", :locals => {:assertion => assertion}
-    else
-      render json: false, :status => 404
-    end
-  end
-
-  def removeAssertion
-    Assertion.find(params[:assertion_id]).destroy
-    render json: true
-  end
-
-  def disableAssertion
-    assertion = Assertion.find(params[:assertion_id])
-    if assertion.active
-      assertion.update(active: false)
-    else
-      assertion.update(active: true)
-    end
-    render json: true
   end
 
   private

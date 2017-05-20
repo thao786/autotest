@@ -48,7 +48,7 @@
 
         <div id="assertion-list">
           <% @test.assertions.each do |assertion| %>
-              <%= render "tests/show_assertion", assertion: assertion %>
+              <%= render "assertions/show_assertion", assertion: assertion %>
           <% end %>
           <label><span class="glyphicon glyphicon-remove"></span>
             <input class="default-assertion" type="checkbox" checked> All tabs return 200 status</label>

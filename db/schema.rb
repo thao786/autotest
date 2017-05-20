@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20170515022035) do
     t.string   "webpage"
     t.boolean  "active"
     t.string   "condition"
+    t.string   "assertion_type"
     t.integer  "test_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

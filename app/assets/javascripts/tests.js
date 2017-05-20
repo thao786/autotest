@@ -287,7 +287,12 @@ function modalFunction() {
     $('#selectorType').on('change', function() {
         var selectorType = this.value;
         $('#custom-click-selector').html($('#choose-by-' + selectorType).html());
-        $('#custom-click-selector input[name="index"]').val(1);
+        $('#custom-click-selector input[name="eq"]').val(1);
+    });
+
+    $('select[name="assertionType"]').on('change', function() {
+        var assertionType = this.value;
+        $('#assertion-condition').html($('#assertion-by-' + assertionType).html());
     });
 
     $(".modal.fade .chosen-select").chosen();
@@ -467,32 +472,15 @@ $(document).on("click", "#new-step-form .submit", function(e) {
 $(document).on("click", "#add-assertion", function(e) {
     $.ajax({
         type: "GET",
-        url: '/tests/newAssertionView',
+        url: '/assertions/newAssertionView',
         data: {test_id: test_id},
         success: function(html, status, xhr) {
             $('body').append(html);
-            $('.modal.fade').modal();
+            $('#addAssertionModal').modal();
             modalFunction();
         },
         error: function(result, status, xhr) {
             alert('Sorry, we could not remove a parameter at this time.');
-        }
-    });
-});
-
-$(document).on("click", ".add-new-assertion", function(e) {
-    var form = $(this).closest('form');
-
-    $.ajax({
-        type: "GET",
-        url: '/tests/addAssertion',
-        data: {test_id: test_id, form: form.serialize()},
-        success: function(html, status, xhr) {
-            $('#assertion-list').prepend(html);
-            $('.modal.fade').modal('hide');
-        },
-        error: function(result, status, xhr) {
-            alert('Assertion body cannot be blank.');
         }
     });
 });

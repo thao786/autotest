@@ -3,7 +3,8 @@
 
       <input class="default-assertion disable-assertion" type="checkbox"
              <%= assertion.active ? 'checked' : '' %> >
-      <%= assertion.condition %>
+  <%= Assertion.assertion_types[assertion.assertion_type]%>:
+  <b><%= assertion.condition %></b>
 
   <% if assertion.webpage.present?  %>
       <span style="font-weight: normal;">on </span>
