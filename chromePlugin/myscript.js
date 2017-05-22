@@ -108,7 +108,7 @@ function reportEvent(data) {
 
 function analyzeClick(obj) {
     var data = {action_type: 'click', valid: true,
-        childrenCount : obj.children().length,
+        childrenCount : obj.find('*').length,
         tag_name: obj.prop("tagName").toLowerCase()};
     var objId = obj.prop("id");
     var classes = obj.prop('class');
