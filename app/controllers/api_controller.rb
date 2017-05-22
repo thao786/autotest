@@ -22,7 +22,7 @@ class ApiController < ActionController::Base
                  :action_type, :session_id, :typed, :screenwidth, :screenheight,
                  :scrollTop, :scrollLeft, :x, :y, :tabId, :windowId))
       draft.update(selector: {selector: params[:selector], eq: params[:eq].to_i,
-                   selectorType: params[:selectorType]})
+                   selectorType: params[:selectorType], childrenCount: params[:childrenCount]})
       render json: true
     else
       render json: false

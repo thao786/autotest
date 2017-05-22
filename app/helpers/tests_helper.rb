@@ -10,27 +10,22 @@ module TestsHelper
     array.join
   end
 
-  def score(selector)
+  def score (selector) # the higher the score, the higher its priority
+    # select based on children count. the fewer children the higher score
     case selector[:selectorType]
       when 'href'
-        -1000
+        100000
       when 'button'
-        -900
-      when 'id'
-        -800
+        90001
+      when 'id' # maybe only prioritize elements with less than 3 children
+        80000 + (10000 - selector[:childrenCount])
       when 'css'
-        -700
-      when 'tag'
-        -500
+        60000 + (10000 - selector[:childrenCount])
+      when 'tag' # prioritize inline elements like img,span, h1
+        500
       else
         0
     end
-  end
-
-  def findSelector(selectors) # for clicks
-    # priority: link <a>, button, id of leaf node, text of leaf node
-    # if the lowest id has several children, pick the text of lowest node
-    selectors.first.to_json
   end
 
   def parseDraft(session_id)
@@ -93,8 +88,9 @@ module TestsHelper
           # sort selectors in order: href, button, id, class, tag
           selectors = chunk.collect {|click| click.selector }.uniq.compact
                .reject { |c| c.empty? }.sort! { |x,y| score(x) <=> score(y)}
+               .reverse
           step.update(config: {selectors: selectors, x: first_event.x, y: first_event.y},
-                  selector: findSelector(selectors))
+                  selector: selectors.first.to_json)
         else
             order = order - 1
       end
