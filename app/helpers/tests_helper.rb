@@ -27,6 +27,12 @@ module TestsHelper
     end
   end
 
+  def findSelector(selectors) # for clicks
+    # priority: link <a>, button, id of leaf node, text of leaf node
+    # if the lowest id has several children, pick the text of lowest node
+    selectors.first.to_json
+  end
+
   def parseDraft(session_id)
     start_time = Draft.where(session_id: session_id).minimum(:stamp)
     test = Test.where(session_id: session_id).first
@@ -38,7 +44,8 @@ module TestsHelper
       order = order + 1
       step = Step.create(wait: first_event.stamp - start_time, webpage: first_event.webpage,
                          order: order, test: test, device_type: 'browser', active: true,
-                         tabId: first_event.tabId, windowId: first_event.windowId, action_type: first_event.action_type,
+                         tabId: first_event.tabId, windowId: first_event.windowId,
+                         action_type: first_event.action_type,
                          screenwidth: first_event.screenwidth, screenheight: first_event.screenheight)
       Extract.create(title: "body_text#{step.id}", step: step,
                      command: 'document.getElementsByTagName("body")[0].textContent')
@@ -84,10 +91,10 @@ module TestsHelper
                         .where(session_id: session_id, action_type: 'click')
 
           # sort selectors in order: href, button, id, class, tag
-          selectors = chunk.collect {|click| click.selector }.uniq.compact.reject { |c| c.empty? }
-               .sort! { |x,y| score(x) <=> score(y)}
+          selectors = chunk.collect {|click| click.selector }.uniq.compact
+               .reject { |c| c.empty? }.sort! { |x,y| score(x) <=> score(y)}
           step.update(config: {selectors: selectors, x: first_event.x, y: first_event.y},
-                  selector: selectors.first.to_json)
+                  selector: findSelector(selectors))
         else
             order = order - 1
       end
