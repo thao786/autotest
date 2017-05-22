@@ -1,5 +1,6 @@
 <div class="step-list-item <%= step.complete? ? '' : 'non-complete-step' %>" data-step="<%= step.id %>">
-  Wait <span class="editable wait"><%= step.wait %></span> millisec: <br>
+  <span>Step <b><%= step.order %></b>: </span>
+  wait <span class="editable wait"><%= step.wait %></span> millisec, then<br>
   <%= Step.web_step_types[step.action_type] %>
 
   <% case step.action_type

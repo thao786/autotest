@@ -67,8 +67,6 @@
     </div>
 
     <div class="col-sm-7">
-      <p>Steps</p>
-
       <div id="step-list">
         <% if @test.steps.count > 0 %>
             <% @test.steps.order('steps.order').each do |step| %>
