@@ -18,7 +18,7 @@ module TestsHelper
       when 'button'
         90001
       when 'id' # maybe only prioritize elements with less than 3 children
-        80000 + (10000 - selector[:childrenCount])
+        80000 + (10000 - selector[:childrenCount]*3000)
       when 'css'
         60000 + (10000 - selector[:childrenCount])
       when 'tag' # prioritize inline elements like img,span, h1
@@ -46,12 +46,7 @@ module TestsHelper
                      command: 'document.getElementsByTagName("body")[0].textContent')
       chunk = nil
       case first_event.action_type
-        when 'pageload'
-          # is this a link click or user load page in browser (this chrome-tab has existed before in this session)
-          if Step.where(tabId: first_event.tabId, windowId: first_event.windowId).count > 1
-            step.destroy
-          end
-          first_event.destroy!
+        when 'pageload' # not sure what to do
         when 'resize'
           first_event.destroy!
         when 'scroll' # merge homogeneously increasing scrollTop or scrollLeft into 1 step

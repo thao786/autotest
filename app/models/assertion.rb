@@ -9,7 +9,7 @@ class Assertion < ApplicationRecord
   end
 
   def self.assertion_types
-    {'text' => 'Text Contained in Page', 'page-title' => 'Page Title',
+    {'text-in-page' => 'Text Contained in Page', 'page-title' => 'Page Title',
      'status-code' => 'Status Code', 'self-enter' => 'Enter Your Own Condition'}
   end
 end

@@ -9,7 +9,7 @@ class AssertionsController < ApplicationController
     assertion = Assertion.create(webpage: params['webpage'],
                condition: params['condition'], test: @test, assertion_type: params['assertionType'])
     if assertion.save
-      redirect_to "/test/#{@test.name}/#{@test.id}"
+      redirect_to @test.url
     else
       render json: false, :status => 404
     end

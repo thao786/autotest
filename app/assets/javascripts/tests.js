@@ -486,21 +486,22 @@ $(document).on("click", "#add-assertion", function(e) {
 });
 
 $(document).on("click", ".remove-assertion", function(e) {
-    var assertionLabel = $(this).closest('.assertion');
-    var assertion_id = assertionLabel.data('id');
+    if(confirm('Are you sure you would like to delete this assertion?')) {
+        var assertionLabel = $(this).closest('.assertion');
+        var assertion_id = assertionLabel.data('id');
 
-    $.ajax({
-        type: "GET",
-        url: '/tests/removeAssertion',
-        data: {assertion_id: assertion_id, test_id: test_id},
-        success: function(html, status, xhr) {
-            $('.modal.fade').modal('hide');
-            assertionLabel.remove();
-        },
-        error: function(result, status, xhr) {
-            alert('Sorry, we could not remove the assertion at this time.');
-        }
-    });
+        $.ajax({
+            type: "GET",
+            url: '/assertions/removeAssertion',
+            data: {assertion_id: assertion_id, test_id: test_id},
+            success: function(html, status, xhr) {
+                assertionLabel.remove();
+            },
+            error: function(result, status, xhr) {
+                alert('Sorry, we could not remove the assertion at this time.');
+            }
+        });
+    }
 });
 
 $(document).on("click", ".disable-assertion", function(e) {
