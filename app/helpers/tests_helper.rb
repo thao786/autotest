@@ -18,9 +18,9 @@ module TestsHelper
       when 'button'
         90001
       when 'id' # maybe only prioritize elements with less than 3 children
-        80000 + (10000 - selector[:childrenCount]*3000)
+        80000 + (10000 - selector[:childrenCount].to_i * 3000)
       when 'css'
-        60000 + (10000 - selector[:childrenCount])
+        60000 + (10000 - selector[:childrenCount].to_i)
       when 'tag' # prioritize inline elements like img,span, h1
         500
       else
@@ -47,6 +47,7 @@ module TestsHelper
       chunk = nil
       case first_event.action_type
         when 'pageload' # not sure what to do
+          first_event.destroy!
         when 'resize'
           first_event.destroy!
         when 'scroll' # merge homogeneously increasing scrollTop or scrollLeft into 1 step
