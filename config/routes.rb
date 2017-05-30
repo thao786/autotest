@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'dashboard/index'
   get 'dashboard/billing'
-  get 'dashboard/preferences'
+  get 'dashboard/intro'
 
   get 'fonts/*font', to: 'fonts#index'
 
@@ -38,7 +38,7 @@ Rails.application.routes.draw do
 
   match 'suites/saveConfig', to: 'suites#saveConfig', via: [:post]
 
-  root to: 'dashboard#index'
+  root to: 'api#intro'
 
   devise_for :users
   resources :users, :plans, :suites, :tests

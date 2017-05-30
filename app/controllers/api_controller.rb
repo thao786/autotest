@@ -29,4 +29,7 @@ class ApiController < ActionController::Base
     end
   end
 
+  def intro
+    render file: 'layouts/intro'
+  end
 end
