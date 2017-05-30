@@ -30,8 +30,8 @@ Rails.application.routes.draw do
 
   get 'assertions/newAssertionView', to: 'assertions#newAssertionView'
   match 'assertions/addAssertion', to: 'assertions#addAssertion', via: [:post]
-  get 'assertions/removeAssertion', to: 'assertions#removeAssertion'
-  get 'assertions/disableAssertion', to: 'assertions#disableAssertion'
+  match 'assertions/removeAssertion', to: 'assertions#removeAssertion', via: [:post]
+  match 'assertions/disableAssertion', to: 'assertions#disableAssertion', via: [:post]
 
   match 'api/check', to: 'api#check', via: [:get, :post]
   match 'api/saveEvent', to: 'api#saveEvent', via: [:post]

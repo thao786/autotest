@@ -491,9 +491,9 @@ $(document).on("click", ".remove-assertion", function(e) {
         var assertion_id = assertionLabel.data('id');
 
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: '/assertions/removeAssertion',
-            data: {assertion_id: assertion_id, test_id: test_id},
+            data: {assertion_id: assertion_id},
             success: function(html, status, xhr) {
                 assertionLabel.remove();
             },
@@ -509,12 +509,10 @@ $(document).on("click", ".disable-assertion", function(e) {
     var assertion_id = assertionLabel.data('id');
 
     $.ajax({
-        type: "GET",
-        url: '/tests/disableAssertion',
-        data: {assertion_id: assertion_id, test_id: test_id},
-        success: function(html, status, xhr) {
-            $('.modal.fade').modal('hide');
-        },
+        type: "POST",
+        url: '/assertions/disableAssertion',
+        data: {assertion_id: assertion_id},
+        success: function(html, status, xhr) {},
         error: function(result, status, xhr) {
             alert('Sorry, we could not remove a parameter at this time.');
         }

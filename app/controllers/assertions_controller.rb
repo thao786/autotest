@@ -1,47 +1,37 @@
 class AssertionsController < ApplicationController
-  before_action :set_test
+  before_action :set_assertion
 
   def newAssertionView
     render partial: "add_assertion"
   end
 
   def addAssertion
+    test = Test.find params[:test_id]
     assertion = Assertion.create(webpage: params['webpage'],
-               condition: params['condition'], test: @test, assertion_type: params['assertionType'])
+               condition: params['condition'], test: test,
+               assertion_type: params['assertionType'])
     if assertion.save
-      redirect_to @test.url
+      redirect_to assertion.test.url
     else
       render json: false, :status => 404
     end
   end
 
   def removeAssertion
-    Assertion.find(params[:assertion_id]).destroy
+    @assertion.destroy
     render json: true
   end
 
   def disableAssertion
-    assertion = Assertion.find(params[:assertion_id])
-    if assertion.active
-      assertion.update(active: false)
+    if @assertion.active
+      @assertion.update(active: false)
     else
-      assertion.update(active: true)
+      @assertion.update(active: true)
     end
     render json: true
   end
 
   private
-    def set_test
-      begin
-        @test = Test.find(params[:test_id])
-        if !helpers.own?(@test)
-          render json: false, :status => 404
-        end
-      rescue
-        @test = nil
-      end
-    end
-
     def set_assertion
       begin
         @assertion = Assertion.find(params[:assertion_id])
