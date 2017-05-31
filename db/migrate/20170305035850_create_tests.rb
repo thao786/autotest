@@ -7,6 +7,9 @@ class CreateTests < ActiveRecord::Migration[5.0]
       t.string :session_id
       t.datetime :session_expired_at
       t.text :description
+      t.text :cachesteps
+      t.boolean :active
+      t.string :params
 
       t.timestamps
     end

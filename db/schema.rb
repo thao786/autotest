@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 20170515022035) do
   end
 
   create_table "plans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "name"
+    t.string   "email"
     t.integer  "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -64,12 +64,13 @@ ActiveRecord::Schema.define(version: 20170515022035) do
   create_table "prep_tests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "order"
     t.integer  "test_id", default: 0
-    t.integer  "step_id"
+    t.integer  "step_id", default: 0
     t.integer  "suite_id", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["step_id"], name: "index_prep_tests_on_step_id", using: :btree
     t.index ["test_id"], name: "index_prep_tests_on_test_id", using: :btree
+    t.index ["suite_id"], name: "index_prep_tests_on_suite_id", using: :btree
   end
 
   create_table "steps", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
