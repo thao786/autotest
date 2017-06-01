@@ -6,7 +6,7 @@ module TestsHelper
   end
 
   def testCount
-    Test.where(suite: Suite.where(current_user.suites)).count
+    Test.where(suite: current_user.suites).count
   end
 
   def JQfyClasses(class_group) # turn "class1 class2" into ".class1.class2"
