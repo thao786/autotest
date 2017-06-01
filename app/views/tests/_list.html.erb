@@ -1,0 +1,22 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Suite</th>
+      <th>Test Title</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% tests.each do |test| %>
+      <% suite = test.suite %>
+
+      <tr>
+        <td><%= link_to suite.title, controller: "suites", action: "show", id: suite.name %></td>
+        <td><a href="<%= showUrl test %>"> <%= test.title %></a></td>
+        <td>
+          <%= render "tests/delete_btn", test: test %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

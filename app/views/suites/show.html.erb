@@ -26,7 +26,7 @@
     <h2>Tests in this Suite (<%= @suite.tests.count %> total)</h2>
 
     <% @tests = @suite.tests %>
-    <%= render file: "tests/index" %>
+    <%= render "tests/list", tests: @suite.tests %>
   </div>
 </div>
 
