@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170515022035) do
+ActiveRecord::Schema.define(version: 20170531234831) do
 
   create_table "assertions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "webpage"
@@ -18,30 +18,30 @@ ActiveRecord::Schema.define(version: 20170515022035) do
     t.string   "condition"
     t.string   "assertion_type"
     t.integer  "test_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.index ["test_id"], name: "index_assertions_on_test_id", using: :btree
   end
 
   create_table "drafts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint   "stamp"
+    t.datetime "stamp"
     t.string   "webpage"
+    t.string   "apk"
+    t.string   "activity"
     t.string   "action_type"
     t.string   "session_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
     t.string   "typed"
     t.integer  "scrollTop"
     t.integer  "scrollLeft"
-    t.string   "apk"
-    t.string   "activity"
     t.integer  "x"
     t.integer  "y"
     t.string   "selector"
-    t.integer  "screenwidth",  null: false
-    t.integer  "screenheight", null: false
+    t.integer  "screenwidth"
+    t.integer  "screenheight"
     t.string   "tabId"
     t.string   "windowId"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "extracts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -49,8 +49,8 @@ ActiveRecord::Schema.define(version: 20170515022035) do
     t.integer  "step_id"
     t.string   "source_type", default: "webpage"
     t.string   "command"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.index ["step_id"], name: "index_extracts_on_step_id", using: :btree
   end
 
@@ -63,45 +63,46 @@ ActiveRecord::Schema.define(version: 20170515022035) do
 
   create_table "prep_tests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "order"
-    t.integer  "test_id", default: 0
-    t.integer  "step_id", default: 0
-    t.integer  "suite_id", default: 0
+    t.integer  "test_id"
+    t.integer  "step_id"
+    t.integer  "suite_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["step_id"], name: "index_prep_tests_on_step_id", using: :btree
-    t.index ["test_id"], name: "index_prep_tests_on_test_id", using: :btree
     t.index ["suite_id"], name: "index_prep_tests_on_suite_id", using: :btree
+    t.index ["test_id"], name: "index_prep_tests_on_test_id", using: :btree
   end
 
   create_table "steps", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "test_id"
-    t.string   "action_type"
-    t.string   "selector"
+    t.datetime "time"
+    t.boolean  "active"
+    t.string   "device_type"
     t.string   "typed"
     t.integer  "scrollTop"
     t.integer  "scrollLeft"
+    t.string   "action_type"
+    t.string   "selector"
     t.integer  "wait"
     t.string   "webpage"
     t.integer  "order"
     t.text     "config",       limit: 65535
-    t.string   "device_type"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.boolean  "active"
     t.integer  "screenwidth"
     t.integer  "screenheight"
     t.string   "tabId"
     t.string   "windowId"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["test_id"], name: "index_steps_on_test_id", using: :btree
   end
 
   create_table "suites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.text   "description"
     t.string   "name"
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.text     "description", limit: 65535
     t.string   "title"
+    t.integer  "user_id"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.index ["user_id"], name: "index_suites_on_user_id", using: :btree
   end
 
@@ -112,11 +113,11 @@ ActiveRecord::Schema.define(version: 20170515022035) do
     t.string   "session_id"
     t.datetime "session_expired_at"
     t.text     "description",        limit: 65535
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
     t.text     "cachesteps",         limit: 65535
     t.boolean  "active"
     t.string   "params"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.index ["suite_id"], name: "index_tests_on_suite_id", using: :btree
   end
 
@@ -142,10 +143,10 @@ ActiveRecord::Schema.define(version: 20170515022035) do
 
   add_foreign_key "assertions", "tests"
   add_foreign_key "extracts", "steps"
-  add_foreign_key "prep_test_for_suites", "suites"
-  add_foreign_key "prep_test_for_suites", "tests"
   add_foreign_key "prep_tests", "steps"
+  add_foreign_key "prep_tests", "suites"
   add_foreign_key "prep_tests", "tests"
+  add_foreign_key "steps", "tests"
   add_foreign_key "suites", "users"
   add_foreign_key "tests", "suites"
   add_foreign_key "users", "plans"

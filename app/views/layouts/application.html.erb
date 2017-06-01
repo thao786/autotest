@@ -14,8 +14,11 @@
 <% if user_signed_in? %>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-xs-6"><%= link_to "Dashboard", root_path %>  |
-      <%= link_to 'All Suites', suites_path %>
+    <div class="col-xs-6">
+      <%= link_to "Homepage", root_path %>  |
+      <%= link_to "Dashboard", dashboard_index_path %>  |
+      <%= link_to 'All Test Suites', suites_path %> |
+      <%= link_to 'All Tests', tests_path %> |
       (<%= current_user.suites.count %> total)
     </div>
 

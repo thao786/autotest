@@ -21,7 +21,7 @@
 
             <div class="form-group">
               <label>Suite: </label>
-              <select name="suite" class="form-control">
+              <select name="suite" class="form-control" required="true">
                 <% current_user.suites.each do |suite| %>
                     <option value="<%= suite.id %>"><%= suite.title %></option>
                 <% end %>

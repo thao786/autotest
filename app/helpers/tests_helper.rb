@@ -5,6 +5,10 @@ module TestsHelper
     "/test/#{test.name}/#{test.id}"
   end
 
+  def testCount
+    Test.where(suite: Suite.where(current_user.suites)).count
+  end
+
   def JQfyClasses(class_group) # turn "class1 class2" into ".class1.class2"
     array = class_group.split.map { |single_class| ".#{single_class}" }
     array.join

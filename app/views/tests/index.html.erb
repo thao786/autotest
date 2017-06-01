@@ -1,9 +1,22 @@
+<h2>All Tests (<%= testCount %> total)</h2>
+
+<a class="add-test-modal pointer">
+  <span class="glyphicon glyphicon-plus"></span> Add Test</a>
+
+
+<div class="form-inline">
+  <label for="email">Type to filter:</label>
+  <input type="text" class="form-control" id="filter-test">
+</div>
+
+
+<div class="container">
 <table class="table table-bordered">
   <thead>
     <tr>
       <th>Suite</th>
       <th>Test Title</th>
-      <th></th>
+      <th>Description</th>
     </tr>
   </thead>
 
@@ -20,5 +33,4 @@
     <% end %>
   </tbody>
 </table>
-
-
+</div>
