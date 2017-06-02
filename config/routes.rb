@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   get 'dashboard/index'
-  get 'dashboard/billing'
   get 'dashboard/intro'
 
   get 'fonts/*font', to: 'fonts#index'
