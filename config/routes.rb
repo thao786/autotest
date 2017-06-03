@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   get 'step/configModal', to: 'step#configModal'
   match 'step/saveConfig', to: 'step#saveConfig', via: [:post]
 
-
   match 'tests/addTestParams', to: 'tests#addTestParams', via: [:post]
   match 'tests/removeTestParams', to: 'tests#removeTestParams', via: [:post]
   get 'test/:name/:id', to: 'tests#show'

@@ -19,7 +19,6 @@
 
 
 $(document).on('turbolinks:load', function() {
-
     $(document).on("click", ".add-test-modal", function(e) {
         var suite_id = $(this).data('suite');
 
