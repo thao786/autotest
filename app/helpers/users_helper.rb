@@ -4,6 +4,8 @@ module UsersHelper
       case object.class.name
         when 'Extract'
           current_user == object.step.test.suite.user
+        when 'Result'
+          current_user == object.test.suite.user
         when 'Assertion'
           current_user == object.test.suite.user
         when 'Step'

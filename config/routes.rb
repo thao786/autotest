@@ -39,6 +39,6 @@ Rails.application.routes.draw do
   root to: 'api#intro'
 
   devise_for :users
-  resources :users, :plans, :suites, :tests
+  resources :users, :plans, :suites, :tests, :results
 
 end
