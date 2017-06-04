@@ -2,6 +2,7 @@ class Step < ApplicationRecord
   belongs_to :test
   serialize :config
   has_many :extracts, dependent: :destroy
+  has_many :results
 
   validates :wait, numericality: true
   validates :action_type, presence: true
@@ -10,8 +11,8 @@ class Step < ApplicationRecord
   has_many :pre_tests, class_name: 'Test', through: :prep_tests, :source => :test
 
   def self.web_step_types
-    {'pageload' => 'load page', 'scroll' => 'scroll', 'keypress' => 'type',
-         'click' => 'click', 'resize' => 'resize'}
+      {'pageload' => 'load page', 'scroll' => 'scroll', 'keypress' => 'type',
+           'click' => 'click', 'resize' => 'resize'}
   end
 
   after_initialize :set_defaults, unless: :persisted? # The set_defaults will only work if the object is new

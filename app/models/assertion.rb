@@ -1,5 +1,6 @@
 class Assertion < ApplicationRecord
   belongs_to :test
+  has_many :results, dependent: :destroy
   validates :condition, :test, presence: true
 
   after_initialize :set_defaults, unless: :persisted? # The set_defaults will only work if the object is new

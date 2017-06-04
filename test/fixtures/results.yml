@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  test: one
+  assertion: 
+  step: one
+  runID: MyString
+  error: MyString
+
+two:
+  test: two
+  assertion: 
+  step: two
+  runID: MyString
+  error: MyString

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170531234831) do
+ActiveRecord::Schema.define(version: 20170604045650) do
 
   create_table "assertions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "webpage"
@@ -71,6 +71,20 @@ ActiveRecord::Schema.define(version: 20170531234831) do
     t.index ["step_id"], name: "index_prep_tests_on_step_id", using: :btree
     t.index ["suite_id"], name: "index_prep_tests_on_suite_id", using: :btree
     t.index ["test_id"], name: "index_prep_tests_on_test_id", using: :btree
+  end
+
+  create_table "results", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "test_id"
+    t.integer  "assertion_id"
+    t.integer  "step_id"
+    t.string   "runID"
+    t.string   "error"
+    t.string   "webpage"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["assertion_id"], name: "index_results_on_assertion_id", using: :btree
+    t.index ["step_id"], name: "index_results_on_step_id", using: :btree
+    t.index ["test_id"], name: "index_results_on_test_id", using: :btree
   end
 
   create_table "steps", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -146,6 +160,9 @@ ActiveRecord::Schema.define(version: 20170531234831) do
   add_foreign_key "prep_tests", "steps"
   add_foreign_key "prep_tests", "suites"
   add_foreign_key "prep_tests", "tests"
+  add_foreign_key "results", "assertions"
+  add_foreign_key "results", "steps"
+  add_foreign_key "results", "tests"
   add_foreign_key "steps", "tests"
   add_foreign_key "suites", "users"
   add_foreign_key "tests", "suites"

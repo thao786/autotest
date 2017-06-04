@@ -1,0 +1,13 @@
+class CreateResults < ActiveRecord::Migration[5.0]
+  def change
+    create_table :results do |t|
+      t.references :test, foreign_key: true
+      t.references :assertion, foreign_key: true
+      t.references :step, foreign_key: true
+      t.string :runID
+      t.string :error
+
+      t.timestamps
+    end
+  end
+end
