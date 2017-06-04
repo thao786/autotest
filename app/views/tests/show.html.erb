@@ -58,10 +58,10 @@
           <% @test.assertions.each do |assertion| %>
               <%= render "assertions/show_assertion", assertion: assertion %>
           <% end %>
-          <label><span class="glyphicon glyphicon-remove"></span>
-            <input class="default-assertion" type="checkbox" checked> All tabs return 200 status</label>
-          <label><span class="glyphicon glyphicon-remove"></span>
-            <input class="default-assertion" type="checkbox" checked> All ajax requests return 200 status</label>
+          <label><input class="default-assertion" type="checkbox" checked disabled>
+              All tabs return 200 status</label>
+          <label><input class="default-assertion" type="checkbox" checked disabled>
+              All ajax requests return 200 status</label>
         </div>
       </div>
     </div>

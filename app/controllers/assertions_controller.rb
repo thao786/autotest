@@ -2,6 +2,7 @@ class AssertionsController < ApplicationController
   before_action :set_assertion
 
   def newAssertionView
+    @test = Test.find params[:test_id]
     render partial: "add_assertion"
   end
 
