@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20170604045650) do
   end
 
   create_table "drafts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.datetime "stamp"
+    t.bigint   "stamp"
     t.string   "webpage"
     t.string   "apk"
     t.string   "activity"
@@ -79,7 +79,6 @@ ActiveRecord::Schema.define(version: 20170604045650) do
     t.integer  "step_id"
     t.string   "runID"
     t.string   "error"
-    t.string   "webpage"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["assertion_id"], name: "index_results_on_assertion_id", using: :btree
