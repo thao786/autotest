@@ -3,7 +3,7 @@ class CreateSuites < ActiveRecord::Migration[5.0]
     create_table :suites do |t|
       t.string :name
       t.text :description
-      t.string :title
+      t.string :title, null: false
       t.references :user, foreign_key: true
 
       t.timestamps

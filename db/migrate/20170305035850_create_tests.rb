@@ -2,13 +2,13 @@ class CreateTests < ActiveRecord::Migration[5.0]
   def change
     create_table :tests do |t|
       t.references :suite, foreign_key: true
-      t.string :title
+      t.string :title, null: false
       t.string :name
       t.string :session_id
       t.datetime :session_expired_at
       t.text :description
       t.text :cachesteps
-      t.boolean :active
+      t.boolean :active, null: false, default: 1
       t.string :params
 
       t.timestamps
