@@ -1,7 +1,6 @@
 class Assertion < ApplicationRecord
   belongs_to :test
   has_many :results, dependent: :destroy
-  validates :condition, :test, presence: true
 
   after_initialize :set_defaults, unless: :persisted? # The set_defaults will only work if the object is new
 
@@ -10,7 +9,9 @@ class Assertion < ApplicationRecord
   end
 
   def self.assertion_types
-    {'text-in-page' => 'Text Contained in Page', 'page-title' => 'Page Title',
-     'status-code' => 'Status Code', 'self-enter' => 'Enter Your Own Condition'}
+    {'text-in-page' => 'Text Contained in Page',
+     'page-title' => 'Page Title',
+     'status-code' => 'Status Code',
+     'self-enter' => 'Enter Your Own Condition'}
   end
 end
