@@ -7,6 +7,5 @@ Assertion.create(id: 4, assertion_type: "step-succeed", label: "step completes s
 Assertion.create(id: 5, assertion_type: "match-url", label: "url must match")
 
 
-
 ActiveRecord::Base.connection.execute("ALTER TABLE assertions CHANGE created_at created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
 ActiveRecord::Base.connection.execute("ALTER TABLE assertions CHANGE updated_at updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
