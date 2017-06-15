@@ -9,7 +9,10 @@ class TestsController < ApplicationController
   # GET /tests/1
   def show
     @test = Test.find(params[:id])
-    @suite = @test.suite
+    @result = nil
+    if Result.where(test: @test).count > 0
+      @result = Result.order("id DESC").first
+    end
   end
 
   # GET /tests/new

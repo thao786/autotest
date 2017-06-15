@@ -19,7 +19,11 @@
   <%= link_to suite.title, controller: "suites", action: "show", id: suite.name %>
   <span class="glyphicon glyphicon-edit"></span>
 </p>
-<p><strong>Lastest Run:</strong> N/A</p>
+
+<p>
+  <strong>Lastest Run:</strong>
+  <a href="<%= resultUrl(@result) %>"><%= @result.created_at %></a>
+</p>
 
 <% if @test.description.present? %>
     <p>
