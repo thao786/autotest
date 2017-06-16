@@ -28,7 +28,7 @@ class StepController < ApplicationController
       @step.update(selector: @step.config[:selectors][form['selector'].to_i].to_json)
     end
 
-    render partial: "step/show_step", :locals => {:step => @step}
+    render partial: "step/show", :locals => {:step => @step}
   end
 
   def edit_view
@@ -72,7 +72,7 @@ class StepController < ApplicationController
     form = Rack::Utils.parse_nested_query(params[:form])
     if form['typed'].present?
       @step.update(typed: form['typed'])
-      render partial: "step/show_step", :locals => {:step => @step}
+      render partial: "step/show", :locals => {:step => @step}
     else
       render json: false
     end
@@ -110,7 +110,7 @@ class StepController < ApplicationController
                              action_type: form['action_type'], wait: form['wait'])
     end
 
-    render partial: "step/show_step", :locals => {:step => new_step}
+    render partial: "step/show", :locals => {:step => new_step}
   end
 
   def removeExtract

@@ -4,4 +4,8 @@ class Result < ApplicationRecord
   belongs_to :assertion
 
   validates :test, :name, presence: true
+
+  def url
+    "/results/#{runID}"
+  end
 end

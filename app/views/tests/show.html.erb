@@ -22,7 +22,7 @@
 
 <p>
   <strong>Lastest Run:</strong>
-  <a href="<%= resultUrl(@result) %>"><%= @result.created_at %></a>
+  <a href="<%= @result.url %>"><%= @result.created_at %></a>
 </p>
 
 <% if @test.description.present? %>
@@ -38,7 +38,7 @@
     <div>To run before the test:
       <% suite.pre_tests.each do |test| %>
           <a class="hash-pair" href="<%= test.url %>"><%= test.title %></a>
-        <% end %>
+      <% end %>
     </div>
 <% end %>
 
@@ -74,7 +74,7 @@
       <div id="step-list">
         <% if @test.steps.count > 0 %>
             <% @test.steps.order('steps.order').each do |step| %>
-                <%= render "step/show_step", step: step %>
+                <%= render "step/show", step: step %>
             <% end %>
         <% else %>
             <p>No step to display.</p>

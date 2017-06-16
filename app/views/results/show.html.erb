@@ -1,1 +1,9 @@
-Result for test <b><%= @test.title %></b>
+Result for test <a href="<%= @test.url %>"><b><%= @test.title %></b></a>
+
+<% @test.steps.each do |step| %>
+    <% url = step.screenShot(@runId) %>
+    <a href="<%= url %>">
+        <img class="step-screenshot" height="200" src="<%= url %>">
+    </a>
+<% end %>
+

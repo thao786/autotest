@@ -35,4 +35,28 @@ class Step < ApplicationRecord
         true
     end
   end
+
+  def title
+    action = "#{web_step_types[action_type]} "
+    noun = ''
+
+    case action_type
+      when 'pageload'
+        noun = webpage
+      when 'scroll'
+        noun = "to #{scrollLeft}, #{scrollTop}"
+      when 'keypress'
+        noun = typed
+      when 'click'
+        noun = "on #{translateClickSelector JSON.parse(step.selector,:symbolize_names => true)}"
+      else
+        true
+    end
+
+    action + noun
+  end
+
+  def screenShot(runId)
+    "https://s3.amazonaws.com/#{ENV['bucket']}/#{runId}-#{order}"
+  end
 end
