@@ -1,9 +1,20 @@
 Result for test <a href="<%= @test.url %>"><b><%= @test.title %></b></a>
 
-<% @test.steps.each do |step| %>
-    <% url = step.screenShot(@runId) %>
-    <a href="<%= url %>">
-        <img class="step-screenshot" height="200" src="<%= url %>">
-    </a>
-<% end %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-6"> Assertions
+    </div>
 
+
+    <div class="col-xs-6">
+      <% @test.steps.each do |step| %>
+          <% url = step.screenShot(@runId) %>
+          Step <b><%= step.order %></b>: <%= step.title %> <br>
+          <a href="<%= url %>">
+            <img class="step-screenshot" height="200" src="<%= url %>">
+          </a><br><br>
+      <% end %>
+    </div>
+
+  </div>
+</div>

@@ -5,6 +5,10 @@ class Result < ApplicationRecord
 
   validates :test, :name, presence: true
 
+  def self.universal_assertions
+    ["http-200", "ajax-200", "report", "step-succeed", "match-url"]
+  end
+
   def url
     "/results/#{runID}"
   end

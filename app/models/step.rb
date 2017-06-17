@@ -1,3 +1,4 @@
+
 class Step < ApplicationRecord
   belongs_to :test
   serialize :config
@@ -37,7 +38,7 @@ class Step < ApplicationRecord
   end
 
   def title
-    action = "#{web_step_types[action_type]} "
+    action = "#{Step.web_step_types[action_type]} "
     noun = ''
 
     case action_type
@@ -48,7 +49,7 @@ class Step < ApplicationRecord
       when 'keypress'
         noun = typed
       when 'click'
-        noun = "on #{translateClickSelector JSON.parse(step.selector,:symbolize_names => true)}"
+        noun = "on #{ApplicationController.helpers.translateClickSelector JSON.parse(selector,:symbolize_names => true)}"
       else
         true
     end
@@ -57,6 +58,6 @@ class Step < ApplicationRecord
   end
 
   def screenShot(runId)
-    "https://s3.amazonaws.com/#{ENV['bucket']}/#{runId}-#{order}"
+    "https://s3.amazonaws.com/#{ENV['bucket']}/#{runId}-#{order}.jpg"
   end
 end
