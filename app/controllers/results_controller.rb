@@ -7,7 +7,7 @@ class ResultsController < ApplicationController
   # GET /results/runID
   def show
     @runId = params[:id]
-    @results = Result.where(runID: @runId)
+    @results = Result.where(runId: @runId)
 
     if @results.count > 0
       @test = @results.first.test

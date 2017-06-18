@@ -38,9 +38,30 @@
             <button type="submit" class="btn btn-primary">Save</button>
         <% end %>
 
-        <div id="assertion-by-text" style="display: none;">
+        <div id="assertion-by-text-in-page" style="display: none;">
           <div class="form-group">
             <label>Text Contained in Page:</label>
+            <input name="condition" type="text" class="form-control" required>
+          </div>
+        </div>
+
+        <div id="assertion-by-text-not-in-page" style="display: none;">
+          <div class="form-group">
+            <label>Text Not Contained in Page:</label>
+            <input name="condition" type="text" class="form-control" required>
+          </div>
+        </div>
+
+        <div id="assertion-by-html-in-page" style="display: none;">
+          <div class="form-group">
+            <label>HTML Contained in Page:</label>
+            <input name="condition" type="text" class="form-control" required>
+          </div>
+        </div>
+
+        <div id="assertion-by-html-not-in-page" style="display: none;">
+          <div class="form-group">
+            <label>HTML Not Contained in Page:</label>
             <input name="condition" type="text" class="form-control" required>
           </div>
         </div>

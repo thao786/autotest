@@ -23,8 +23,9 @@
 <p>
   <strong>Lastest Run:</strong>
   <% if @result.present? %>
+      <% count = @test.results.where(runId: @result.runId).count %>
       <a href="<%= @result.url %>"><%= time_ago_in_words @result.created_at %></a>
-      (<%= @test.results.where(runID: @result.runID).count - 1 %> failed assertions)
+      (<%= pluralize(count - 1, ' failed assertion') %>)
   <% else %>
       N/A
   <% end %>

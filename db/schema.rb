@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20170604045650) do
     t.integer  "test_id"
     t.integer  "assertion_id"
     t.integer  "step_id"
-    t.string   "runID"
+    t.string   "runId"
     t.string   "webpage"
     t.string   "error"
     t.datetime "created_at",   null: false
