@@ -22,7 +22,13 @@
 
 <p>
   <strong>Lastest Run:</strong>
-  <a href="<%= @result.url %>"><%= @result.created_at %></a>
+  <% if @result.present? %>
+      <a href="<%= @result.url %>"><%= time_ago_in_words @result.created_at %></a>
+      (<%= @test.results.where(runID: @result.runID).count - 1 %> failed assertions)
+  <% else %>
+      N/A
+  <% end %>
+
 </p>
 
 <% if @test.description.present? %>

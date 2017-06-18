@@ -1,4 +1,3 @@
-
 class Step < ApplicationRecord
   belongs_to :test
   serialize :config

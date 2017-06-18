@@ -1,8 +1,26 @@
-Result for test <a href="<%= @test.url %>"><b><%= @test.title %></b></a>
+<h2> Result for test <a href="<%= @test.url %>"><b><%= @test.title %></b></a></h2>
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-xs-6"> Assertions
+    <div class="col-xs-6">
+      <h4>Failed Assertions: </h4>
+      <p>
+        <% @results.each do |result| %>
+            <span class="glyphicon glyphicon-remove"></span>
+            Step <b><%= result.step.order %>:</b><br>
+            <%= result.error %>
+      </p>
+      <% end %>
+
+      <h4 style="display: inline">Successful Assertions:</h4> (<%= @assertions.count %> defined)<br>
+      <% if @assertions.count > 0 %>
+        <p>
+            <span class="glyphicon glyphicon-remove"></span>
+            Step <b><%= result.step.order %>:</b> <%= result.error %>
+        </p>
+      <% else %>
+          none
+      <% end %>
     </div>
 
 
