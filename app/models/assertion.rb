@@ -5,7 +5,7 @@ class Assertion < ApplicationRecord
   after_initialize :set_defaults, unless: :persisted? # The set_defaults will only work if the object is new
 
   def set_defaults
-    self.active  ||= true
+    self.active ||= true
   end
 
   def self.assertion_types
@@ -14,7 +14,7 @@ class Assertion < ApplicationRecord
      'html-in-page' => 'HTML Contained in Page',
      'html-not-in-page' => 'HTML not Contained in Page',
      'page-title' => 'Page Title',
-     'status-code' => 'Status Code',
+     # 'status-code' => 'Status Code',
      'self-enter' => 'Enter Your Own Condition'}
   end
 end

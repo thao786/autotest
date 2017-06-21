@@ -5,7 +5,8 @@ class CreateAssertions < ActiveRecord::Migration[5.0]
       t.boolean :active
       t.string :condition
       t.string :assertion_type
-      t.references :test, foreign_key: true, null: false
+      t.string :label
+      t.references :test, foreign_key: true
 
       t.timestamps
     end

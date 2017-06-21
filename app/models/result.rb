@@ -10,6 +10,6 @@ class Result < ApplicationRecord
   end
 
   def url
-    "/results/#{runID}"
+    "/results/#{runId}"
   end
 end
