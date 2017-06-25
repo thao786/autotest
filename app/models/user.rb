@@ -5,5 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   belongs_to :plan
-  has_many :suites, dependent: :destroy
+  has_many :suites
 end

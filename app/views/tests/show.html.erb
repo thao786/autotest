@@ -27,7 +27,7 @@
       <a href="<%= @result.url %>"><%= time_ago_in_words @result.created_at %></a>
       (<%= pluralize(count - 1, ' failed assertion') %>)
   <% else %>
-      N/A
+      never ran before
   <% end %>
 
 </p>
