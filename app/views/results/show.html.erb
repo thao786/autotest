@@ -7,22 +7,17 @@
       <p>
         <% @results.each do |result| %>
             <span class="glyphicon glyphicon-remove"></span>
-            Step <b><%= result.step.order %>:</b><br>
+            <%= result.assertion.label.titleize %>
+            <% if result.step.present? %>
+                (Step <b><%= result.step.order %>):</b><br>
+            <% else %>
+                : <b><%= result.assertion.condition %></b>
+            <% end %>
+
             <%= result.error %>
       </p>
       <% end %>
-
-      <h4 style="display: inline">Successful Assertions:</h4> (<%= @assertions.count %> defined)<br>
-      <% if @assertions.count > 0 %>
-        <p>
-            <span class="glyphicon glyphicon-remove"></span>
-            Step <b><%= result.step.order %>:</b> <%= result.error %>
-        </p>
-      <% else %>
-          none
-      <% end %>
     </div>
-
 
     <div class="col-xs-6">
       <% @test.steps.each do |step| %>
@@ -33,6 +28,5 @@
           </a><br><br>
       <% end %>
     </div>
-
   </div>
 </div>

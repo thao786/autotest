@@ -10,7 +10,8 @@ class AssertionsController < ApplicationController
     test = Test.find params[:test_id]
     assertion = Assertion.create(webpage: params['webpage'],
                condition: params['condition'], test: test,
-               assertion_type: params['assertionType'])
+               assertion_type: params['assertionType'],
+               label: Assertion.assertion_types[params['assertionType']])
     if assertion.save
       redirect_to assertion.test.url
     else
