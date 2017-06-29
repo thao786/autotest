@@ -1,12 +1,14 @@
 module StepHelper
   def translateClickSelector (selector)
     selector[:selectorType] ||= selector['selectorType']
-    eq = selector[:eq] ||= 1
-    eq = 1 + eq
+    eq = selector[:eq].to_i ||= 1
+    # eq = 1 + eq
 
     case selector[:selectorType]
       when 'href'
         "#{eq.ordinalize} <a href=#{selector[:selector]}>"
+      when 'partialHref'
+        "#{eq.ordinalize} <a> in which href containing #{selector[:selector]}"
       when 'button'
         "#{eq.ordinalize} button with text containing #{selector[:selector]}"
       when 'id'

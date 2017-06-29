@@ -28,7 +28,7 @@ class StepController < ApplicationController
       @step.update(selector: @step.config[:selectors][form['selector'].to_i].to_json)
     end
 
-    render partial: "step/show", :locals => {:step => @step}
+    render json: true
   end
 
   def edit_view

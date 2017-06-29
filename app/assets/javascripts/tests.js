@@ -418,7 +418,7 @@ $(document).on("click", ".save-click-step", function(e) {
         },
         success: function(html, status, xhr) {
             $('.modal.fade').modal('hide');
-            $("#step-list [data-step='" + step_id + "']").replaceWith(html);
+            location.reload()
         },
         error: function(result, status, xhr) {
             alert('Sorry, we could not save step data at this time.');
