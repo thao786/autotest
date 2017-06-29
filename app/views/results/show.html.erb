@@ -4,18 +4,21 @@
   <div class="row">
     <div class="col-xs-6">
       <h4>Failed Assertions: </h4>
-      <p>
         <% @results.each do |result| %>
-            <span class="glyphicon glyphicon-remove"></span>
+          <p><span class="glyphicon glyphicon-remove"></span>
             <%= result.assertion.label.titleize %>
             <% if result.step.present? %>
                 (Step <b><%= result.step.order %>):</b><br>
             <% else %>
                 : <b><%= result.assertion.condition %></b>
             <% end %>
-
-            <%= result.error %>
-      </p>
+            <% if result.error.length  > 60 %>
+              <span data-toggle="collapse" data-target="#hide<%= result.id %>""><%=  result.error[0..60] %> </span>
+              <span id="hide<%= result.id %>" class="collapse"><%=  result.error[61..-1] %></span>
+            <% else %>
+                <%=  result.error %>
+            <% end %>
+          </p>
       <% end %>
     </div>
 
@@ -30,3 +33,8 @@
     </div>
   </div>
 </div>
+<script>
+    function showme(e) {console.log(9);
+        $(this).next().css("display", "block");
+    }
+</script>
