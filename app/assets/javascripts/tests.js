@@ -1,9 +1,9 @@
 var testUrl = window.location.pathname;
 var sessionId = '';
-
+var test_id;
 
 $(document).on('turbolinks:load', function() {
-var test_id = $("#page_info").data('test');
+test_id = $("#page_info").data('test');
 
 $('#startRecording').click(function() {
     testUrl = window.location.pathname;
@@ -93,11 +93,6 @@ $(document).on("click", ".editable", function(e) {
     $(this).hide();
 });
 
-/*
-    most logics DO NOT apply to click events
-    1. all editable Span are followed by edit Div
- */
-
 // discard data and show the dotted span
 $(document).on("click", ".input-combo .glyphicon-remove", function(e) {
     var editableSpan = $(this).parents().prev();
@@ -106,10 +101,6 @@ $(document).on("click", ".input-combo .glyphicon-remove", function(e) {
     $('#validation_err').hide();
 });
 
-
-/*
-    save editable fields by clicking on glyphicon-ok symbols
- */
 
 // save editable values
 $(document).on("click", ".glyphicon-ok", function(e) {

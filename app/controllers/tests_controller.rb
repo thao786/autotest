@@ -114,7 +114,7 @@ class TestsController < ApplicationController
   end
 
   def runTest
-    #
+    Result.destroy_all(test: @test) # only 1 test can be ran at a time
   end
 
   private
