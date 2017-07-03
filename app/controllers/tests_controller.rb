@@ -17,13 +17,14 @@ class TestsController < ApplicationController
 
   # GET /tests/new
   def new
-    @test = Test.new
     @suite = Suite.find(params[:suite_id]) if params[:suite_id].present?
     render template: "tests/new", :layout => false
   end
 
   # GET /tests/1/edit
   def edit
+    @suite = @test.suite
+    render template: "tests/new", :layout => false
   end
 
   # POST /tests
@@ -47,13 +48,14 @@ class TestsController < ApplicationController
 
   # PATCH/PUT /tests/1
   def update
-    @test = Test.find_by(id: params[:id], suite: @suite)
-    test_params[:suite_id] = @suite.id
+    @test.title = params[:title]
+    @test.description = params[:description]
+    @test.suite = Suite.find params[:suite]
 
-    if @test.update(test_params)
+    if @test.save!
       redirect_to @test.url, notice: 'Test was successfully updated.'
     else
-      render :edit
+      render plain: 'failed', :status => 404
     end
   end
 

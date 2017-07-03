@@ -12,7 +12,8 @@
     <button id="addNewStep" class="btn-primary btn">Add Step</button>
 <% end %>
 
-<h4 style="display: block; width:300px; margin: 0 auto;">Test: <%= @test.title %> <span class="glyphicon glyphicon-edit"></span></h4>
+<h4 style="display: block; width:300px; margin: 0 auto;">Test: <%= @test.title %>
+  <span class="glyphicon glyphicon-edit" onclick="showEditTestModal('<%= @test.id %>');"></span></h4>
 
 <p>
   <strong>Suite:</strong>
@@ -29,7 +30,6 @@
   <% else %>
       never ran before
   <% end %>
-
 </p>
 
 <% if @test.description.present? %>

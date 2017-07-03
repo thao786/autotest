@@ -2,21 +2,36 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">New Test</h5>
+        <h5 class="modal-title"><%= @test.present? ? 'Edit' : 'New' %> Test</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <%= form_tag("/tests", method: "post") do %>
+        <% if @test.present? %>
+            <% url = "/tests/#{@test.id}" %>
+            <% method = 'put' %>
+        <% else %>
+            <% url = '/tests' %>
+            <% method = 'post' %>
+            <% @test = Test.new %>
+        <% end %>
+
+        <%= form_tag(url, method: method) do %>
+            <% if @test.id.present? %>
+                <input name="test_id" type="hidden" value="<%= @test.id %>">
+            <% end %>
+
             <div class="form-group">
               <label>Title: </label>
-              <input name="title" type="text" class="form-control" required="true">
+              <input name="title" type="text" class="form-control" required="true"
+                     value="<%= @test.title %>">
             </div>
 
             <div class="form-group">
               <label>Description: </label>
-              <input name="description" type="text" class="form-control">
+              <input name="description" type="text" class="form-control"
+                     value="<%= @test.description %>">
             </div>
 
             <div class="form-group">
@@ -30,7 +45,7 @@
 
             <div>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary submit" >Save</button>
+              <button type="submit" class="btn btn-primary submit">Save</button>
             </div>
         <% end %>
       </div>

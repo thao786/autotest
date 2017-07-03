@@ -270,25 +270,9 @@ $(".step-list-item .hover-edit-btn").on("click", function(e) { // add more heade
     });
 });
 
-function modalFunction() {
-    $('.modal.fade').on('hidden.bs.modal', function () {
-        $('.modal.fade').remove();
-    });
 
-    $('#selectorType').on('change', function() {
-        var selectorType = this.value;
-        $('#custom-click-selector').html($('#choose-by-' + selectorType).html());
-        $('#custom-click-selector input[name="eq"]').val(1);
-    });
 
-    $('select[name="assertionType"]').on('change', function() {
-        var assertionType = this.value;
-        $('#assertion-condition').html($('#assertion-by-' + assertionType).html());
-    });
 
-    $(".modal.fade .chosen-select").chosen();
-    $('.modal.fade .chosen-container').css('width', '100%');
-}
 
 $(document).on("click", ".remove-webpage-param", function(e) {
     e.preventDefault();
@@ -539,6 +523,25 @@ $(document).on("click", ".show-config-modal", function(e) {
 });
 
 
-
-
 });
+
+
+function modalFunction() {
+    $('.modal.fade').on('hidden.bs.modal', function () {
+        $('.modal.fade').remove();
+    });
+
+    $('#selectorType').on('change', function() {
+        var selectorType = this.value;
+        $('#custom-click-selector').html($('#choose-by-' + selectorType).html());
+        $('#custom-click-selector input[name="eq"]').val(1);
+    });
+
+    $('select[name="assertionType"]').on('change', function() {
+        var assertionType = this.value;
+        $('#assertion-condition').html($('#assertion-by-' + assertionType).html());
+    });
+
+    $(".modal.fade .chosen-select").chosen();
+    $('.modal.fade .chosen-container').css('width', '100%');
+}

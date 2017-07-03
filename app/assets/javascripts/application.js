@@ -78,6 +78,17 @@ $(document).on('turbolinks:load', function() {
 
 });
 
-
+function showEditTestModal(test_id) {
+    $.ajax({
+        type: "GET",
+        url: '/tests/' + test_id + '/edit', // /tests/1/edit
+        data: {test_id: test_id},
+        success: function(html, status, xhr) {
+            $('body').append(html);
+            $('#newTestModal').modal();
+            modalFunction();
+        }
+    });
+}
 
 
