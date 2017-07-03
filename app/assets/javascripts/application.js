@@ -47,14 +47,16 @@ $(document).on('turbolinks:load', function() {
     $(document).on("click", ".remove-test-tr", function(e) {
         if (confirm('Are you sure to delete this test?')) {
             var test_id = $(this).data('test');
-            var tr = $(this).closest('tr');
 
             $.ajax({
                 type: "DELETE",
                 url: '/tests/' + test_id,
                 data: {test_id: test_id},
                 success: function(html, status, xhr) {
-                    tr.remove();
+                    if (window.location.pathname.match(/test\/.+\/[0-9]+/g))
+                        location.reload();
+                    else
+                        location.reload('/tests');
                 }
             });
         }
