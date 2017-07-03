@@ -36,7 +36,7 @@ class TestsController < ApplicationController
       name = "#{title}_#{random}"
     end
 
-    @test = Test.new(title: title, name: name, description: params[:description],
+    @test = Test.new(title: params[:title], name: name, description: params[:description],
                      suite_id: params[:suite])
 
     if @test.save
