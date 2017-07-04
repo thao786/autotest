@@ -17,13 +17,14 @@ class TestsController < ApplicationController
 
   # GET /tests/new
   def new
-    @test = Test.new
     @suite = Suite.find(params[:suite_id]) if params[:suite_id].present?
     render template: "tests/new", :layout => false
   end
 
   # GET /tests/1/edit
   def edit
+    @suite = @test.suite
+    render template: "tests/new", :layout => false
   end
 
   # POST /tests
@@ -35,7 +36,7 @@ class TestsController < ApplicationController
       name = "#{title}_#{random}"
     end
 
-    @test = Test.new(title: title, name: name, description: params[:description],
+    @test = Test.new(title: params[:title], name: name, description: params[:description],
                      suite_id: params[:suite])
 
     if @test.save
@@ -47,13 +48,14 @@ class TestsController < ApplicationController
 
   # PATCH/PUT /tests/1
   def update
-    @test = Test.find_by(id: params[:id], suite: @suite)
-    test_params[:suite_id] = @suite.id
+    @test.title = params[:title]
+    @test.description = params[:description]
+    @test.suite = Suite.find params[:suite]
 
-    if @test.update(test_params)
+    if @test.save!
       redirect_to @test.url, notice: 'Test was successfully updated.'
     else
-      render :edit
+      render plain: 'failed', :status => 404
     end
   end
 
@@ -114,7 +116,7 @@ class TestsController < ApplicationController
   end
 
   def runTest
-    #
+    Result.destroy_all(test: @test) # only 1 test can be ran at a time
   end
 
   private

@@ -4,6 +4,4 @@ Thuy:
 
 
 Thao:
-- turn runId into some random string
-- make href selector a regex
-- how to run eclipse project without compiling into a jar?
+- edit test
