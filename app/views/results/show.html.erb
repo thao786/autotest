@@ -6,14 +6,14 @@
       <h4>Failed Assertions: </h4>
         <% @results.each do |result| %>
           <p><span class="glyphicon glyphicon-remove"></span>
-            <%= result.assertion.label.titleize %>
+            <%= result.assertion.label.titleize %>a>
             <% if result.step.present? %>
                 (Step <b><%= result.step.order %>):</b><br>
             <% else %>
                 : <b><%= result.assertion.condition %></b>
             <% end %>
             <% if result.error.length  > 60 %>
-              <span data-toggle="collapse" data-target="#hide<%= result.id %>""><%=  result.error[0..60] %> </span>
+              <span data-toggle="collapse" data-target="#hide<%= result.id %>""><%=  result.error[0..60] %> <a>View More</a></span>
               <span id="hide<%= result.id %>" class="collapse"><%=  result.error[61..-1] %></span>
             <% else %>
                 <%=  result.error %>
