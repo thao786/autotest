@@ -1,7 +1,6 @@
 Thuy:
-- make test's title and description editable via a modal
-- only display a portion of result's error
-
+- make config take ENV
 
 Thao:
-- edit test
+- log in with Google
+- find button text with XPath

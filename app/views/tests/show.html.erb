@@ -14,7 +14,8 @@
 <% end %>
 
 <h4 style="display: block; width:300px; margin: 0 auto;">Test: <%= @test.title %>
-  <span class="glyphicon glyphicon-edit" onclick="showEditTestModal('<%= @test.id %>');"></span></h4>
+  <a><span class="glyphicon glyphicon-edit" title="Edit Test"
+               onclick="showEditTestModal('<%= @test.id %>');"></span></a></h4>
 
 <p>
   <strong>Suite:</strong>
