@@ -35,12 +35,13 @@ group :development, :test do
 end
 
 
-
 gem 'thin'
 gem 'devise'
 gem 'mysql2'
 gem 'json'
 gem 'aws-sdk'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
 
 
 group :development do

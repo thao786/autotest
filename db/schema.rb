@@ -153,6 +153,10 @@ ActiveRecord::Schema.define(version: 20170604045650) do
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["plan_id"], name: "index_users_on_plan_id", using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "oauth_token"
+    t.datetime "oauth_expires_at"
   end
 
   add_foreign_key "assertions", "tests"
