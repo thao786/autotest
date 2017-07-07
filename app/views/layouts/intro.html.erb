@@ -1,7 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Autotest</title>
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <meta name="google-signin-client_id" content="548695467567-70v8t3gjff0itqom18mm2rdhtbqmlnnp.apps.googleusercontent.com">
+</head>
+
+<body>
+
 <h2>Wellcome to autotest!</h2>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
 
 <% if user_signed_in? %>
     <a href="/suites">Dashboard</a>
 <% else %>
     <%= link_to('Login', new_user_session_path)  %>
+    <div class="g-signin2" data-onsuccess="onSignIn">Google Sign In</div>
 <% end %>
+
+</body>
+</html>

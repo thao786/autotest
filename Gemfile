@@ -41,6 +41,8 @@ gem 'devise'
 gem 'mysql2'
 gem 'json'
 gem 'aws-sdk'
+gem 'google-api-client'
+
 
 
 group :development do
