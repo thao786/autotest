@@ -2,5 +2,6 @@ Thuy:
 - make config take ENV
 
 Thao:
-- log in with Google
+- make test params/extracts work
+- make project live
 - find button text with XPath
