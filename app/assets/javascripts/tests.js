@@ -2,7 +2,7 @@ var testUrl = window.location.pathname;
 var sessionId = '';
 var test_id;
 
-$(document).on('turbolinks:load', function() {
+$(document).ready(function() {
 test_id = $("#page_info").data('test');
 
 $('#startRecording').click(function() {

@@ -12,14 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require bootstrap.js
 //= require chosen.jquery.js
 //= require_tree .
 
 var google_id = '548695467567-70v8t3gjff0itqom18mm2rdhtbqmlnnp.apps.googleusercontent.com';
 
-$(document).on('turbolinks:load', function() {
+$(document).ready(function() {
     $(document).on("click", ".add-test-modal", function(e) {
         var suite_id = $(this).data('suite');
 
