@@ -2,14 +2,14 @@
 // All this logic will automatically be available in application.js.
 
 
-    function showmore(id) {
-        if ($("#vmbutton").text() == "View Less") {
-            $("#vmbutton").html('View More');
-            $("#" + id).css("display", "block");
+    function showmore(id,btid) {
+        if ($("#" + btid).text() == "View Less") {
+            $("#" + btid).html('View More');
+            $("#" + id).css("display", "none");
         }
         else {
-            $("#vmbutton").html('View Less');
-            $("#" + id).css("display", "none");
+            $("#" + btid).html('View Less');
+            $("#" + id).css("display", "block");
         }
 
     }

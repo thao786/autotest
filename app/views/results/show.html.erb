@@ -13,7 +13,7 @@
                 : <b><%= result.assertion.condition %></b>
             <% end %>
             <% if result.error.length  > 60 %>
-              <span><%=  result.error[0..60] %> <a onclick="showmore('hide<%= result.id %>')"; id="vmbutton">View More</a></span>
+              <span><%=  result.error[0..60] %> <a onclick="showmore('hide<%= result.id %>','vm<%= result.id %>')"; id="vm<%= result.id %>">View More</a></span>
               <span id="hide<%= result.id %>" class="collap" style="display:none;"><%=  result.error[61..-1] %></span>
             <% else %>
                 <%=  result.error %>
@@ -33,4 +33,3 @@
     </div>
   </div>
 </div>
-
