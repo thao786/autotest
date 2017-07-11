@@ -17,7 +17,7 @@ $('#startRecording').click(function() {
         data: {test_id: test_id},
         success: function(result, status, xhr) {
             sessionId = result;
-            $('#notice').html('All your activities on Chrome will be recorded. Please make sure chrome extension is intalled.');
+            $('#notice').html('All your activities on Chrome will be recorded. Please make sure chrome extension is installed.');
 
             // activate the Chrome Plugin
             window.postMessage({ type: "FROM_PAGE", session_id: sessionId }, "*");
@@ -376,7 +376,7 @@ $(document).on("click", ".hash-pair .remove-pageload-param", function(e) {
 });
 
 $(document).on("click", ".empty-header-params .remove-header-param," +
-    ".empty-pageload-params .empty-pageload-params," +
+    ".empty-pageload-params .empty-pageload-params, .remove-pageload-param," +
     " .empty-extract-param .remove-extract-param", function(e) {
     $(this).parent().remove();
 });
