@@ -11,7 +11,8 @@ class Step < ApplicationRecord
   has_many :pre_tests, class_name: 'Test', through: :prep_tests, :source => :test
 
   def self.web_step_types
-      {'pageload' => 'load page', 'scroll' => 'scroll', 'keypress' => 'type',
+      {'pageload' => 'load page in browser', 'pageloadCurl' => 'load page with Curl',
+       'scroll' => 'scroll', 'keypress' => 'type',
            'click' => 'click', 'resize' => 'resize'}
   end
 

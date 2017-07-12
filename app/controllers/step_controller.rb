@@ -39,6 +39,12 @@ class StepController < ApplicationController
     form = Rack::Utils.parse_nested_query(params[:form])
     @step.update(webpage: form['webpage']) if form['webpage'].present?
     @step.update(wait: form['wait']) if form['wait'].present?
+  end
+
+  def save_pageload_curl
+    form = Rack::Utils.parse_nested_query(params[:form])
+    @step.update(webpage: form['webpage']) if form['webpage'].present?
+    @step.update(wait: form['wait']) if form['wait'].present?
 
     hash = @step.config ||= {}
     hash[:method] = form['method'] if form['method'].present?
