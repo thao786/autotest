@@ -115,6 +115,7 @@ class StepController < ApplicationController
       new_step = Step.create(test: @test, order: @test.steps.maximum('order') + 1,
                              action_type: form['action_type'], wait: form['wait'])
     end
+    new_step.update(active: false)
 
     render partial: "step/show", :locals => {:step => new_step}
   end
