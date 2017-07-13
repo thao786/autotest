@@ -104,7 +104,7 @@ $(document).on("click", ".input-combo .glyphicon-remove", function(e) {
 
 // save editable values
 $(document).on("click", ".glyphicon-ok", function(e) {
-    var step_id = $(this).closest('.step-list-item').data('step');
+    var step_id = $(this).closest('.hover-edit-btn-item').data('step');
 
     // find out which field is this. It's always preceded by an editable span
     var editableSpan = $(this).parent().prev('.editable');

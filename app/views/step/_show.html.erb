@@ -7,25 +7,20 @@
        when 'pageload' %> <b><%= step.webpage %></b><br>
           <span>screen size: <%= step.screenwidth %> x <%= step.screenheight %></span>
 
-          <button class="hover-edit-btn btn visible-hover">
-            <span class="glyphicon glyphicon-edit"></span> Edit
-          </button>
       <% when 'scroll' %> to
           <span class="editable scrollLeft"><%= step.scrollLeft %></span>px
           <span class="editable scrollTop"><%= step.scrollTop %></span>px
 
       <% when 'click' %> on <strong><%= translateClickSelector JSON.parse(step.selector,:symbolize_names => true) %></strong>
-          <button class="hover-edit-btn btn visible-hover">
-            <span class="glyphicon glyphicon-edit"></span> Edit
-          </button>
 
       <% when 'keypress' %>
           <b><%= step.typed %></b>
-          <button class="hover-edit-btn btn visible-hover">
-            <span class="glyphicon glyphicon-edit"></span> Edit
-          </button>
       <% else %>
   <% end %>
+  
+  <button class="hover-edit-btn btn visible-hover">
+    <span class="glyphicon glyphicon-edit"></span> Edit
+  </button>
 
   <div>
       <a class="show-config-modal">extracts:</a>
