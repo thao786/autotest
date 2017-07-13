@@ -1,6 +1,6 @@
 <div class="step-list-item <%= step.complete? ? '' : 'non-complete-step' %>" data-step="<%= step.id %>">
   <span>Step <b><%= step.order %></b>: </span>
-  wait <span class="editable wait"><%= step.wait %></span> millisec, then<br>
+  wait <span class="wait"><b><%= step.wait %></b></span> millisec, then<br>
   <%= Step.web_step_types[step.action_type] %>
 
   <% case step.action_type
@@ -8,8 +8,8 @@
           <span>screen size: <%= step.screenwidth %> x <%= step.screenheight %></span>
 
       <% when 'scroll' %> to
-          <span class="editable scrollLeft"><%= step.scrollLeft %></span>px
-          <span class="editable scrollTop"><%= step.scrollTop %></span>px
+          <span class="scrollLeft"><b><%= step.scrollLeft %></b></span> px
+          <span class="scrollTop"><b><%= step.scrollTop %></b></span> px
 
       <% when 'click' %> on <strong><%= translateClickSelector JSON.parse(step.selector,:symbolize_names => true) %></strong>
 
@@ -17,7 +17,7 @@
           <b><%= step.typed %></b>
       <% else %>
   <% end %>
-  
+
   <button class="hover-edit-btn btn visible-hover">
     <span class="glyphicon glyphicon-edit"></span> Edit
   </button>
