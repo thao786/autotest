@@ -1,7 +1,5 @@
 Thuy:
 - redesign
-- mark all click field as required
-- make incomplete New Step as inactive (active = false)
 - remove editable fields like wait on step/show.html.erb and add them to forms
 - create edit screen for scroll action
 - improve error message

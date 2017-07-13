@@ -26,6 +26,8 @@ class Step < ApplicationRecord
     case action_type
       when 'pageload'
         webpage.present?
+      when 'pageloadCurl'
+        webpage.present?
       when 'scroll'
         scrollLeft.present? and scrollTop.present?
       when 'keypress'
