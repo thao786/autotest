@@ -98,13 +98,11 @@ class TestsController < ApplicationController
   def addTestParams
     names = params[:param_names]
     values = params[:param_values]
-    hash = @test.params ||= {}
     names.each_with_index { |value, index|
       if names[index].present?
-        hash[value] = values[index]
+        TestParam.create(test: @test, label: names[index], val: values[index])
       end
     }
-    @test.update(params: hash)
     render partial: 'tests/test_params', :status => 200
   end
 
