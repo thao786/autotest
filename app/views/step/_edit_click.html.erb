@@ -11,7 +11,7 @@
         <form>
             <div class="form-group">
               <label>CSS Selectors of clicked elements: </label>
-              <select name="selector" class="form-control">
+              <select name="selector" class="form-control" required>
                 <% @step.config[:selectors].each_with_index do |selector, index| %>
                     <option value="<%= index %>"
                         <%= @step.config[:selectors][index].to_json == @step.selector ? 'selected' : '' %>>
@@ -28,7 +28,7 @@
         <form id="edit-click-form">
           <div class="form-group form-inline">
             <label>Selectors of clicked elements: </label>
-            <select id="selectorType" name="selectorType" class="form-control">
+            <select id="selectorType" name="selectorType" class="form-control" required>
               <option value="id">ID</option>
               <option value="class">Class Name</option>
               <option value="tag">Tag Name</option>
@@ -45,7 +45,7 @@
           <div id="custom-click-selector">
               <div class="form-group form-inline">
                 <label>ID: </label>
-                <input name="selector" type="text" class="form-control" placeholder="Ex: container">
+                <input name="selector" type="text" class="form-control" placeholder="Ex: container" required>
               </div>
           </div>
 
@@ -55,103 +55,103 @@
         <div id="choose-by-css" style="display: none;">
           <div class="form-group form-inline">
             <label>CSS Selector: </label>
-            <input name="selector" type="text" class="form-control" placeholder="Ex: #form .submit">
+            <input name="selector" type="text" class="form-control" placeholder="Ex: #form .submit" required>
           </div>
 
           <div class="form-group form-inline">
             <label>Index: </label>
-            <input name="eq" type="text" class="form-control">
+            <input name="eq" type="text" class="form-control" required>
           </div>
         </div>
 
         <div id="choose-by-href" style="display: none;">
           <div class="form-group form-inline">
             <label>Link Href: </label>
-            <input name="selector" type="text" class="form-control" placeholder="Ex: index.html">
+            <input name="selector" type="text" class="form-control" placeholder="Ex: index.html" required>
           </div>
 
           <div class="form-group form-inline">
             <label>Index: </label>
-            <input name="eq" type="text" class="form-control">
+            <input name="eq" type="text" class="form-control" required>
           </div>
         </div>
 
         <div id="choose-by-button" style="display: none;">
           <div class="form-group form-inline">
             <label>Button Text: </label>
-            <input name="selector" type="text" class="form-control" placeholder="Ex: Submit">
+            <input name="selector" type="text" class="form-control" placeholder="Ex: Submit" required>
           </div>
 
           <div class="form-group form-inline">
             <label>Index: </label>
-            <input name="eq" type="text" class="form-control">
+            <input name="eq" type="text" class="form-control" required>
           </div>
         </div>
 
         <div id="choose-by-partialLink" style="display: none;">
           <div class="form-group form-inline">
             <label>Partial Link Text: </label>
-            <input name="selector" type="text" class="form-control" placeholder="Ex: Click Here">
+            <input name="selector" type="text" class="form-control" placeholder="Ex: Click Here" required>
           </div>
 
           <div class="form-group form-inline">
             <label>Index: </label>
-            <input name="eq" type="text" class="form-control">
+            <input name="eq" type="text" class="form-control" required>
           </div>
         </div>
 
         <div id="choose-by-partialHref" style="display: none;">
           <div class="form-group form-inline">
             <label>Partial Href: </label>
-            <input name="selector" type="text" class="form-control" placeholder="Ex: index.html">
+            <input name="selector" type="text" class="form-control" placeholder="Ex: index.html" required>
           </div>
 
           <div class="form-group form-inline">
             <label>Index: </label>
-            <input name="eq" type="text" class="form-control">
+            <input name="eq" type="text" class="form-control" required>
           </div>
         </div>
 
         <div id="choose-by-name" style="display: none;">
           <div class="form-group form-inline">
             <label>Name: </label>
-            <input name="selector" type="text" class="form-control">
+            <input name="selector" type="text" class="form-control" required>
           </div>
 
           <div class="form-group form-inline">
             <label>Index: </label>
-            <input name="eq" type="text" class="form-control">
+            <input name="eq" type="text" class="form-control" required>
           </div>
         </div>
 
         <div id="choose-by-tag" style="display: none;">
           <div class="form-group form-inline">
             <label>Tag Name: </label>
-            <input name="selector" type="text" class="form-control" placeholder="input">
+            <input name="selector" type="text" class="form-control" placeholder="input" required>
           </div>
 
           <div class="form-group form-inline">
             <label>Index: </label>
-            <input name="eq" type="text" class="form-control">
+            <input name="eq" type="text" class="form-control" required>
           </div>
         </div>
 
         <div id="choose-by-class" style="display: none;">
           <div class="form-group form-inline">
             <label>Class Names: </label>
-            <input name="selector" type="text" class="form-control" placeholder="Ex: btn btn-primary">
+            <input name="selector" type="text" class="form-control" placeholder="Ex: btn btn-primary" required>
           </div>
 
           <div class="form-group form-inline">
             <label>Index: </label>
-            <input name="eq" type="text" class="form-control">
+            <input name="eq" type="text" class="form-control" required>
           </div>
         </div>
 
         <div id="choose-by-id" style="display: none;">
           <div class="form-group form-inline">
             <label>Choose by ID: </label>
-            <input name="selector" type="text" class="form-control">
+            <input name="selector" type="text" class="form-control" required>
           </div>
         </div>
 
@@ -160,10 +160,10 @@
             <label>Click Coordination: </label>
             <br>
             <label>x: </label>
-            <input name="x" type="text" class="form-control" value="<%= @step.config[:x] %>">
+            <input name="x" type="text" class="form-control" value="<%= @step.config[:x] %>" required>
 
             <label>y: </label>
-            <input name="y" type="text" class="form-control" value="<%= @step.config[:y] %>">
+            <input name="y" type="text" class="form-control" value="<%= @step.config[:y] %>" required>
           </div>
         </div>
       </div>
