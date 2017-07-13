@@ -1,12 +1,10 @@
-<% if @test.params.present? %>
-<% @test.params.each do |key, value| %>
+<% @test.test_params.each do |param| %>
     <div class="hash-pair">
 
-      <%= key %> : <%= value %>
+      <%= param.label %> : <%= param.val %>
 
       <span class="glyphicon glyphicon-remove remove-test-param"
-            data-key="<%= key %>"
-            data-value="<%= value %>"></span>
+            data-key="<%= param.label %>"
+            data-value="<%= param.val %>"></span>
     </div>
-<% end %>
 <% end %>

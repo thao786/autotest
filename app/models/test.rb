@@ -3,6 +3,7 @@ class Test < ApplicationRecord
   has_many :steps, dependent: :destroy
   has_many :assertions, dependent: :destroy
   has_many :results, dependent: :destroy
+  has_many :test_params, dependent: :destroy
 
   has_many :prep_tests, dependent: :destroy
   has_many :lead_steps, :through => :prep_tests, :source => :step
@@ -12,7 +13,7 @@ class Test < ApplicationRecord
   validates :session_id, uniqueness: true, if: 'session_id.present?'
 
   serialize :cachesteps, Hash
-  serialize :params, Hash
+  # serialize :params, Hash
 
   def url
     "/test/#{name}/#{id}"
