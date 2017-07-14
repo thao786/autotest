@@ -10,11 +10,15 @@
       <div class="modal-body">
         <form id="edit-pageload-form">
             <div class="form-group">
+              <label for="wait">Wait:</label>
+              <input name="wait" type="text" class="form-control"
+                     value="<%= @step.wait %>" required>
+            </div>
+            <div class="form-group">
               <label for="webpage">Webpage:</label>
               <input name="webpage" type="text" class="form-control"
                      value="<%= @step.webpage %>" required>
             </div>
-
             <div>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-primary submit" >Save changes</button>

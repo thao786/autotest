@@ -10,6 +10,11 @@
       <div class="modal-body">
         <form>
             <div class="form-group">
+            <div class="form-group">
+              <label for="wait">Wait:</label>
+              <input name="wait" type="text" class="form-control"
+                     value="<%= @step.wait %>" required>
+            </div>
               <label>CSS Selectors of clicked elements: </label>
               <select name="selector" class="form-control" required>
                 <% @step.config[:selectors].each_with_index do |selector, index| %>
