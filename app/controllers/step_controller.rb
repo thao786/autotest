@@ -88,6 +88,18 @@ class StepController < ApplicationController
     @step.update(active: true) if @step.complete?
   end
 
+  def save_scroll
+    form = Rack::Utils.parse_nested_query(params[:form])
+    if form['scrollTop'].present? && form['scrollLeft'].present?#form['scrollTop'].match(/^[0-9]+#$/) 
+      @step.update(scrollTop: form['scrollTop'])
+      @step.update(scrollLeft: form['scrollLeft'])
+      @step.update(wait: form['wait']) if form['wait'].present?
+    else
+      render plain: 'Not Exist', :status => 404
+    end
+    @step.update(active: true) if @step.complete?
+  end
+
   def remove_header_param
     hash = @step.config ||= {}
     hash[:headers].delete params[:key]

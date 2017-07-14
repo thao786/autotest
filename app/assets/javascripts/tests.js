@@ -402,6 +402,7 @@ $(document).on("click", "#edit-pageload-form .submit", function(e) {
         },
         success: function(html, status, xhr) {
             $('.modal.fade').modal('hide');
+            location.reload();
         },
         error: function(result, status, xhr) {
             $('.error-modal').html(result.responseText);
@@ -421,13 +422,12 @@ $(document).on("click", "#edit-keypress-form .submit", function(e) {
         success: function(html, status, xhr) {
             $('.modal.fade').modal('hide');
             $("#step-list [data-step='" + step_id + "']").replaceWith(html);
+            location.reload();
         },
         error: function(result, status, xhr) {
             alert('Sorry, we could not step data at this time.');
         }
     });
-
-    $('.modal.fade').modal('hide');
 });
 
 $(document).on("click", "#edit-click-form .submit", function(e) {
@@ -439,6 +439,26 @@ $(document).on("click", "#edit-click-form .submit", function(e) {
         url: '/step/save_click',
         data: {step_id: step_id,
             form: form.serialize()
+        },
+        success: function(html, status, xhr) {
+            $('.modal.fade').modal('hide');
+            location.reload();
+        },
+        error: function(result, status, xhr) {
+            $('.error-modal').html(result.responseText);
+        }
+    });
+});
+
+$(document).on("click", "#edit-scroll-form .submit", function(e) {
+    var step_id = $(this).closest('.modal.fade').data('step');
+    var form = $(this).closest('form');
+
+    $.ajax({
+        type: "POST",
+        url: '/step/save_scroll',
+        data: {step_id: step_id,
+            form: $('#edit-scroll-form').serialize()
         },
         success: function(html, status, xhr) {
             $('.modal.fade').modal('hide');
