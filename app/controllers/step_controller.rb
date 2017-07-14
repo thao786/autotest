@@ -24,6 +24,7 @@ class StepController < ApplicationController
       @step.update(selector: @step.config[:selectors][form['selector'].to_i].to_json)
     end
 
+    @step.update(active: true) if @step.complete?
     render json: true
   end
 
@@ -37,8 +38,9 @@ class StepController < ApplicationController
       @step.update(webpage: form['webpage'])
       @step.update(wait: form['wait']) if form['wait'].present?
     else
-      render plain: 'Incorrect Webpage Format', :status => 404
+      render plain: 'Incorrect Format Or Blank Webpage', :status => 404
     end
+    @step.update(active: true) if @step.complete?
   end
 
   def save_pageload_curl
@@ -72,6 +74,7 @@ class StepController < ApplicationController
     end
 
     @step.update(config: hash)
+    @step.update(active: true) if @step.complete?
   end
 
   def save_keypress
@@ -82,6 +85,7 @@ class StepController < ApplicationController
     else
       render json: false
     end
+    @step.update(active: true) if @step.complete?
   end
 
   def remove_header_param

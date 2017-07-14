@@ -46,8 +46,6 @@ module TestsHelper
                          tabId: first_event.tabId, windowId: first_event.windowId,
                          action_type: first_event.action_type,
                          screenwidth: first_event.screenwidth, screenheight: first_event.screenheight)
-      Extract.create(title: "body_text#{step.id}", step: step,
-                     command: 'document.getElementsByTagName("body")[0].textContent')
       chunk = nil
       case first_event.action_type
         when 'pageload' # not sure what to do

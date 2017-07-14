@@ -6,7 +6,7 @@
       <h4>Failed Assertions: </h4>
         <% @results.each do |result| %>
           <p><span class="glyphicon glyphicon-remove"></span>
-            <%= result.assertion.label.titleize %>a>
+            <%= result.assertion.label.titleize %>
             <% if result.step.present? %>
                 (Step <b><%= result.step.order %>):</b><br>
             <% else %>
