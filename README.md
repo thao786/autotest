@@ -1,15 +1,16 @@
 Thuy:
 - turn Test Params into modal
 - remove default extract creation in DB, but still display
-- make step active=true when updated
-- remove editable fields like wait on step/show.html.erb and add them to forms
-- improve error message
+
+
 
 
 REDESIGN
+- redesign login screens
 - redesign modal errors
 - make inactive steps more obvious
 - mark all Interpolatable fields obvious
+
 
 
 

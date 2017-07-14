@@ -450,7 +450,7 @@ $(document).on("click", "#edit-keypress-form .submit", function(e) {
     });
 });
 
-$(document).on("click", "#edit-click-form .submit", function(e) {
+$(document).on("click", ".edit-click-form .submit", function(e) {
     var step_id = $(this).closest('.modal.fade').data('step');
     var form = $(this).closest('form');
 

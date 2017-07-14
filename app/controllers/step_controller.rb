@@ -24,6 +24,7 @@ class StepController < ApplicationController
       @step.update(selector: @step.config[:selectors][form['selector'].to_i].to_json)
     end
 
+    @step.update(wait: form['wait']) if form['wait'].present?
     @step.update(active: true) if @step.complete?
     render json: true
   end
@@ -40,6 +41,7 @@ class StepController < ApplicationController
     else
       render plain: 'Incorrect Format Or Blank Webpage', :status => 404
     end
+    @step.update(wait: form['wait']) if form['wait'].present?
     @step.update(active: true) if @step.complete?
   end
 
@@ -74,6 +76,7 @@ class StepController < ApplicationController
     end
 
     @step.update(config: hash)
+    @step.update(wait: form['wait']) if form['wait'].present?
     @step.update(active: true) if @step.complete?
   end
 
@@ -85,17 +88,18 @@ class StepController < ApplicationController
     else
       render json: false
     end
+    @step.update(wait: form['wait']) if form['wait'].present?
     @step.update(active: true) if @step.complete?
   end
 
   def save_scroll
     form = Rack::Utils.parse_nested_query(params[:form])
-    if form['scrollTop'].present? && form['scrollLeft'].present?form['scrollTop'].match(/^[0-9]+#$/) 
+    if form['scrollTop'].match?(/[0-9]+/) && form['scrollLeft'].match?(/[0-9]+/)
       @step.update(scrollTop: form['scrollTop'])
       @step.update(scrollLeft: form['scrollLeft'])
       @step.update(wait: form['wait']) if form['wait'].present?
     else
-      render plain: 'Some parameter is missing', :status => 404
+      render plain: 'Parameters can only contain numbers and not be blank.', :status => 404
     end
     @step.update(active: true) if @step.complete?
   end
