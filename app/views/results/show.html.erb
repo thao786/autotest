@@ -1,5 +1,9 @@
 <h2> Result for test <a href="<%= @test.url %>"><b><%= @test.title %></b></a></h2>
 
+<p>
+  Date Ran: <%= @results.first.updated_at %>
+</p>
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-xs-6">
