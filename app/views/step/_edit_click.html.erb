@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form class="edit-click-form">
             <div class="form-group">
             <div class="form-group">
               <label for="wait">Wait:</label>
@@ -26,11 +26,11 @@
                     <option value="coordination">
                       Coordination [<%= @step.config[:x] %>, <%= @step.config[:y] %>] </option>
               </select>
-              <button type="button" class="btn btn-primary save-click-step">Save</button>
+              <button type="button" class="btn btn-primary submit">Save</button>
             </div><hr>
         </form>
 
-        <form id="edit-click-form">
+        <form class="edit-click-form">
           <div class="form-group form-inline">
             <label>Selectors of clicked elements: </label>
             <select id="selectorType" name="selectorType" class="form-control" required>
