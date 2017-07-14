@@ -54,24 +54,6 @@ $('#stopRecording').click(function() {
     });
 });
 
-$(document).on("click", ".delete-step", function(e) {
-    var step_id = $(this).closest('.step-list-item').data('step');
-    var list_item = $(this).parent();
-
-    if(confirm('Are you sure you would like to delete this comment?')) {
-        $.ajax({
-            type: "GET",
-            url: '/step/delete_step',
-            dataType: "text",
-            data: {step_id: step_id},
-            success: function(result, status, xhr) {
-                list_item.remove();
-            }
-        });
-    }
-});
-
-
 /*
     visual effect
  */
@@ -88,28 +70,7 @@ $("body").on('mouseenter', '.step-list-item', function() {
     $(this).find('.visible-hover').show();
 }).on('mouseleave', '.step-list-item', function() {
     $('.visible-hover').hide();
-});
-
-
-// show index input when user click on classes
-$(document).on("click", ".step-classes .step-class", function(e) {
-    $('.step-classes .classes-select').remove(); // remove all opening index input
-
-    var classSelectDiv = $('#copyable .classes-select')[0].outerHTML;
-    $(this).after(classSelectDiv);
-    $(this).next().show();
-
-    // default index is 1
-    var insertedCombo = $(this).next();
-    insertedCombo.find('input').eq(0).val($(this).html() + ' : eq( 1 )');
-});
-
-// user cancel class picking
-$(document).on("click", ".step-classes .glyphicon-remove", function(e) {
-    $(this).closest('.classes-select').remove();
-});
-
-
+})
 
 var test_param_count = 0; //initlal text box count
 
@@ -119,35 +80,6 @@ $("#add-test-params").click(function(e){ //on add input button click
     var html = $('#copyable .empty-test-params')[0].outerHTML;
     $('#test-params-input-list').append(html);
     $('#submit-test-params').show();
-});
-
-$(document).on("click", ".remove-test-param", function(e) { //user click on remove text
-    e.preventDefault();
-
-    // check if this remove active parameters
-    var key = $(this).data('key');
-    var thisEl = $(this);
-
-    if (key) {
-        $.ajax({
-            type: "POST",
-            url: '/tests/removeTestParams',
-            data: {test_id: test_id, key: key},
-            success: function(result, status, xhr) {
-                thisEl.parent('div').remove();
-                test_param_count--;
-            },
-            error: function(result, status, xhr) {
-                alert('Sorry, we could not remove a parameter at this time.');
-            }
-        });
-    } else {
-        thisEl.parent('div').remove();
-        test_param_count--;
-    }
-
-    if (test_param_count == 0)
-        $('#submit-test-params').hide();
 });
 
 $("#submit-test-params").on("click", function(e){ //user click on remove text
@@ -192,6 +124,54 @@ $(".step-list-item .hover-edit-btn").on("click", function(e) { // add more heade
     });
 });
 
+});
+
+$(document).on("click", ".delete-step", function(e) {
+    var step_id = $(this).closest('.step-list-item').data('step');
+    var list_item = $(this).parent();
+
+    if(confirm('Are you sure you would like to delete this comment?')) {
+        $.ajax({
+            type: "GET",
+            url: '/step/delete_step',
+            dataType: "text",
+            data: {step_id: step_id},
+            success: function(result, status, xhr) {
+                list_item.remove();
+            }
+        });
+    }
+});
+
+$(document).on("click", ".remove-test-param", function(e) { //user click on remove text
+    e.preventDefault();
+
+    // check if this remove active parameters
+    var key = $(this).data('key');
+    var thisEl = $(this);
+
+    if (key) {
+        $.ajax({
+            type: "POST",
+            url: '/tests/removeTestParams',
+            data: {test_id: test_id, key: key},
+            success: function(result, status, xhr) {
+                thisEl.parent('div').remove();
+                test_param_count--;
+            },
+            error: function(result, status, xhr) {
+                alert('Sorry, we could not remove a parameter at this time.');
+            }
+        });
+    } else {
+        thisEl.parent('div').remove();
+        test_param_count--;
+    }
+
+    if (test_param_count == 0)
+        $('#submit-test-params').hide();
+});
+
 $(document).on("click", ".remove-webpage-param", function(e) {
     e.preventDefault();
     $(this).parent().remove();
@@ -214,8 +194,6 @@ $(document).on("click", "#add-empty-extract", function(e) {
     var inputCombo = $('#copyable .empty-extract-param')[0].outerHTML;
     $("#empty-extract-list").append(inputCombo);
 });
-
-
 
 $(document).on("click", ".hash-pair .remove-header-param", function(e) {
     var step_id = $(this).closest('.modal.fade').data('step');
@@ -260,8 +238,6 @@ $(document).on("click", ".empty-header-params .remove-header-param," +
     " .empty-extract-param .remove-extract-param", function(e) {
     $(this).parent().remove();
 });
-
-
 
 $(document).on("click", ".add-step-after, #addNewStep", function(e) {
     var step_id = $(this).closest('.step-list-item').data('step');
@@ -382,9 +358,6 @@ $(document).on("click", ".show-config-modal", function(e) {
             modalFunction();
         }
     });
-});
-
-
 });
 
 /*
