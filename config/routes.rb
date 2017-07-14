@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   get 'fonts/*font', to: 'fonts#index'
 
   get 'step/delete_step', to: 'step#delete_step'
-  get 'step/change_wait', to: 'step#change_wait'
   match 'step/save_click', to: 'step#save_click', via: [:post]
   get 'step/edit_view', to: 'step#edit_view'
   match 'step/save_pageload', to: 'step#save_pageload', via: [:post]

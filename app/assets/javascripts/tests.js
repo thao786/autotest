@@ -71,72 +71,6 @@ $(document).on("click", ".delete-step", function(e) {
     }
 });
 
-// show the input field when click on dotted span
-$(document).on("click", ".editable.selector", function(e) {
-    var editDiv = $(this).next();
-    editDiv.toggle();
-});
-
-// edit non-selector spans
-$(document).on("click", ".editable", function(e) {
-    if ($(this).hasClass('selector'))
-        return;
-
-    var value = $(this).html();
-    var inputCombo = $("#copyable .input-combo")[0].outerHTML;
-    $(this).after(inputCombo);
-    var insertedCombo = $(this).next();
-    insertedCombo.find('input').eq(0).val(value);
-    insertedCombo.css('display', 'inline-block');
-    // set size relative to existing value
-    // insertedCombo.css('width', value.length + 5);
-    $(this).hide();
-});
-
-// discard data and show the dotted span
-$(document).on("click", ".input-combo .glyphicon-remove", function(e) {
-    var editableSpan = $(this).parents().prev();
-    $(this).parent().remove();
-    editableSpan.show();
-    $('#validation_err').hide();
-});
-
-
-// save editable values
-$(document).on("click", ".glyphicon-ok", function(e) {
-    var step_id = $(this).closest('.hover-edit-btn-item').data('step');
-
-    // find out which field is this. It's always preceded by an editable span
-    var editableSpan = $(this).parent().prev('.editable');
-    var glyp = $(this);
-
-    // save wait time
-    if (editableSpan.hasClass('wait')) {
-        var wait = glyp.prev().val();
-
-        $.ajax({
-            type: "GET",
-            url: '/step/change_wait',
-            dataType: "json",
-            data: {step_id: step_id, wait: wait},
-            success: function(result, status, xhr) {
-                glyp.parent().prev().show();
-                glyp.parent().prev().html(wait);
-                glyp.parent().hide();
-            },
-            error: function(html) {
-                var errors = html.responseJSON;
-                $('#validation_err').show();
-                $('#validation_err').html(errors[0]);
-            }
-        });
-    } else if (editableSpan.hasClass('scrollTop')) {
-
-    } else if (editableSpan.hasClass('scrollLeft')) {
-
-    }
-});
-
 
 /*
     visual effect
@@ -157,10 +91,6 @@ $("body").on('mouseenter', '.step-list-item', function() {
 });
 
 
-/*
-    CLICK LOGICS
- */
-
 // show index input when user click on classes
 $(document).on("click", ".step-classes .step-class", function(e) {
     $('.step-classes .classes-select').remove(); // remove all opening index input
@@ -180,10 +110,6 @@ $(document).on("click", ".step-classes .glyphicon-remove", function(e) {
 });
 
 
-
-/*
-    TEST PARAMS
- */
 
 var test_param_count = 0; //initlal text box count
 
@@ -248,10 +174,6 @@ $("#submit-test-params").on("click", function(e){ //user click on remove text
     });
 });
 
-/*
-    STEP HEADERS AND PARAMS
- */
-
 $(".step-list-item .hover-edit-btn").on("click", function(e) { // add more headers
     var step_id = $(this).closest('.step-list-item').data('step');
 
@@ -269,10 +191,6 @@ $(".step-list-item .hover-edit-btn").on("click", function(e) { // add more heade
         }
     });
 });
-
-
-
-
 
 $(document).on("click", ".remove-webpage-param", function(e) {
     e.preventDefault();
@@ -297,45 +215,7 @@ $(document).on("click", "#add-empty-extract", function(e) {
     $("#empty-extract-list").append(inputCombo);
 });
 
-$(document).on("click", "#edit-pageload-form .submit", function(e) {
-    var step_id = $(this).closest('.modal.fade').data('step');
 
-    $.ajax({
-        type: "POST",
-        url: '/step/save_pageload',
-        data: {step_id: step_id,
-            form: $('#edit-pageload-form').serialize()
-        },
-        success: function(html, status, xhr) {
-        },
-        error: function(result, status, xhr) {
-            alert('Sorry, we could not step data at this time.');
-        }
-    });
-
-    $('.modal.fade').modal('hide');
-});
-
-$(document).on("click", "#edit-keypress-form .submit", function(e) {
-    var step_id = $(this).closest('.modal.fade').data('step');
-
-    $.ajax({
-        type: "POST",
-        url: '/step/save_keypress',
-        data: {step_id: step_id,
-            form: $('#edit-keypress-form').serialize()
-        },
-        success: function(html, status, xhr) {
-            $('.modal.fade').modal('hide');
-            $("#step-list [data-step='" + step_id + "']").replaceWith(html);
-        },
-        error: function(result, status, xhr) {
-            alert('Sorry, we could not step data at this time.');
-        }
-    });
-
-    $('.modal.fade').modal('hide');
-});
 
 $(document).on("click", ".hash-pair .remove-header-param", function(e) {
     var step_id = $(this).closest('.modal.fade').data('step');
@@ -381,25 +261,7 @@ $(document).on("click", ".empty-header-params .remove-header-param," +
     $(this).parent().remove();
 });
 
-$(document).on("click", ".save-click-step", function(e) {
-    var step_id = $(this).closest('.modal.fade').data('step');
-    var form = $(this).closest('form');
 
-    $.ajax({
-        type: "POST",
-        url: '/step/save_click',
-        data: {step_id: step_id,
-            form: form.serialize()
-        },
-        success: function(html, status, xhr) {
-            $('.modal.fade').modal('hide');
-            location.reload()
-        },
-        error: function(result, status, xhr) {
-            alert('Sorry, we could not save step data at this time.');
-        }
-    });
-});
 
 $(document).on("click", ".add-step-after, #addNewStep", function(e) {
     var step_id = $(this).closest('.step-list-item').data('step');
@@ -525,6 +387,68 @@ $(document).on("click", ".show-config-modal", function(e) {
 
 });
 
+/*
+ STEP MODAL EDIT FORMS
+ */
+
+$(document).on("click", "#edit-pageload-form .submit", function(e) {
+    var step_id = $(this).closest('.modal.fade').data('step');
+
+    $.ajax({
+        type: "POST",
+        url: '/step/save_pageload',
+        data: {step_id: step_id,
+            form: $('#edit-pageload-form').serialize()
+        },
+        success: function(html, status, xhr) {
+            $('.modal.fade').modal('hide');
+        },
+        error: function(result, status, xhr) {
+            $('.error-modal').html(result.responseText);
+        }
+    });
+});
+
+$(document).on("click", "#edit-keypress-form .submit", function(e) {
+    var step_id = $(this).closest('.modal.fade').data('step');
+
+    $.ajax({
+        type: "POST",
+        url: '/step/save_keypress',
+        data: {step_id: step_id,
+            form: $('#edit-keypress-form').serialize()
+        },
+        success: function(html, status, xhr) {
+            $('.modal.fade').modal('hide');
+            $("#step-list [data-step='" + step_id + "']").replaceWith(html);
+        },
+        error: function(result, status, xhr) {
+            alert('Sorry, we could not step data at this time.');
+        }
+    });
+
+    $('.modal.fade').modal('hide');
+});
+
+$(document).on("click", "#edit-click-form .submit", function(e) {
+    var step_id = $(this).closest('.modal.fade').data('step');
+    var form = $(this).closest('form');
+
+    $.ajax({
+        type: "POST",
+        url: '/step/save_click',
+        data: {step_id: step_id,
+            form: form.serialize()
+        },
+        success: function(html, status, xhr) {
+            $('.modal.fade').modal('hide');
+            location.reload();
+        },
+        error: function(result, status, xhr) {
+            $('.error-modal').html(result.responseText);
+        }
+    });
+});
 
 function modalFunction() {
     $('.modal.fade').on('hidden.bs.modal', function () {

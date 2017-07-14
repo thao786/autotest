@@ -7,24 +7,20 @@ class StepController < ApplicationController
     render json: true
   end
 
-  def change_wait
-    @step.update(wait: params[:wait])
-    if @step.valid?
-      render json: true
-    else
-      render json: @step.errors.full_messages, :status => 404
-    end
-  end
-
   def save_click
     form = Rack::Utils.parse_nested_query(params[:form])
-    if form['selectorType'].present?
-      @step.update(selector: {selectorType: form['selectorType'], eq: form['eq'],
-                              selector: form['selector']}.to_json)
+    if form['selectorType'].present? # selector form
+      if form['selector'].blank?
+          render plain: 'CSS Selector Missing', :status => 404
+          return
+      else
+        @step.update(selector: {selectorType: form['selectorType'],
+                                eq: form['eq'] ||= 1, selector: form['selector']}.to_json)
+      end
     elsif form['selector'] == 'coordination'
       @step.update(selector:
            {selectorType: 'coordination', x: @step.config[:x], y: @step.config[:y]}.to_json)
-    else
+    else # one of the default selectors
       @step.update(selector: @step.config[:selectors][form['selector'].to_i].to_json)
     end
 
@@ -37,8 +33,12 @@ class StepController < ApplicationController
 
   def save_pageload
     form = Rack::Utils.parse_nested_query(params[:form])
-    @step.update(webpage: form['webpage']) if form['webpage'].present?
-    @step.update(wait: form['wait']) if form['wait'].present?
+    if form['webpage'] =~ URI::regexp
+      @step.update(webpage: form['webpage'])
+      @step.update(wait: form['wait']) if form['wait'].present?
+    else
+      render plain: 'Incorrect Webpage Format', :status => 404
+    end
   end
 
   def save_pageload_curl
