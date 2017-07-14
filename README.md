@@ -15,6 +15,7 @@ REDESIGN
 
 Thao:
 - install SSL
+- create documentation page
 - make project live
 - find button text with XPaths
 - find an ORM for java to match Result to DB
