@@ -75,14 +75,62 @@ $("body").on('mouseenter', '.step-list-item', function() {
 var test_param_count = 0; //initlal text box count
 
 $("#add-test-params").click(function(e){ //on add input button click
+    $.ajax({
+        type: "GET",
+        url: '/tests/add_new_param',
+        data: {test_id: test_id},
+        success: function(html, status, xhr) {
+            $('body').append(html);
+            $('#addTestModal').modal();
+            modalFunction();
+            test_param_count++; //text box increment
+            var html = $('#copyable .empty-test-params')[0].outerHTML;
+            $('#test-params-input-list').append(html);
+        },
+        error: function(result, status, xhr) {
+            alert('Sorry, we cannot add test parameter at this time.');
+        }
+    });
+});
+
+$(document).on("click", "#add-more-test", function(e) {  
     e.preventDefault();
     test_param_count++; //text box increment
     var html = $('#copyable .empty-test-params')[0].outerHTML;
     $('#test-params-input-list').append(html);
-    $('#submit-test-params').show();
 });
 
-$("#submit-test-params").on("click", function(e){ //user click on remove text
+
+$(document).on("click", ".remove-test-param", function(e) { //user click on remove text
+    e.preventDefault();
+
+    // check if this remove active parameters
+    var key = $(this).data('key');
+    var thisEl = $(this);
+
+    if (key) {
+        $.ajax({
+            type: "POST",
+            url: '/tests/removeTestParams',
+            data: {test_id: test_id, key: key},
+            success: function(result, status, xhr) {
+                thisEl.parent('div').remove();
+                test_param_count--;
+            },
+            error: function(result, status, xhr) {
+                alert('Sorry, we could not remove a parameter at this time.');
+            }
+        });
+    } else {
+        thisEl.parent('div').remove();
+        test_param_count--;
+    }
+
+    if (test_param_count == 0)
+        $('#submit-test-params').hide();
+});
+
+$(document).on("click", "#submit-test-params", function(e) {  
     var param_names = [];
     $("#test-params-input-list input[name*='param_names']").each(function(){
         param_names.push($(this).val());
@@ -99,9 +147,11 @@ $("#submit-test-params").on("click", function(e){ //user click on remove text
         success: function(result, status, xhr) {
             $("#test_params").html(result);
             $("#test-params-input-list").html('');
+            $('#addTestModal').modal('toggle');
         },
         error: function(result, status, xhr) {
             alert('Sorry, we could not add a parameter at this time.');
+
         }
     });
 });

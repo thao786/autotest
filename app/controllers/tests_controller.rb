@@ -65,6 +65,10 @@ class TestsController < ApplicationController
     render json: true
   end
 
+  def add_new_param
+    render partial: "add_test_params"
+  end
+  
   # generate an unique session ID
   def generateSession
     @test.steps.destroy_all

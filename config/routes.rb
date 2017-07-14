@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   match 'tests/addTestParams', to: 'tests#addTestParams', via: [:post]
   match 'tests/removeTestParams', to: 'tests#removeTestParams', via: [:post]
   get 'test/:name/:id', to: 'tests#show'
+  get 'tests/add_new_param', to: 'tests#add_new_param'
   get 'tests/generateSession', to: 'tests#generateSession'
   get 'tests/stopSession', to: 'tests#stopSession'
   get 'tests/runTest', to: 'tests#runTest'
