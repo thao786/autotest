@@ -15,7 +15,7 @@
                      value="<%= @step.wait %>" required>
             </div>
             <div class="form-group">
-              <label for="typed">Typed String:</label>
+              <label for="typed">Typed String (<%= render 'doc/string_interpolation_link' %>):</label>
               <textarea name="typed" class="form-control" rows="3"><%= @step.typed %></textarea>
             </div>
 
