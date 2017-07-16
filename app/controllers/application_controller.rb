@@ -7,6 +7,6 @@ class ApplicationController < ActionController::Base
   include Util
 
   def documentation
-    render "layouts/documentation"
+    render "doc/documentation"
   end
 end
