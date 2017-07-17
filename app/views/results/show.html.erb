@@ -9,20 +9,22 @@
     <div class="col-xs-6">
       <h4>Failed Assertions: </h4>
         <% @results.each do |result| %>
-          <p><span class="glyphicon glyphicon-remove"></span>
-            <%= result.assertion.label.titleize %>
-            <% if result.step.present? %>
-                (Step <b><%= result.step.order %>):</b><br>
-            <% else %>
-                : <b><%= result.assertion.condition %></b>
-            <% end %>
-            <% if result.error.length  > 60 %>
-              <span><%=  result.error[0..60] %> <a onclick="showmore('hide<%= result.id %>','vm<%= result.id %>')"; id="vm<%= result.id %>">View More</a></span>
-              <span id="hide<%= result.id %>" class="collap" style="display:none;"><%=  result.error[61..-1] %></span>
-            <% else %>
-                <%=  result.error %>
-            <% end %>
-          </p>
+          <% if result.assertion.assertion_type != 'report' %>
+              <p><span class="glyphicon glyphicon-remove"></span>
+                <%= result.assertion.label.titleize %>
+                <% if result.step.present? %>
+                    (Step <b><%= result.step.order %>):</b><br>
+                <% else %>
+                    : <b><%= result.assertion.condition %></b>
+                <% end %>
+                <% if result.error.length  > 60 %>
+                  <span><%=  result.error[0..60] %> <a onclick="showmore('hide<%= result.id %>','vm<%= result.id %>')"; id="vm<%= result.id %>">View More</a></span>
+                  <span id="hide<%= result.id %>" class="collap" style="display:none;"><%=  result.error[61..-1] %></span>
+                <% else %>
+                    <%=  result.error %>
+                <% end %>
+              </p>
+          <% end %>
       <% end %>
     </div>
 

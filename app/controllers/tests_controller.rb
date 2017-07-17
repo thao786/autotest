@@ -11,7 +11,7 @@ class TestsController < ApplicationController
     @test = Test.find(params[:id])
     @result = nil
     if Result.where(test: @test).count > 0
-      @result = Result.order("id DESC").first
+      @result = Result.where(test: @test).order("id DESC").first
     end
   end
 

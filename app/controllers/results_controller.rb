@@ -11,7 +11,6 @@ class ResultsController < ApplicationController
 
     if @results.count > 0
       @test = @results.first.test
-      @results = @results.select {|result| result.assertion.assertion_type != 'report'}
       @assertions = Assertion.where(test: @test)
       # s3 = Aws::S3::Client.new(region:'us-east-1')
       # resp = s3.list_objects(bucket: ENV['bucket'], prefix: "#{params[:id]}-")
