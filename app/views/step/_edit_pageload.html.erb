@@ -15,7 +15,7 @@
                      value="<%= @step.wait %>" required>
             </div>
             <div class="form-group">
-              <label for="webpage">Webpage:</label>
+              <label for="webpage">Webpage (<%= render 'doc/string_interpolation_link' %>):</label>
               <input name="webpage" type="text" class="form-control"
                      value="<%= @step.webpage %>" required>
             </div>

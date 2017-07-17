@@ -14,6 +14,8 @@ REDESIGN
 
 
 Thao:
+- Start Recording shouldnt wipe out pictures
+- order should display as continuous
 - install SSL
 - create documentation page
 - make project live

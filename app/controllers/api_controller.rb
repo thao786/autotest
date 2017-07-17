@@ -30,6 +30,6 @@ class ApiController < ActionController::Base
   end
 
   def intro
-    render file: 'layouts/intro'
+    render template: 'layouts/intro'
   end
 end

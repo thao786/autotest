@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  get 'dashboard/index'
-  get 'dashboard/intro'
-  get 'application/documentation'
   get '/doc', to: 'application#documentation'
 
   get 'fonts/*font', to: 'fonts#index'
