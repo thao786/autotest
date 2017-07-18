@@ -1,9 +1,28 @@
 <h2>Wellcome to autotest!</h2>
 
 <% if user_signed_in? %>
-    <a href="/suites">Dashboard</a>
+    <a href="/suites">See your Tests</a>
 <% else %>
     <%= link_to('Login', new_user_session_path)  %>
 
     <%= link_to "Google", user_google_oauth2_omniauth_authorize_path %>
 <% end %>
+
+<h3>What is AutoTest</h3>
+<p>AutoTest records your Web and Mobile (coming soon) actions and translate them into code
+  that can be ran by Selenium and Appium. Thus, <b>little to none</b> programming knowledge
+  is required.</p>
+
+<h3>How It Works</h3>
+<p>
+<h5><a href="/doc">Web</a></h5>
+  You need to install our Chrome extension and activate it. To record a test, you need to create a
+test under a test suite and click "Start Recording Steps". The extension will listen to your
+actions on Chrome Browser and give a replicable steps after. You can edit the step list once
+recording is complete.
+</p>
+
+<p>
+  A test can be ran anytime when you click "Run Test". Once the running is complete, you will get
+  a result page that includes screenshots and assertion results.
+</p>

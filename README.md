@@ -1,6 +1,8 @@
 Thuy:
-- nest extract into edit modal
 - Add Step button fails
+- order should display as continuous
+- Failed Assertion 0 -> none
+
 
 
 
@@ -15,7 +17,7 @@ REDESIGN
 
 Thao:
 - Start Recording shouldnt wipe out pictures
-- order should display as continuous
+- next action should happens even if current page is not done loading
 - install SSL
 - create documentation page
 - make project live
