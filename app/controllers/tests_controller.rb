@@ -122,7 +122,7 @@ class TestsController < ApplicationController
     @test.update(running: true)
     %x( java -jar "#{ENV['HOME']}/sel.jar" "#{@test.id}" )
     @test.update(running: false)
-    render json: true
+    render json: @test.id
   end
 
   private

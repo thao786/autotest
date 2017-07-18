@@ -100,7 +100,6 @@ $(document).on("click", "#add-more-test", function(e) {
     $('#test-params-input-list').append(html);
 });
 
-
 $(document).on("click", ".remove-test-param", function(e) { //user click on remove text
     e.preventDefault();
 
@@ -492,6 +491,37 @@ $(document).on("click", "#edit-scroll-form .submit", function(e) {
         }
     });
 });
+
+$(document).on("click", "#runTest", function(e) {
+    // change to spinning icon
+    $('<button id="showRunningTest" type="button" class="btn btn-danger" disabled>' +
+        '<span class="glyphicon glyphicon-repeat normal-left-spinner"></span> ' +
+        'Test Running</button>').insertAfter('#runTest');
+    $('#runTest').hide();
+
+    $.ajax({
+        type: "GET",
+        url: '/tests/runTest',
+        data: {test_id: test_id},
+        success: function(runId, status, xhr) {
+            $('#showRunningTest').remove();
+            $('#runTest').show();
+            // open result page in new tab
+            var win = window.open('/results/' + runId, '_blank');
+            if (win) {
+                //Browser has allowed it to be opened
+                win.focus();
+            } else {
+                //Browser has blocked it
+                alert('Please allow popups for this website');
+            }
+        },
+        error: function(result, status, xhr) {
+            alert('Sorry, we could not run this test at this time.');
+        }
+    });
+});
+
 
 function modalFunction() {
     $('.modal.fade').on('hidden.bs.modal', function () {

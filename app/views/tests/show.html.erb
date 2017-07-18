@@ -9,7 +9,7 @@
 <% else %>
     <button id="startRecording" class="btn-primary btn">Start recording steps</button>
     <% if @test.running %>
-        <button type="button" class="btn btn-danger" disabled>
+        <button id="showRunningTest" type="button" class="btn btn-danger" disabled>
           <span class="glyphicon glyphicon-repeat normal-left-spinner"></span>
           Test Running
         </button>
