@@ -40,6 +40,7 @@ gem 'json'
 gem 'aws-sdk'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
+gem 'selenium-webdriver'
 
 
 group :development do
