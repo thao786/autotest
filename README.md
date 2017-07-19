@@ -16,10 +16,8 @@ REDESIGN
 
 
 Thao:
-- Start Recording shouldnt wipe out pictures
 - next action should happens even if current page is not done loading
 - install SSL
-- create documentation page
 - make project live
 - find button text with XPaths
 - find an ORM for java to match Result to DB
