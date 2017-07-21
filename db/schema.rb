@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 20170713000338) do
     t.text     "error",        limit: 4294967295
     t.string   "webpage"
     t.datetime "created_at",                      default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at",                      default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at",                                                           null: false
     t.index ["assertion_id"], name: "index_results_on_assertion_id", using: :btree
     t.index ["step_id"], name: "index_results_on_step_id", using: :btree
     t.index ["test_id"], name: "index_results_on_test_id", using: :btree
@@ -138,8 +138,6 @@ ActiveRecord::Schema.define(version: 20170713000338) do
     t.datetime "session_expired_at"
     t.text     "description",        limit: 65535
     t.boolean  "active",                           default: true, null: false
-    t.boolean  "running",                           default: false, null: false
-    t.string   "params"
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
     t.index ["suite_id"], name: "index_tests_on_suite_id", using: :btree
