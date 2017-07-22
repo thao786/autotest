@@ -18,6 +18,7 @@ REDESIGN
 Thao:
 - next action should happens even if current page is not done loading
 - install SSL
+- escape quote in CSS Selector
 - make project live
 - find button text with XPaths
 - find an ORM for java to match Result to DB
