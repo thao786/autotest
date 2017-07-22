@@ -88,8 +88,8 @@
     <div class="col-sm-7">
       <div id="step-list">
         <% if @test.steps.count > 0 %>
-            <% @test.steps.order('steps.order').each do |step| %>
-                <%= render "step/show", step: step %>
+            <% @test.steps.order('steps.order').each_with_index do |step, index| %>
+                <%= render "step/show", step: step , index: index %>
             <% end %>
         <% else %>
             <p>No step to display.</p>

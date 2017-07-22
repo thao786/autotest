@@ -8,30 +8,34 @@
   <div class="row">
     <div class="col-xs-6">
       <h4>Failed Assertions: </h4>
-        <% @results.each do |result| %>
-          <% if result.assertion.assertion_type != 'report' %>
-              <p><span class="glyphicon glyphicon-remove"></span>
-                <%= result.assertion.label.titleize %>
-                <% if result.step.present? %>
-                    (Step <b><%= result.step.order %>):</b><br>
-                <% else %>
-                    : <b><%= result.assertion.condition %></b>
-                <% end %>
-                <% if result.error.length  > 60 %>
-                  <span><%=  result.error[0..60] %> <a onclick="showmore('hide<%= result.id %>','vm<%= result.id %>')"; id="vm<%= result.id %>">View More</a></span>
-                  <span id="hide<%= result.id %>" class="collap" style="display:none;"><%=  result.error[61..-1] %></span>
-                <% else %>
-                    <%=  result.error %>
-                <% end %>
-              </p>
+        <% if @results.size > 1 %>
+          <% @results.each do |result| %>
+            <% if result.assertion.assertion_type != 'report' %>
+                <p><span class="glyphicon glyphicon-remove"></span>
+                  <%= result.assertion.label.titleize %>
+                  <% if result.step.present? %>
+                      (Step <b><%= result.step.order %>):</b><br>
+                  <% else %>
+                      : <b><%= result.assertion.condition %></b>
+                  <% end %>
+                  <% if result.error.length  > 60 %>
+                    <span><%=  result.error[0..60] %> <a onclick="showmore('hide<%= result.id %>','vm<%= result.id %>')"; id="vm<%= result.id %>">View More</a></span>
+                    <span id="hide<%= result.id %>" class="collap" style="display:none;"><%=  result.error[61..-1] %></span>
+                  <% else %>
+                      <%=  result.error %>
+                  <% end %>
+                </p>
+            <% end %>
           <% end %>
-      <% end %>
+        <% else %>
+          <p>No failed errors!</p>
+        <% end %>
     </div>
 
     <div class="col-xs-6">
-      <% @test.steps.each do |step| %>
+      <% @test.steps.each_with_index do |step , index| %>
           <% url = step.screenShot(@runId) %>
-          Step <b><%= step.order %></b>: <%= step.title %> <br>
+          Step <b><%= index + 1 %></b>: <%= step.title %> <br>
           <a href="<%= url %>">
             <img class="step-screenshot" height="200" src="<%= url %>">
           </a><br><br>

@@ -186,7 +186,9 @@ $(document).on("click", ".delete-step", function(e) {
             dataType: "text",
             data: {step_id: step_id},
             success: function(result, status, xhr) {
-                list_item.remove();
+                list_item.remove();           
+                location.reload();
+
             }
         });
     }
