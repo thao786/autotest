@@ -2,11 +2,24 @@ module ResultsHelper
   def runSteps(test, checkAssertions = true)
     runId = test.id
     driver = Selenium::WebDriver.for :chrome
+    tabs = [] # the first tab is always blank for easier management
     steps = Step.where(test: test)
     steps.each { |step|
       if checkAssertions # ran pre-tests (only available to main test)
         Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first)
       end
+
+      # check if we need to switch tab
+      current_tab_id = driver.execute_script "return window.name"
+      tab_id = "#{step.windowId}-#{step.tabId}"
+      if current_tab_id != tab_id
+        if tabs.exclude? tab_id
+          driver.execute_script "window.open('_blank', '#{tab_id}')"
+          tabs << tab_id
+        end
+        driver.switch_to.window tab_id
+      end
+
 
       begin
         case step.action_type
@@ -98,6 +111,20 @@ module ResultsHelper
       `"rm #{screenshot}"` # delete local screenshot
 
       if checkAssertions # check assertions
+        # check 404 and 500 errors
+        logs = driver.manage.logs.get('browser')
+        logs.each { |log|
+          if log.include? 'Failed to load resource: the server responded with a status'
+            Result.create(test: test, webpage: driver.current_url,
+                          assertion: Assertion.where(assertion_type: "http-200").first,
+                          runId: runId, error: log)
+
+          end
+        }
+
+        assertions = Assertion.find(test: test, active: true)
+        assertions.each { |assertion|
+        }
       end
 
       driver.quit
