@@ -41,6 +41,8 @@ gem 'aws-sdk'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'selenium-webdriver'
+gem 'headless'
+gem 'chromedriver-helper'
 
 
 group :development do
