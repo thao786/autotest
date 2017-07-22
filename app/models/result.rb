@@ -3,7 +3,7 @@ class Result < ApplicationRecord
   belongs_to :step
   belongs_to :assertion
 
-  validates :test, :name, presence: true
+  validates :test, presence: true
 
   def self.universal_assertions
     ["http-200", "ajax-200", "report", "step-succeed", "match-url"]

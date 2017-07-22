@@ -5,6 +5,7 @@ module ResultsHelper
     steps = Step.where(test: test)
     steps.each { |step|
       if checkAssertions # ran pre-tests (only available to main test)
+        Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first)
       end
 
       begin
@@ -86,17 +87,20 @@ module ResultsHelper
 
       # save screenshot
       md5 = Digest::MD5.hexdigest "#{runId}-#{step.order}"
-      screenshot = "#{ENV['picDir']}#{md5}.jpg"
+      screenshot = "#{ENV['picDir']}#{md5}.png"
       driver.save_screenshot screenshot
 
       # upload to AWS
-      s3 = Aws::S3::Client.new(region:'us-east-1')
-      obj = s3.bucket(ENV['bucket']).object("#{md5}.jpg")
-      obj.upload_file(screenshot)
-       # delete local screenshot
+      client = Aws::S3::Client.new(region: 'us-east-1')
+      resource = Aws::S3::Resource.new(client: client)
+      bucket = resource.bucket(ENV['bucket'])
+      bucket.object("#{md5}.png").upload_file(screenshot)
+      `"rm #{screenshot}"` # delete local screenshot
 
       if checkAssertions # check assertions
       end
+
+      driver.quit
     }
   end
 end

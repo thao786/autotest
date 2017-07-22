@@ -61,6 +61,6 @@ class Step < ApplicationRecord
 
   def screenShot(runId)
     filename = Digest::MD5.hexdigest "#{runId}-#{order}"
-    "https://s3.amazonaws.com/#{ENV['bucket']}/#{filename}.jpg"
+    "https://s3.amazonaws.com/#{ENV['bucket']}/#{filename}.png"
   end
 end

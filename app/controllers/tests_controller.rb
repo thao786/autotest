@@ -120,7 +120,7 @@ class TestsController < ApplicationController
   def runTest
     Result.destroy_all(test: @test) # only 1 test can be ran at a time
     @test.update(running: true)
-    %x( java -jar "#{ENV['HOME']}/sel.jar" "#{@test.id}" )
+    helper.runSteps @test
     @test.update(running: false)
     render json: @test.id
   end
