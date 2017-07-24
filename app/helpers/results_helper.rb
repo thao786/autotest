@@ -20,7 +20,6 @@ module ResultsHelper
         driver.switch_to.window tab_id
       end
 
-
       begin
         case step.action_type
           when 'pageload'
@@ -29,7 +28,7 @@ module ResultsHelper
             # load headers and params
             driver.get step.webpage
           when 'scroll'
-            driver.execute_script("scroll('#{step.scrollTop}, #{step.scrollTop}')")
+            driver.execute_script("scroll(#{step.scrollTop}, #{step.scrollTop})")
           when 'keypress'
             driver.action.send_keys(step.typed).perform
           when 'click'
@@ -109,25 +108,34 @@ module ResultsHelper
       bucket = resource.bucket(ENV['bucket'])
       bucket.object("#{md5}.png").upload_file(screenshot)
       `"rm #{screenshot}"` # delete local screenshot
+    }
 
-      if checkAssertions # check assertions
-        # check 404 and 500 errors
+    if checkAssertions # check assertions
+      tabs.each { |tab_id|
+        driver.switch_to.window tab_id
+
+        # check 404 and 500 errors for ALL tabs
         logs = driver.manage.logs.get('browser')
         logs.each { |log|
           if log.include? 'Failed to load resource: the server responded with a status'
             Result.create(test: test, webpage: driver.current_url,
                           assertion: Assertion.where(assertion_type: "http-200").first,
                           runId: runId, error: log)
-
           end
         }
 
-        assertions = Assertion.find(test: test, active: true)
+        assertions = Assertion.where(test: test, active: true)
         assertions.each { |assertion|
+          if assertion.webpage.blank? || assertion.webpage == driver.current_url
+            if driver.execute_script(assertion.condition) != 'true'
+              Result.create(test: test, webpage: driver.current_url,
+                            assertion: assertion, runId: runId)
+            end
+          end
         }
-      end
+      }
+    end
 
-      driver.quit
-    }
+    driver.quit
   end
 end
