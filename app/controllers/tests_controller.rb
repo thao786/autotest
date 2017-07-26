@@ -120,7 +120,9 @@ class TestsController < ApplicationController
   def runTest
     Result.where(test: @test).destroy_all # only 1 test can be ran at a time
     @test.update(running: true)
-    helpers.runSteps @test
+    driver = Selenium::WebDriver.for :chrome
+    helpers.runSteps(driver, @test)
+    driver.quit
     @test.update(running: false)
     render json: @test.id
   end

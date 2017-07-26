@@ -16,6 +16,7 @@ Thao:
 - next action should happens even if current page is not done loading
 - install SSL
 - make project live
+- use OCR to read page's text
 
 
 
@@ -23,12 +24,11 @@ Thao:
 
 WRITE usage tutorials:
 - link to usage page from all keywords
-- create video to demonstrate concepts (get a guy's perfect english)
+- create video to demonstrate concepts (get someone's perfect english)
 - warn users about pageload step: they might need to delete this
 - the assertion should output TRUE
 - emphasize Autotest can handle multiple tabs
-
-
+- make it clear that Autotest use OCR to see visible text
 
 
 

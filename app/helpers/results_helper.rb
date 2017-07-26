@@ -1,12 +1,14 @@
 module ResultsHelper
-  def runSteps(test, checkAssertions = true)
+  def runSteps(driver, test, checkAssertions = true)
     runId = test.id
-    driver = Selenium::WebDriver.for :chrome
     tabs = [] # the first tab is always blank for easier management
     steps = Step.where(test: test)
     steps.each { |step|
       if checkAssertions # ran pre-tests (only available to main test)
         Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first)
+        step.pre_tests.each { |pre_test|
+          runSteps(driver, pre_test,false)
+        }
       end
 
       # check if we need to switch tab
@@ -19,6 +21,8 @@ module ResultsHelper
         end
         driver.switch_to.window tab_id
       end
+
+      # wait
 
       begin
         case step.action_type
@@ -106,8 +110,8 @@ module ResultsHelper
       client = Aws::S3::Client.new(region: 'us-east-1')
       resource = Aws::S3::Resource.new(client: client)
       bucket = resource.bucket(ENV['bucket'])
-      bucket.object("#{md5}.png").upload_file(screenshot)
-      `"rm #{screenshot}"` # delete local screenshot
+      bucket.object("#{md5}.png").upload_file(screenshot, acl:'public-read')
+      File.delete screenshot # delete local screenshot
     }
 
     if checkAssertions # check assertions
@@ -127,7 +131,26 @@ module ResultsHelper
         assertions = Assertion.where(test: test, active: true)
         assertions.each { |assertion|
           if assertion.webpage.blank? || assertion.webpage == driver.current_url
-            if driver.execute_script(assertion.condition) != 'true'
+            condition = assertion.condition
+            passed = case assertion.assertion_type
+                       when 'text-in-page'
+                         text = driver.execute_script 'return document.body.textContent'
+                         text.include? assertion.condition
+                       when 'text-not-in-page'
+                         text = driver.execute_script 'return document.body.textContent'
+                         text.exclude? assertion.condition
+                       when 'html-in-page'
+                         source = driver.execute_script 'return document.documentElement.outerHTML'
+                         source.include? assertion.condition
+                       when 'html-not-in-page'
+                         source = driver.execute_script 'return document.documentElement.outerHTML'
+                         source.exclude? assertion.condition
+                       when 'page-title'
+                         driver.execute_script('return document.title').include? assertion.condition
+                       else # self-enter JS command
+                         driver.execute_script(assertion.condition) == 'true'
+                     end
+            unless passed
               Result.create(test: test, webpage: driver.current_url,
                             assertion: assertion, runId: runId)
             end
@@ -135,7 +158,5 @@ module ResultsHelper
         }
       }
     end
-
-    driver.quit
   end
 end
