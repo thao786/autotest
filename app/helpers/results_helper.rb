@@ -2,12 +2,18 @@ module ResultsHelper
   def runSteps(driver, test, checkAssertions = true)
     runId = test.id
     tabs = [] # the first tab is always blank for easier management
+
+    params = {} # initiate test params and extraction
+    test.test_params { |param| # eval '"123 #{456.to_s} 789"'
+      params[param.label] = param.val
+    }
+
     steps = Step.where(test: test)
     steps.each { |step|
       if checkAssertions # ran pre-tests (only available to main test)
         Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first)
         step.pre_tests.each { |pre_test|
-          runSteps(driver, pre_test,false)
+          runSteps(driver, pre_test, false)
         }
       end
 
@@ -101,6 +107,8 @@ module ResultsHelper
                       runId: runId, error: error)
       end
 
+      # add extractions to params
+
       # save screenshot
       md5 = Digest::MD5.hexdigest "#{runId}-#{step.order}"
       screenshot = "#{ENV['picDir']}#{md5}.png"
@@ -135,18 +143,18 @@ module ResultsHelper
             passed = case assertion.assertion_type
                        when 'text-in-page'
                          text = driver.execute_script 'return document.body.textContent'
-                         text.include? assertion.condition
+                         text.include? condition
                        when 'text-not-in-page'
                          text = driver.execute_script 'return document.body.textContent'
-                         text.exclude? assertion.condition
+                         text.exclude? condition
                        when 'html-in-page'
                          source = driver.execute_script 'return document.documentElement.outerHTML'
-                         source.include? assertion.condition
+                         source.include? condition
                        when 'html-not-in-page'
                          source = driver.execute_script 'return document.documentElement.outerHTML'
-                         source.exclude? assertion.condition
+                         source.exclude? condition
                        when 'page-title'
-                         driver.execute_script('return document.title').include? assertion.condition
+                         driver.execute_script('return document.title').include? condition
                        else # self-enter JS command
                          driver.execute_script(assertion.condition) == 'true'
                      end

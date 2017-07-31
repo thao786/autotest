@@ -1,8 +1,5 @@
 Thuy:
 
-
-
-
 REDESIGN
 - redesign login screens
 - redesign modal errors
