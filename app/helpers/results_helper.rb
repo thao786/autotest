@@ -1,19 +1,28 @@
 module ResultsHelper
-  def runSteps(driver, test, checkAssertions = true)
-    runId = test.id
-    tabs = [] # the first tab is always blank for easier management
+  def extractParams(paramStr, param)
+    if /#\{.+\}/ =~ param # eval '"123 #{456.to_s} 789"'
+      eval "#{paramStr}
+#{param}"
+    else
+      param
+    end
+  end
 
-    params = {} # initiate test params and extraction
-    test.test_params { |param| # eval '"123 #{456.to_s} 789"'
-      params[param.label] = param.val
+  def runSteps(driver, test, runId, checkAssertions = true)
+    tabs = [] # the first tab is always blank for easier management
+    mediaFolder = "#{ENV['picDir']}#{runId}/"
+    paramStr = ''
+    test.test_params.each { |param|
+      paramStr = "#{paramStr}
+#{param.label} = \"#{param.val}\""
     }
 
     steps = Step.where(test: test)
     steps.each { |step|
       if checkAssertions # ran pre-tests (only available to main test)
-        Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first)
+        Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first, runId: runId)
         step.pre_tests.each { |pre_test|
-          runSteps(driver, pre_test, false)
+          runSteps(driver, pre_test, runId, false)
         }
       end
 
@@ -33,18 +42,18 @@ module ResultsHelper
       begin
         case step.action_type
           when 'pageload'
-            driver.get step.webpage
+            driver.get extractParams(paramStr,step.webpage)
           when 'pageloadCurl'
             # load headers and params
-            driver.get step.webpage
+            driver.get extractParams(paramStr,step.webpage)
           when 'scroll'
-            driver.execute_script("scroll(#{step.scrollTop}, #{step.scrollTop})")
+            driver.execute_script("scroll(#{extractParams(paramStr,step.scrollTop)}, #{extractParams(paramStr,step.scrollLeft)})")
           when 'keypress'
-            driver.action.send_keys(step.typed).perform
+            driver.action.send_keys(extractParams(paramStr,step.typed)).perform
           when 'click'
-            type = step.selector.selectorType
-            selector = step.selector.selector
-            eq = step.selector.eq
+            type = extractParams(paramStr,step.selector.selectorType)
+            selector = extractParams(paramStr,step.selector.selector)
+            eq = extractParams(paramStr,step.selector.eq)
             element = case type # first, find DOM with WebDriver
                         when 'id'
                           driver.find_elements(:id => selector).first
@@ -108,10 +117,15 @@ module ResultsHelper
       end
 
       # add extractions to params
+      step.extracts.each { |extract|
+        extract_value = driver.execute_script extract.command
+        paramStr = "#{paramStr}
+#{extract.title} = \"#{extract_value}\""
+      }
 
       # save screenshot
       md5 = Digest::MD5.hexdigest "#{runId}-#{step.order}"
-      screenshot = "#{ENV['picDir']}#{md5}.png"
+      screenshot = "#{mediaFolder}#{md5}.png"
       driver.save_screenshot screenshot
 
       # upload to AWS
@@ -119,7 +133,6 @@ module ResultsHelper
       resource = Aws::S3::Resource.new(client: client)
       bucket = resource.bucket(ENV['bucket'])
       bucket.object("#{md5}.png").upload_file(screenshot, acl:'public-read')
-      File.delete screenshot # delete local screenshot
     }
 
     if checkAssertions # check assertions
@@ -139,7 +152,7 @@ module ResultsHelper
         assertions = Assertion.where(test: test, active: true)
         assertions.each { |assertion|
           if assertion.webpage.blank? || assertion.webpage == driver.current_url
-            condition = assertion.condition
+            condition = extractParams(paramStr, assertion.condition)
             passed = case assertion.assertion_type
                        when 'text-in-page'
                          text = driver.execute_script 'return document.body.textContent'

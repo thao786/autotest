@@ -120,9 +120,13 @@ class TestsController < ApplicationController
   def runTest
     Result.where(test: @test).destroy_all # only 1 test can be ran at a time
     @test.update(running: true)
+    begin Dir.mkdir "#{ENV['picDir']}#{@test.id}"
+    rescue
+    end
     driver = Selenium::WebDriver.for :chrome
-    helpers.runSteps(driver, @test)
+    helpers.runSteps(driver, @test, @test.id)
     driver.quit
+    FileUtils.remove_entry "#{ENV['picDir']}#{@test.id}"
     @test.update(running: false)
     render json: @test.id
   end
