@@ -45,6 +45,17 @@ class StepController < ApplicationController
     @step.update(active: true) if @step.complete?
   end
 
+  def save_config
+    form = Rack::Utils.parse_nested_query(params[:form])
+    unless form['extract_names'].nil?
+      form['extract_names'].each do |en|
+        if en.match?(/\s/) || en.empty?
+          render plain: 'Blank not allowed', :status => 404
+        end
+      end
+    end
+  end
+
   def save_pageload_curl
     form = Rack::Utils.parse_nested_query(params[:form])
     @step.update(webpage: form['webpage']) if form['webpage'].present?
@@ -151,6 +162,16 @@ class StepController < ApplicationController
   end
 
   def saveConfig
+    #validate input
+    form = Rack::Utils.parse_nested_query(params[:form])
+    unless form['extract_names'].nil?
+      form['extract_names'].each do |en|
+        if en.match?(/\s/) || en.empty?
+          render plain: 'Blank not allowed', :status => 404 and return
+        end
+      end
+    end
+
     # save pre-steps
     PrepTest.destroy_all(step: @step)
     params[:pre_run_tests].each { |test_id|

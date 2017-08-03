@@ -434,6 +434,25 @@ $(document).on("click", "#edit-pageload-form .submit", function(e) {
     });
 });
 
+$(document).on("click", "#save-config .submit", function(e) {
+    var step_id = $(this).closest('.modal.fade').data('step');
+
+    $.ajax({
+        type: "POST",
+        url: '/step/saveConfig',
+        data: {step_id: step_id,
+            form: $('#save-config').serialize()
+        },
+        success: function(html, status, xhr) {
+            $('.modal.fade').modal('hide');
+            location.reload();
+        },
+        error: function(result, status, xhr) {
+            $('.error-modal').html(result.responseText);
+        }
+    });
+});
+
 $(document).on("click", "#edit-keypress-form .submit", function(e) {
     var step_id = $(this).closest('.modal.fade').data('step');
 
