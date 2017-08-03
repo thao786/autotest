@@ -2,12 +2,21 @@
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-xs-1">
-      <a href="#suite"> Suite</a>
+    <div class="col-xs-2" style="padding: 0px;">
+      <ul style="list-style: none; padding: 0px;">
+        <li><a href="#suite"> Suite</a></li>
+        <li><a href="#suite"> Suite</a></li>
+        <li><a href="#test"> Test</a></li>
+        <li><a href="#step"> Step</a></li>
+        <li><a href="#assertion"> Assertion</a></li>
+        <li><a href="#testParam"> Test Parameters</a></li>
+        <li><a href="#extract"> Page Extractions</a></li>
+        <li><a href="#rubyInterpolate"> Ruby Interpolation</a></li>
+      </ul>
+
     </div>
 
-    <div id="definitions" class="col-xs-11">
-
+    <div id="definitions" class="col-xs-10">
       <div id="suite">
         A <b>suite</b> contains several tests.
       </div>
@@ -18,10 +27,13 @@
 
       <div id="step">
         <h4>Step</h4>
-        A <b>test</b> consists of one or several steps. Autotest generates them as you perform the actions on browsers. You can edit, add or remove them after. A step can be one of the following types:
+        A test consists of one or several <b>steps</b>. Autotest generates them as you perform the actions on browsers. You can edit, add or remove them (not during the recording). Step  types:
         <ul>
-          <li>tgr</li>
-          <li>nhgf</li>
+          <li><b>pageload</b>: A pageload can result from the user manually loading new webpage from Address Bar, or from a click, etc. In later cases, user might want to delete the pageload step to prevent double page loading.</li>
+          <li><b>pageloadCurl</b>: request made by ping. User can set headers, HTTP methods (GET/POST) and parameters.</li>
+          <li><b>scroll</b></li>
+          <li><b>keypress</b></li>
+          <li><b>click</b></li>
         </ul>
       </div>
 
@@ -35,7 +47,7 @@
         You can define parameters unique to a test such as Headers and use it to fill in step's values.
       </div>
 
-      <div id="testParam">
+      <div id="extract">
         <h4>Page Extractions</h4>
         You can extract values from web page or mobile screen with JavaScript once it's done loading. Those values are availabe to use in step form in consequential steps.
       </div>
@@ -44,10 +56,6 @@
         <h4>Ruby Interpolation</h4>
         You can insert predefined parameters or page extractions to field similar to <a href="http://www.rubydoc.info/github/rubyworks/facets/String.interpolate">Ruby's string interpolation</a>.
       </div>
-
-
-
-
 
     </div>
   </div>
