@@ -1,5 +1,5 @@
 <div class="step-list-item <%= step.complete? ? '' : 'non-complete-step' %>" data-step="<%= step.id %>">
-  <span>Step <b><%= index + 1 %></b>: </span>
+  <span>Step <b><%= (defined?(index) ? index : step.order)  + 1 %></b>: </span>
   wait <span class="wait"><b><%= step.wait %></b></span> millisec, then<br>
   <%= Step.web_step_types[step.action_type] %>
 
