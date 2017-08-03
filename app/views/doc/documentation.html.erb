@@ -1,14 +1,55 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Autotest Documentation</title>
-  <%= csrf_meta_tags %>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <%= stylesheet_link_tag "application", media: "all" %>
-</head>
+<h2>Autotest Documentation</h2>
 
-<body>
-all explanation here
-</body>
-</html>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-1">
+      <a href="#suite"> Suite</a>
+    </div>
+
+    <div id="definitions" class="col-xs-11">
+
+      <div id="suite">
+        A <b>suite</b> contains several tests.
+      </div>
+
+      <div id="test">
+        A <b>test</b> let you record web and mobile (android/iphone) actions.
+      </div>
+
+      <div id="step">
+        <h4>Step</h4>
+        A <b>test</b> consists of one or several steps. Autotest generates them as you perform the actions on browsers. You can edit, add or remove them after. A step can be one of the following types:
+        <ul>
+          <li>tgr</li>
+          <li>nhgf</li>
+        </ul>
+      </div>
+
+      <div id="assertion">
+        <h4>Assertion</h4>
+        An <b>assertion</b> defines how a test should turn out. You can use the pre-defined assertions, or write your own in Javascript. If you decide to write your own, the assertion should output Boolean true to be marked correct. Anything else is deemed failed.
+      </div>
+
+      <div id="testParam">
+        <h4>Test Parameters</h4>
+        You can define parameters unique to a test such as Headers and use it to fill in step's values.
+      </div>
+
+      <div id="testParam">
+        <h4>Page Extractions</h4>
+        You can extract values from web page or mobile screen with JavaScript once it's done loading. Those values are availabe to use in step form in consequential steps.
+      </div>
+
+      <div id="rubyInterpolate">
+        <h4>Ruby Interpolation</h4>
+        You can insert predefined parameters or page extractions to field similar to <a href="http://www.rubydoc.info/github/rubyworks/facets/String.interpolate">Ruby's string interpolation</a>.
+      </div>
+
+
+
+
+
+    </div>
+  </div>
+</div>
+
