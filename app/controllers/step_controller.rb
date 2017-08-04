@@ -174,17 +174,17 @@ class StepController < ApplicationController
 
     # save pre-steps
     PrepTest.destroy_all(step: @step)
-    params[:pre_run_tests].each { |test_id|
+    form['pre_run_tests'].each { |test_id|
       test = Test.find test_id
       order = PrepTest.where(suite: @suite, test: test).maximum(:order)
       order ||= 0
       PrepTest.create(step: @step, test: test, order: order+1)
-    } if params[:pre_run_tests].present?
+    } if params['pre_run_tests'].present?
 
     # save extracts
-    params[:extract_names].each_with_index { |name, index|
-      Extract.create(step: @step, title: name, command: params[:extract_js][index])
-    } if params[:extract_names].present?
+    form['extract_names'].each_with_index { |name, index|
+      Extract.create(step: @step, title: name, command: form['extract_js'][index])
+    } if form['extract_names'].present?
 
     redirect_to "/test/#{@step.test.name}/#{@step.test.id}"
   end
