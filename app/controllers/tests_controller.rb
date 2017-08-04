@@ -103,8 +103,10 @@ class TestsController < ApplicationController
     names = params[:param_names]
     values = params[:param_values]
     names.each_with_index { |value, index|
-      if names[index].present?
-        TestParam.create(test: @test, label: names[index], val: values[index])
+      if names[index].nil? || names[index].match?(/\s/) || names[index].empty?
+          render plain: 'Blank not allowed', :status => 404 and return
+      else
+          TestParam.create(test: @test, label: names[index], val: values[index])
       end
     }
     render partial: 'tests/test_params', :status => 200
