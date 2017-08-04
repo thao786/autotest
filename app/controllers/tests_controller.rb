@@ -123,6 +123,10 @@ class TestsController < ApplicationController
     begin Dir.mkdir "#{ENV['picDir']}#{@test.id}"
     rescue
     end
+    unless Rails.env.development?
+      headless = Headless.new
+      headless.start
+    end
     driver = Selenium::WebDriver.for :chrome
     helpers.runSteps(driver, @test, @test.id)
     driver.quit
