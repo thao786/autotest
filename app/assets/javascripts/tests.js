@@ -150,8 +150,6 @@ $(document).on("click", "#submit-test-params", function(e) {
         },
         error: function(result, status, xhr) {
             $('.error-modal').html(result.responseText);
-            alert('Sorry, we could not add a parameter at this time.');
-
         }
     });
 });
