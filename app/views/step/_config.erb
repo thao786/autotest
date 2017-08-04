@@ -12,7 +12,10 @@
           <input type="hidden" name="step_id" value="<%= @step.id %>">
 
           <div class="form-group">
-            <label for="pre_run_tests">Perform before the actual test (Ex: Log in)</label>
+            <label for="pre_run_tests">
+              <a>Pre tests</a> to run before the step (Ex: Log in)
+
+            </label>
             <select data-placeholder="Select Tests" class="chosen-select form-control"
                     multiple name="pre_run_tests[]">
               <% Suite.where(user: current_user).each do |s| %>
