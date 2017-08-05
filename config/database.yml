@@ -17,8 +17,11 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: autoTest
+  database: autotest
 
 production:
   <<: *default
-  database: autoTest
+  username: root
+  password: root
+  socket: /Applications/MAMP/tmp/mysql/mysql.sock
+  database: autotest
