@@ -11,6 +11,7 @@ REDESIGN
 
 Thao:
 - next action should happens even if current page is not done loading
+- resize screenshot
 - install SSL
 - make project live
 - use OCR to read page's text

@@ -17,11 +17,16 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: autotest
+  host: <%= ENV['RDS_HOSTNAME'] %>
+  port: <%= ENV['RDS_PORT'] %>
+  username: <%= ENV['RDS_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] %>
+  database: <%= ENV['RDS_DB_NAME'] %>
 
 production:
   <<: *default
-  username: root
-  password: root
-  socket: /Applications/MAMP/tmp/mysql/mysql.sock
-  database: autotest
+  host: <%= ENV['RDS_HOSTNAME'] %>
+  port: <%= ENV['RDS_PORT'] %>
+  username: <%= ENV['RDS_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] %>
+  database: <%= ENV['RDS_DB_NAME'] %>

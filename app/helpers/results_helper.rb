@@ -10,7 +10,7 @@ module ResultsHelper
 
   def runSteps(driver, test, runId, checkAssertions = true)
     tabs = [] # the first tab is always blank for easier management
-    mediaFolder = "#{ENV['picDir']}#{runId}/"
+    mediaFolder = "#{ENV['HOME']}/#{ENV['picDir']}/#{runId}"
     paramStr = ''
     test.test_params.each { |param|
       paramStr = "#{paramStr}
