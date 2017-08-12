@@ -52,7 +52,7 @@ class Step < ApplicationRecord
       when 'keypress'
         noun = typed
       when 'click'
-        noun = "on #{ApplicationController.helpers.translateClickSelector JSON.parse(selector,:symbolize_names => true)}"
+        noun = "on #{ApplicationController.helpers.translateClickSelector selector}"
       else
         true
     end
