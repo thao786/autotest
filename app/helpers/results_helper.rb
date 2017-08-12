@@ -29,7 +29,7 @@ module ResultsHelper
       # check if we need to switch tab
       current_tab_id = driver.execute_script "return window.name"
       tab_id = "#{step.windowId}-#{step.tabId}"
-      if tab_id.present? && current_tab_id != tab_id
+      if step.tabId.present? && current_tab_id != tab_id
         if tabs.exclude? tab_id
           driver.execute_script "window.open('_blank', '#{tab_id}')"
           tabs << tab_id
@@ -47,7 +47,7 @@ module ResultsHelper
             # load headers and params
             driver.get extractParams(paramStr,step.webpage)
           when 'scroll'
-            driver.execute_script("scroll(#{extractParams(paramStr,step.scrollTop)}, #{extractParams(paramStr,step.scrollLeft)})")
+            driver.execute_script("scroll(#{extractParams(paramStr,step.scrollLeft)}, #{extractParams(paramStr,step.scrollTop)})")
           when 'keypress'
             driver.action.send_keys(extractParams(paramStr,step.typed)).perform
           when 'click'
