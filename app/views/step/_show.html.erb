@@ -11,7 +11,7 @@
           <span class="scrollLeft"><b><%= step.scrollLeft %></b></span> px
           <span class="scrollTop"><b><%= step.scrollTop %></b></span> px
 
-      <% when 'click' %> on <strong><%= translateClickSelector JSON.parse(step.selector,:symbolize_names => true) %></strong>
+      <% when 'click' %> on <strong><%= translateClickSelector step.selector %></strong>
 
       <% when 'keypress' %>
           <b><%= step.typed %></b>

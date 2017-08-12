@@ -62,7 +62,7 @@ module TestsHelper
           chunk = Draft.where("id < ?", next_id)
                              .where(session_id: session_id, action_type: 'scroll')
           last_scroll = chunk.last
-          step.update(scrollTop: last_scroll.scrollTop, scrollLeft: last_scroll.scrollLeft)
+          step.update(scrollTop: last_scroll.scrollTop.to_s, scrollLeft: last_scroll.scrollLeft.to_s)
         when 'keypress' # merge all typed into 1 string
           # similar to scroll
           next_event = Draft.where.not(action_type: 'keypress')
@@ -88,7 +88,7 @@ module TestsHelper
                .reject { |c| c.empty? }.sort! { |x,y| score(x) <=> score(y)}
                .reverse
           step.update(config: {selectors: selectors, x: first_event.x, y: first_event.y},
-                  selector: selectors.first.to_json)
+                  selector: selectors.first)
         else
             order = order - 1
       end

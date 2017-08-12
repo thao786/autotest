@@ -30,3 +30,8 @@ WRITE usage tutorials:
 
 
 
+
+- when hit recording tests, all existing steps are deleted
+
+
+      <% @test.steps.each_with_index do |step, index| %>

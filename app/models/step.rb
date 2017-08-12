@@ -1,5 +1,6 @@
 class Step < ApplicationRecord
   belongs_to :test
+  serialize :selector
   serialize :config
   has_many :extracts, dependent: :destroy
   has_many :results, dependent: :destroy

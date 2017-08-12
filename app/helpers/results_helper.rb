@@ -1,6 +1,6 @@
 module ResultsHelper
   def extractParams(paramStr, param)
-    if /#\{.+\}/ =~ param # eval '"123 #{456.to_s} 789"'
+    if param.class == String && /#\{.+\}/ =~ param
       eval "#{paramStr}
 #{param}"
     else
@@ -17,7 +17,7 @@ module ResultsHelper
 #{param.label} = \"#{param.val}\""
     }
 
-    steps = Step.where(test: test)
+    steps = Step.where(test: test, active: true)
     steps.each { |step|
       if checkAssertions # ran pre-tests (only available to main test)
         Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first, runId: runId)
@@ -29,7 +29,7 @@ module ResultsHelper
       # check if we need to switch tab
       current_tab_id = driver.execute_script "return window.name"
       tab_id = "#{step.windowId}-#{step.tabId}"
-      if current_tab_id != tab_id
+      if tab_id.present? && current_tab_id != tab_id
         if tabs.exclude? tab_id
           driver.execute_script "window.open('_blank', '#{tab_id}')"
           tabs << tab_id
@@ -51,9 +51,9 @@ module ResultsHelper
           when 'keypress'
             driver.action.send_keys(extractParams(paramStr,step.typed)).perform
           when 'click'
-            type = extractParams(paramStr,step.selector.selectorType)
-            selector = extractParams(paramStr,step.selector.selector)
-            eq = extractParams(paramStr,step.selector.eq)
+            type = extractParams(paramStr,step.selector[:selectorType])
+            selector = extractParams(paramStr,step.selector[:selector])
+            eq = extractParams(paramStr,step.selector[:eq])
             element = case type # first, find DOM with WebDriver
                         when 'id'
                           driver.find_elements(:id => selector).first
@@ -142,7 +142,7 @@ module ResultsHelper
         # check 404 and 500 errors for ALL tabs
         logs = driver.manage.logs.get('browser')
         logs.each { |log|
-          if log.include? 'Failed to load resource: the server responded with a status'
+          if log.message.include? 'Failed to load resource: the server responded with a status'
             Result.create(test: test, webpage: driver.current_url,
                           assertion: Assertion.where(assertion_type: "http-200").first,
                           runId: runId, error: log)

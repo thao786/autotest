@@ -11,7 +11,7 @@
         <% if @results.size > 1 %>
           <% @results.each do |result| %>
             <% if result.assertion.assertion_type != 'report' %>
-                <p><span class="glyphicon glyphicon-remove"></span>
+                <p style="color: red;"><span class="glyphicon glyphicon-remove"></span>
                   <%= result.assertion.label.titleize %>
                   <% if result.step.present? %>
                       (Step <b><%= result.step.order %>):</b><br>
@@ -33,7 +33,7 @@
     </div>
 
     <div class="col-xs-6">
-      <% @test.steps.each_with_index do |step , index| %>
+      <% Step.where(test: @test, active: true).each_with_index do |step, index| %>
           <% url = step.screenShot(@runId) %>
           Step <b><%= index + 1 %></b>: <%= step.title %> <br>
           <a href="<%= url %>">

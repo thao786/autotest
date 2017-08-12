@@ -12,7 +12,7 @@ gem 'rails', '~> 5.0.2'
 gem 'puma', '~> 3.0'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
-gem 'listen'#, '~> 3.1.5'
+gem 'listen'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
