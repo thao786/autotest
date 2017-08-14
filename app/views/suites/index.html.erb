@@ -22,7 +22,7 @@
           <span class="glyphicon glyphicon-edit"></span>
       </td>
       <td><%= link_to "#{suite.tests.count}", controller: "suites", action: "show", id: suite.name %></td>
-      <td><%= time_ago_in_words suite.updated_at %></td>
+      <td><%= suite.updated_at.strftime("%B %d, %Y") %></td>
 
       <td>
         <%= form_for suite, method: :delete, data: { confirm: 'Are you sure?' } do |f|  %>

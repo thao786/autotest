@@ -4,10 +4,39 @@
   <span class="glyphicon glyphicon-plus"></span> Add Test</a>
 
 <div class="container">
-<div class="form-inline">
-  <input type="text" class="form-control" id="filter-test" name="filter-test">
-  <button id="filter-test-btn">Filter Test</button>
-</div><br>
+<!--<div class="form-inline">-->
+  <!--<input type="text" class="form-control" id="filter-test" name="filter-test">-->
+  <!--<button id="filter-test-btn">Filter Test</button>-->
+<!--</div><br>-->
 
-  <%= render "tests/list", tests: @tests %>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Suite</th>
+      <th>Test Title</th>
+      <th>Description</th>
+      <th>Last Ran</th>
+      <th>Created At</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @tests.each do |test| %>
+        <% suite = test.suite %>
+
+        <tr>
+          <td><%= link_to suite.title, controller: "suites", action: "show", id: suite.name %></td>
+          <td><a href="<%= showUrl test %>"> <%= test.title %></a></td>
+          <td><%= render "tests/delete_btn", test: test %></td>
+          <td><% if test.results.count > 0 %>
+                  <%= time_ago_in_words test.results.first.created_at %>
+              <% else %>
+                  never ran before
+              <% end %>
+          </td>
+          <td><%= test.created_at.strftime("%B %d, %Y") %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
 </div>

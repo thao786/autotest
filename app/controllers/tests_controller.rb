@@ -4,6 +4,7 @@ class TestsController < ApplicationController
   # GET /tests
   def index
     @tests = Test.joins(:suite).where(suites: {user: current_user})
+                 .order(created_at: :desc)
   end
 
   # GET /tests/1
