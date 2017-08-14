@@ -1,4 +1,7 @@
 Thuy:
+- bug: test index: Description: Delete
+
+
 
 REDESIGN
 - redesign login screens

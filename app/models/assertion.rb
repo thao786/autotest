@@ -17,4 +17,14 @@ class Assertion < ApplicationRecord
      # 'status-code' => 'Status Code',
      'self-enter' => 'Enter Your Own Condition'}
   end
+
+  def self.default_assertions
+    {
+        'http-200' => 'All Http request return 200 status',
+        'ajax-200' => 'All Ajax request return 200 status',
+        'report' => 'report',
+        'step-succeed' => 'step completes successfully',
+        'match-url' => 'url must match'
+    }
+  end
 end

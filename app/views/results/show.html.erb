@@ -12,7 +12,13 @@
           <% @results.each do |result| %>
             <% if result.assertion.assertion_type != 'report' %>
                 <p style="color: red;"><span class="glyphicon glyphicon-remove"></span>
-                  <%= result.assertion.label.titleize %>
+
+                  <% if result.assertion.test %>
+                      <%= result.assertion.label %>
+                  <% else %>
+                      <%= Assertion.default_assertions[result.assertion.assertion_type].titleize %>
+                  <% end %>
+
                   <% if result.step.present? %>
                       (Step <b><%= result.step.order %>):</b><br>
                   <% else %>
