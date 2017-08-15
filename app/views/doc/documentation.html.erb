@@ -22,18 +22,20 @@
       </div>
 
       <div id="test">
-        A <b>test</b> let you record web and mobile (android/iphone) actions. A test cannot be run simultenously. Recording a test will delete all its currently existing steps. Running a test will delete all its existing results.
+        A <b>test</b> let you record web and mobile (android/iphone) actions. A test cannot be run simultenously. Recording a test will delete all its currently existing steps. Running a test will delete all its existing results. <br><br>
+        When the test is done recording, Autotest makes best guesses which actions user had done. However, users can change it afterward.
       </div>
 
       <div id="step">
         <h4>Step</h4>
-        A test consists of one or several <b>steps</b>. Autotest generates them as you perform the actions on browsers. You can edit, add or remove them (not during the recording). Step  types:
+        A test consists of one or several <b>steps</b>. Autotest generates them as you perform the actions on browsers. You can edit, add or remove them (not during the recording). All steps have an editable wait time, which is the time delay amount before a step is ran.
+        <br><br>Step types:
         <ul>
           <li><b>pageload</b>: A pageload can result from the user manually loading new webpage from Address Bar, or from a click, etc. In later cases, user might want to delete the pageload step to prevent double page loading.</li>
           <li><b>pageloadCurl</b>: request made by ping. User can set headers, HTTP methods (GET/POST) and parameters.</li>
           <li><b>scroll</b></li>
-          <li><b>keypress</b></li>
-          <li><b>click</b></li>
+          <li><b>keypress</b>: detect user's keyboard actitivies.</li>
+          <li><b>click</b>: </li>
         </ul>
       </div>
 
