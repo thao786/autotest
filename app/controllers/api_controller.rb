@@ -32,4 +32,8 @@ class ApiController < ActionController::Base
   def intro
     render template: 'layouts/intro'
   end
+
+  def fonts
+    send_file "#{ENV['HOME']}/autotest/vendor/assets/fonts/#{params[:font]}.#{params[:format]}"
+  end
 end

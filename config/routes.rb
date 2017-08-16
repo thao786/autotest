@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get '/doc', to: 'application#documentation'
 
-  get 'fonts/*font', to: 'fonts#index'
+  get 'fonts/*font', to: 'api#fonts'
 
   get 'step/delete_step', to: 'step#delete_step'
   match 'step/save_click', to: 'step#save_click', via: [:post]
