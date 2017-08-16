@@ -9,13 +9,15 @@ class Assertion < ApplicationRecord
   end
 
   def self.assertion_types
-    {'text-in-page' => 'Text Contained in Page',
-     'text-not-in-page' => 'Text Not Contained in Page',
-     'html-in-page' => 'HTML Contained in Page',
-     'html-not-in-page' => 'HTML not Contained in Page',
-     'page-title' => 'Page Title',
-     # 'status-code' => 'Status Code',
-     'self-enter' => 'Enter Your Own Condition'}
+    {
+        'text-in-page' => 'Text Contained in Page',
+         'text-not-in-page' => 'Text Not Contained in Page',
+         'html-in-page' => 'HTML Contained in Page',
+         'html-not-in-page' => 'HTML not Contained in Page',
+         'page-title' => 'Page Title',
+         # 'status-code' => 'Status Code',
+         'self-enter' => 'Enter Your Own Condition'
+    }
   end
 
   def self.default_assertions
