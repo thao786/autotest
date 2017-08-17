@@ -6,8 +6,8 @@ class CreateSteps < ActiveRecord::Migration[5.0]
       t.boolean :active
       t.string :device_type
       t.string :typed
-      t.integer :scrollTop
-      t.integer :scrollLeft
+      t.string :scrollTop
+      t.string :scrollLeft
       t.string :action_type
       t.string :selector
       t.integer :wait
