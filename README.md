@@ -13,6 +13,7 @@ REDESIGN
 
 
 Thao:
+- sign in failure should output error
 - next action should happens even if current page is not done loading
 - resize screenshot
 - install SSL
