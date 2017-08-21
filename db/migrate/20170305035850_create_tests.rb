@@ -8,6 +8,7 @@ class CreateTests < ActiveRecord::Migration[5.0]
       t.datetime :session_expired_at
       t.text :description
       t.boolean :active, null: false, default: 1
+      t.boolean :running, null: false, default: 0
       t.string :params
 
       t.timestamps
