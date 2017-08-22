@@ -1,4 +1,4 @@
-var acceptedOrigin = "http://localhost:3000";
+var acceptedOrigin = '';
 var sessionId = '';
 var tabId = 0;
 var windowId = 0;
@@ -6,8 +6,9 @@ var windowId = 0;
 chrome.storage.local.get(function(data) {
     if (data.session_id.trim().length > 0) {
         sessionId = data.session_id;
+        acceptedOrigin = data.host;
 
-        // check if session ID exists, to make sure the info is not from other sites
+            // check if session ID exists, to make sure the info is not from other sites
         $.ajax({
             dataType: "json",
             type: "post",

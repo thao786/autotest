@@ -20,7 +20,10 @@ $('#startRecording').click(function() {
             $('#notice').html('All your activities on Chrome will be recorded. Please make sure chrome extension is installed.');
 
             // activate the Chrome Plugin
-            window.postMessage({ type: "FROM_PAGE", session_id: sessionId }, "*");
+            window.postMessage({ type: "FROM_PAGE",
+                session_id: sessionId,
+                host: window.origin
+            }, "*");
 
             // poll extension for new events every seconds
             // var extensionId = "lekchccmedapfjjoaanmoaoekpiniknc";
