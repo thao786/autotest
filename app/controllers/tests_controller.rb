@@ -72,7 +72,7 @@ class TestsController < ApplicationController
   
   # generate an unique session ID
   def generateSession
-    @test.steps.destroy_all
+    Step.where(test: @test).destroy_all
     sessionId = SecureRandom.base58(24)
     @test.session_id=sessionId
 

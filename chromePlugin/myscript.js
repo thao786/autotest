@@ -3,20 +3,19 @@ var sessionId = '';
 var tabId = 0;
 var windowId = 0;
 
-chrome.storage.local.get(function(data) {
+chrome.storage.local.get(function(data) {console.log(data);
     if (data.session_id.trim().length > 0) {
         sessionId = data.session_id;
         acceptedOrigin = data.host;
 
-            // check if session ID exists, to make sure the info is not from other sites
+        console.log(data);
+        // check if session ID exists, to make sure the info is not from other sites
         $.ajax({
             dataType: "json",
             type: "post",
             data: {'session_id': sessionId},
             url: acceptedOrigin + '/api/check',
             success: function (result, status, xhr) {
-                console.log(data);
-
                 chrome.runtime.sendMessage({type: "tabId"}, function(response) {
                     tabId = response.tabId;
                     windowId = response.windowId;
