@@ -74,7 +74,7 @@ class TestsController < ApplicationController
   def generateSession
     Step.where(test: @test).destroy_all
     sessionId = SecureRandom.base58(24)
-    @test.session_id=sessionId
+    @test.update(session_id: sessionId)
 
     while !@test.save
       sessionId = SecureRandom.base58(24)
