@@ -25,14 +25,6 @@ $('#startRecording').click(function() {
                 host: window.origin
             }, "*");
 
-            // poll extension for new events every seconds
-            // var extensionId = "lekchccmedapfjjoaanmoaoekpiniknc";
-            //
-            // chrome.runtime.sendMessage(extensionId, {type: 'query_step'},
-            //     function(response) {
-            //         console.log(response);
-            //     });
-
             location.reload();
         }
     });

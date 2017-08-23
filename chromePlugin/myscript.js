@@ -1,20 +1,23 @@
-var acceptedOrigin = '';
+var acceptedOrigins = ["http://localhost:3000",
+    "https://uichecks.com",
+    "https://test.uichecks.com"];
+var origin = '';
 var sessionId = '';
 var tabId = 0;
 var windowId = 0;
 
-chrome.storage.local.get(function(data) {console.log(data);
+chrome.storage.local.get(function(data) {
+    console.log(data);
     if (data.session_id.trim().length > 0) {
         sessionId = data.session_id;
-        acceptedOrigin = data.host;
+        origin = data.host;
 
-        console.log(data);
         // check if session ID exists, to make sure the info is not from other sites
         $.ajax({
             dataType: "json",
             type: "post",
             data: {'session_id': sessionId},
-            url: acceptedOrigin + '/api/check',
+            url: origin + '/api/check',
             success: function (result, status, xhr) {
                 chrome.runtime.sendMessage({type: "tabId"}, function(response) {
                     tabId = response.tabId;
@@ -32,12 +35,12 @@ chrome.storage.local.get(function(data) {console.log(data);
     }
 });
 
-
-// listen for signal from test.com to:
+// listen for signal from Autotest site to:
 // start/stop recording sessions
 window.addEventListener("message", function(event) {
-    // We only accept messages from test.com
-    if (acceptedOrigin.indexOf(event.origin) < 0 ||
+    // We only accept messages from Autotest site
+    console.log(event.origin);
+    if (!acceptedOrigins.includes(event.origin)  ||
             event.data.type != 'FROM_PAGE')
     {
         return;
@@ -45,19 +48,21 @@ window.addEventListener("message", function(event) {
 
     if (event.data.session_id) {
         sessionId = event.data.session_id;
+        origin = event.data.host;
 
         // check if session ID exists, to make sure the info is not from other sites
         $.ajax({
             dataType: "json",
             type: "post",
             data: {'session_id': sessionId},
-            url: acceptedOrigin + '/api/check',
+            url: origin + '/api/check',
             success: function(result, status, xhr) {
                 // set local storage
-                chrome.storage.local.set({ session_id: sessionId }, function () {
-                    // activate plugin's icon
-                    chrome.runtime.sendMessage({type: "showPopup"});
-                });
+                chrome.storage.local.set({ session_id: sessionId, host: origin },
+                    function () {
+                        // activate plugin's icon
+                        chrome.runtime.sendMessage({type: "showPopup"});
+                    });
                 bindEvents();
             }
         });
@@ -95,7 +100,7 @@ function reportEvent(data) {
         dataType: "json",
         type: "post",
         data: data,
-        url: acceptedOrigin + '/api/saveEvent',
+        url: origin + '/api/saveEvent',
         success: function(result, status, xhr) {
             if (result == 'false') {
                 location.reload();
