@@ -1,5 +1,6 @@
 Thuy:
 - bug: test index: Description: Delete
+- display step: resize to X x Y
 
 
 
@@ -16,8 +17,6 @@ Thao:
 - sign in failure should output error
 - next action should happens even if current page is not done loading
 - resize screenshot
-- install SSL
-- make project live
 - use OCR to read page's text
 
 

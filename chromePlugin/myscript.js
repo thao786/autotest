@@ -1,4 +1,5 @@
 var acceptedOrigins = ["http://localhost:3000",
+    "https://localhost:90",
     "https://uichecks.com",
     "https://test.uichecks.com"];
 var origin = '';
@@ -39,7 +40,6 @@ chrome.storage.local.get(function(data) {
 // start/stop recording sessions
 window.addEventListener("message", function(event) {
     // We only accept messages from Autotest site
-    console.log(event.origin);
     if (!acceptedOrigins.includes(event.origin)  ||
             event.data.type != 'FROM_PAGE')
     {
@@ -80,10 +80,14 @@ window.addEventListener("message", function(event) {
 
 }, false);
 
-function reportEvent(data) {
-    if (window.location.origin.indexOf('://localhost') > 0 ||
-        (data.action_type == 'click' && !data.valid))
+function reportEvent(data) { // acceptedOrigins.includes(event.origin)
+    if (acceptedOrigins.includes(window.location.origin) > 0 ||
+        (data.action_type == 'click' && !data.valid)) {
+
         return;
+    }
+
+    console.log(window.location.origin);
 
     data.session_id = sessionId;
     data.stamp = Date.now();
