@@ -82,10 +82,8 @@ window.addEventListener("message", function(event) {
 
 function reportEvent(data) { // acceptedOrigins.includes(event.origin)
     if (acceptedOrigins.includes(window.location.origin) > 0 ||
-        (data.action_type == 'click' && !data.valid)) {
-
+        (data.action_type == 'click' && !data.valid))
         return;
-    }
 
     console.log(window.location.origin);
 
