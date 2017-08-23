@@ -126,16 +126,22 @@ class TestsController < ApplicationController
     begin Dir.mkdir "#{ENV['HOME']}/#{ENV['picDir']}/#{@test.id}"
     rescue
     end
-    headless = Headless.new
-    headless.start
 
-    driver = Selenium::WebDriver.for :chrome
-    helpers.runSteps(driver, @test, @test.id)
-    driver.quit
-    FileUtils.remove_entry "#{ENV['HOME']}/#{ENV['picDir']}/#{@test.id}"
-    @test.update(running: false)
-    render json: @test.id
+    begin
+      headless = Headless.new
+      headless.start
+
+      driver = Selenium::WebDriver.for :chrome
+      helpers.runSteps(driver, @test, @test.id)
+      driver.quit
+      FileUtils.remove_entry "#{ENV['HOME']}/#{ENV['picDir']}/#{@test.id}"
+      @test.update(running: false)
+      render json: @test.id
+    rescue
+      render json: false, :status => 404
+    end
   end
+
 
   private
     def set_test
