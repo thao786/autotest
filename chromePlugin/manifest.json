@@ -27,7 +27,9 @@
     "https://*/*"
   ],
   "externally_connectable": {
-    "matches": ["http://localhost:3000/*", "https://uichecks.com/*", "https://test.uichecks.com/*"],
+    "matches": ["http://localhost:3000/*",
+      "https://uichecks.com/*",
+      "https://test.uichecks.com/*"],
     "accepts_tls_channel_id": true
   }
 }
