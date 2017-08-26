@@ -123,11 +123,8 @@ class TestsController < ApplicationController
   def runTest
     Result.where(test: @test).destroy_all # only 1 test can be ran at a time
     @test.update(running: true)
-    begin Dir.mkdir "#{ENV['HOME']}/#{ENV['picDir']}/#{@test.id}"
-    rescue
-    end
-
     begin
+      Dir.mkdir "#{ENV['HOME']}/#{ENV['picDir']}/#{@test.id}"
       headless = Headless.new
       headless.start
 
