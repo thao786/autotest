@@ -92,8 +92,8 @@ function reportEvent(data) { // acceptedOrigins.includes(event.origin)
     data.webpage = window.location.href;
     data.tabId = tabId;
     data.windowId = windowId;
-    data.screenwidth = screen.width;
-    data.screenheight = screen.height;
+    data.screenwidth = window.innerWidth;
+    data.screenheight = window.innerHeight;
 
     console.log(data);
 
@@ -183,7 +183,6 @@ function bindEvents() {
         reportEvent(data);
 	});
 
-
 	// detect accurately which element is being clicked,
 	// but could miss important ones
 	$(document).on("click", "*", function(e) {
@@ -194,7 +193,6 @@ function bindEvents() {
         reportEvent(data);
 	});
 
-
 	// listen to typing actions
 	$(document).keypress(function(e) {
         var data = {action_type: 'keypress'};
@@ -202,14 +200,12 @@ function bindEvents() {
         reportEvent(data);
 	});
 
-
 	$(document).on("scroll", function(e) {
         var data = {action_type: 'scroll'};
         data.scrollTop = $(window).scrollTop();
         data.scrollLeft = $(window).scrollLeft();
         reportEvent(data);
 	});
-
 
     $(window).resize(function() {
         var data = {action_type: 'resize'};
