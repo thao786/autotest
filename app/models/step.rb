@@ -14,7 +14,7 @@ class Step < ApplicationRecord
   def self.web_step_types
       {'pageload' => 'load page in browser', 'pageloadCurl' => 'load page with Curl',
        'scroll' => 'scroll', 'keypress' => 'type',
-           'click' => 'click', 'resize' => 'resize'}
+           'click' => 'click', 'resize' => 'Resize'}
   end
 
   after_initialize :set_defaults, unless: :persisted? # The set_defaults will only work if the object is new

@@ -15,7 +15,7 @@
         <td><%= link_to suite.title, controller: "suites", action: "show", id: suite.name %></td>
         <td><a href="<%= showUrl test %>"> <%= test.title %></a></td>
         <td>
-          <%= render "tests/delete_btn", test: test %></td>
+          <%= test.description %></td>
       </tr>
     <% end %>
   </tbody>
