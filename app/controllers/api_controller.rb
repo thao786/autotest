@@ -29,6 +29,34 @@ class ApiController < ActionController::Base
     end
   end
 
+  def runTest
+    unless params[:password] == ENV['beanstalk_password']
+      render json: false
+    end
+
+    @test = Test.find(params[:test_id])
+    Result.where(test: @test).destroy_all # only 1 test can be ran at a time
+    @test.update(running: true)
+
+    begin
+      Dir.mkdir "#{ENV['HOME']}/#{ENV['picDir']}/#{@test.id}"
+
+      unless Rails.env.development?
+        headless = Headless.new
+        headless.start
+      end
+
+      driver = Selenium::WebDriver.for :firefox
+      helpers.runSteps(driver, @test, @test.id)
+      driver.quit
+      FileUtils.remove_entry "#{ENV['HOME']}/#{ENV['picDir']}/#{@test.id}"
+      @test.update(running: false)
+      render json: @test.id
+    rescue
+      render json: false, :status => 404
+    end
+  end
+
   def intro
     render template: 'layouts/intro'
   end

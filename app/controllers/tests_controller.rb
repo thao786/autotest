@@ -121,21 +121,26 @@ class TestsController < ApplicationController
   end
 
   def runTest
-    Result.where(test: @test).destroy_all # only 1 test can be ran at a time
-    @test.update(running: true)
-    begin
-      Dir.mkdir "#{ENV['HOME']}/#{ENV['picDir']}/#{@test.id}"
-      headless = Headless.new
-      headless.start
+    if Rails.env.development?
+      Result.where(test: @test).destroy_all # only 1 test can be ran at a time
+      @test.update(running: true)
 
-      driver = Selenium::WebDriver.for :chrome
-      helpers.runSteps(driver, @test, @test.id)
-      driver.quit
-      FileUtils.remove_entry "#{ENV['HOME']}/#{ENV['picDir']}/#{@test.id}"
-      @test.update(running: false)
-      render json: @test.id
-    rescue
-      render json: false, :status => 404
+      begin
+        Dir.mkdir "#{ENV['HOME']}/#{ENV['picDir']}/#{@test.id}"
+        headless = Headless.new
+        headless.start
+
+        driver = Selenium::WebDriver.for :chrome
+        helpers.runSteps(driver, @test, @test.id)
+        driver.quit
+        FileUtils.remove_entry "#{ENV['HOME']}/#{ENV['picDir']}/#{@test.id}"
+        @test.update(running: false)
+        render json: @test.id
+      rescue
+        render json: false, :status => 404
+      end
+    else # call the independent EC2 servers
+
     end
   end
 
