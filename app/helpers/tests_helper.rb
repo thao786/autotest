@@ -51,6 +51,13 @@ module TestsHelper
         when 'pageload' # not sure what to do
           first_event.destroy!
         when 'resize'
+          next_event = Draft.where.not(action_type: 'resize')
+                           .where(session_id: session_id).first
+          next_id = next_event.nil? ? MAX_ID : next_event.id
+          chunk = Draft.where("id < ?", next_id)
+                      .where(session_id: session_id, action_type: 'resize')
+          last_resize = chunk.last
+          step.update(screenwidth: last_resize.screenwidth, screenheight: last_resize.screenheight)
           first_event.destroy!
         when 'scroll' # merge homogeneously increasing scrollTop or scrollLeft into 1 step
           # for now, just pick the last position
