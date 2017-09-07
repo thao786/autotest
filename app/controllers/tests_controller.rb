@@ -130,20 +130,19 @@ class TestsController < ApplicationController
         headless = Headless.new
         headless.start
 
-        driver = Selenium::WebDriver.for :chrome
+        driver = Selenium::WebDriver.for :firefox
         helpers.runSteps(driver, @test, @test.id)
         driver.quit
         FileUtils.remove_entry "#{ENV['HOME']}/#{ENV['picDir']}/#{@test.id}"
         @test.update(running: false)
-        render json: @test.id
       rescue
         render json: false, :status => 404
       end
     else # call the independent EC2 servers
 
     end
+    render json: @test.id
   end
-
 
   private
     def set_test
