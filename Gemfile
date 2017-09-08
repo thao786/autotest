@@ -33,7 +33,6 @@ end
 
 
 
-gem 'nokogiri'
 gem 'thin'
 gem 'devise'
 gem 'mysql2'
