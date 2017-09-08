@@ -32,6 +32,8 @@ group :development, :test do
 end
 
 
+
+gem 'nokogiri'
 gem 'thin'
 gem 'devise'
 gem 'mysql2'
@@ -43,6 +45,7 @@ gem 'selenium-webdriver'
 gem 'headless'
 gem 'chromedriver-helper'
 gem 'exception_notification'
+
 
 
 

@@ -226,6 +226,7 @@ DEPENDENCIES
   json
   listen
   mysql2
+  nokogiri
   omniauth
   omniauth-google-oauth2
   puma (~> 3.0)
