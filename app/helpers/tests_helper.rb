@@ -107,4 +107,28 @@ module TestsHelper
 
     Draft.destroy_all(session_id: session_id)
   end
+
+  def runTest(test)
+    Result.where(test: test).destroy_all # only 1 test can be ran at a time
+    @test.update(running: true)
+    folder = "#{ENV['HOME']}/#{ENV['picDir']}/#{test.id}"
+    FileUtils.rm_r folder if Dir.exist?(folder)
+    Dir.mkdir folder
+
+    unless Rails.env.development?
+      headless = Headless.new
+      headless.start
+    end
+
+    driver = Selenium::WebDriver.for :firefox
+    begin
+      runSteps(driver, test, test.id)
+    rescue
+      # render json: false, :status => 404
+    end
+    driver.quit
+    FileUtils.remove_entry "#{ENV['HOME']}/#{ENV['picDir']}/#{test.id}"
+    @test.update(running: false)
+    render json: test.id
+  end
 end

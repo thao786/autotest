@@ -36,3 +36,19 @@ WRITE usage tutorials:
 
 
 
+INSTALL CHROMIUM ON SERVER:
+- https://gist.github.com/addyosmani/5336747
+- install chromium: apt install chromium-browser
+- install 'chromedriver-helper' gem
+- install missing library: sudo apt-get install libgconf-2-4
+    chromedriver must be able to run on its own for Selenium to run
+
+
+
+
+
+
+
+
+
+
