@@ -114,10 +114,8 @@ class TestsController < ApplicationController
   end
 
   def removeTestParams
-    hash = @test.params
-    hash.delete params[:key]
-    @test.update(params: hash)
-    render json: 1
+    TestParam.where(test: @test, label: params[:key]).destroy_all
+    render json: @test.id
   end
 
   def runTest
@@ -126,6 +124,7 @@ class TestsController < ApplicationController
     else # call the independent EC2 servers
 
     end
+    render json: @test.id
   end
 
   private

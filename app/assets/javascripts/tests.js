@@ -1,6 +1,7 @@
 var testUrl = window.location.pathname;
 var sessionId = '';
 var test_id;
+var test_param_count = 0; //initlal text box count
 
 $(document).ready(function() {
 test_id = $("#page_info").data('test');
@@ -60,14 +61,11 @@ $(".selector-select li").hover(
     }
 );
 
-
 $("body").on('mouseenter', '.step-list-item', function() {
     $(this).find('.visible-hover').show();
 }).on('mouseleave', '.step-list-item', function() {
     $('.visible-hover').hide();
-})
-
-var test_param_count = 0; //initlal text box count
+});
 
 $("#add-test-params").click(function(e){ //on add input button click
     $.ajax({

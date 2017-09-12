@@ -141,6 +141,5 @@ module TestsHelper
     driver.quit
     FileUtils.remove_entry "#{ENV['HOME']}/#{ENV['picDir']}/#{test.id}"
     @test.update(running: false)
-    render json: test.id
   end
 end

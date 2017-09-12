@@ -1,7 +1,6 @@
 Thuy:
 - bug: test index: Description: Delete
-- display step: resize to X x Y
-
+- only add 1 test param at a time
 
 
 REDESIGN
