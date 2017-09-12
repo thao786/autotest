@@ -1,6 +1,5 @@
 Thuy:
 - bug: test index: Description: Delete
-- only add 1 test param at a time
 
 
 REDESIGN

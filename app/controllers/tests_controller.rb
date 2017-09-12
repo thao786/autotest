@@ -105,12 +105,16 @@ class TestsController < ApplicationController
     values = params[:param_values]
     names.each_with_index { |value, index|
       if names[index].nil? || names[index].match?(/\s/) || names[index].empty?
-          render plain: 'Blank not allowed', :status => 404 and return
+        render plain: 'Blank not allowed', :status => 404 and return
       else
+        if TestParam.where(test: @test, label: names[index])
+          render plain: 'This test already has a parameter with this label', :status => 404
+        else
           TestParam.create(test: @test, label: names[index], val: values[index])
+          render partial: 'tests/test_params', :status => 200
+        end
       end
     }
-    render partial: 'tests/test_params', :status => 200
   end
 
   def removeTestParams

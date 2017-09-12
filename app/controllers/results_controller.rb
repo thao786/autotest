@@ -16,7 +16,7 @@ class ResultsController < ApplicationController
       # resp = s3.list_objects(bucket: ENV['bucket'], prefix: "#{params[:id]}-")
       # @pics = resp.contents
     else
-      render plain: 'not found'
+      render plain: 'there is no result about this test'
     end
   end
 end
