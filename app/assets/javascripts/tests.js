@@ -93,35 +93,6 @@ $(document).on("click", "#add-more-test", function(e) {
     $('#test-params-input-list').append(html);
 });
 
-$(document).on("click", ".remove-test-param", function(e) { //user click on remove text
-    e.preventDefault();
-
-    // check if this remove active parameters
-    var key = $(this).data('key');
-    var thisEl = $(this);
-
-    if (key) {
-        $.ajax({
-            type: "POST",
-            url: '/tests/removeTestParams',
-            data: {test_id: test_id, key: key},
-            success: function(result, status, xhr) {
-                thisEl.parent('div').remove();
-                test_param_count--;
-            },
-            error: function(result, status, xhr) {
-                alert('Sorry, we could not remove a parameter at this time.');
-            }
-        });
-    } else {
-        thisEl.parent('div').remove();
-        test_param_count--;
-    }
-
-    if (test_param_count == 0)
-        $('#submit-test-params').hide();
-});
-
 $(document).on("click", "#submit-test-params", function(e) {  
     var param_names = [];
     $("#test-params-input-list input[name*='param_names']").each(function(){
