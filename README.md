@@ -1,5 +1,4 @@
 Thuy:
-- bug: test index: Description: Delete
 
 
 REDESIGN
@@ -39,7 +38,7 @@ INSTALL CHROMIUM ON SERVER:
 - install chromium: apt install chromium-browser
 - install 'chromedriver-helper' gem
 - install missing library: sudo apt-get install libgconf-2-4
-    chromedriver must be able to run on its own for Selenium to run
+    chromedriver must be able to run on its own for Selenium to connect
 
 
 

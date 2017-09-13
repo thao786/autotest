@@ -38,14 +38,19 @@ module ResultsHelper
       end
 
       # wait
+      sleep step.wait/1000
 
       begin
         case step.action_type
           when 'pageload'
-            driver.get extractParams(paramStr,step.webpage)
+            Thread.new {
+              driver.get extractParams(paramStr,step.webpage)
+            }
           when 'pageloadCurl'
             # load headers and params
-            driver.get extractParams(paramStr,step.webpage)
+            Thread.new {
+              driver.get extractParams(paramStr,step.webpage)
+            }
           when 'scroll'
             driver.execute_script("scroll(#{extractParams(paramStr,step.scrollLeft)}, #{extractParams(paramStr,step.scrollTop)})")
           when 'keypress'
