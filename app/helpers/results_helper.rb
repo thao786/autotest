@@ -53,9 +53,7 @@ module ResultsHelper
       begin
         case step.action_type
           when 'pageload'
-            Thread.new {
-              driver.get extractParams(paramStr,step.webpage)
-            }
+            driver.get extractParams(paramStr,step.webpage)
           when 'pageloadCurl'
             # load headers and params
             Thread.new {
@@ -141,13 +139,7 @@ module ResultsHelper
       # save screenshot
       md5 = Digest::MD5.hexdigest "#{runId}-#{step.order}"
       screenshot = "#{mediaFolder}/#{md5}.png"
-
-      begin
-        driver.save_screenshot screenshot
-      rescue
-        a = 9
-        b = 8
-      end
+      driver.save_screenshot screenshot
 
       # upload to AWS
       client = Aws::S3::Client.new(region: 'us-east-1')
@@ -157,7 +149,6 @@ module ResultsHelper
     }
 
     sleep 1
-    done = true
 
     if checkAssertions # check assertions
       tabs.each { |tab_id|
