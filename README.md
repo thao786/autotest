@@ -1,5 +1,5 @@
 Thuy:
-
+- dont display runTest button if theres no step
 
 REDESIGN
 - redesign login screens

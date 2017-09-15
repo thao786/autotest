@@ -18,6 +18,17 @@ module ResultsHelper
     }
 
     steps = Step.where(test: test, active: true)
+    done = false
+    # Thread.new { # continuously take screenshots
+    #   count = 0
+    #   while done == false
+    #     p done
+    #     screenshot = "#{mediaFolder}/#{count.to_s.rjust(5, '0')}.png"
+    #     driver.save_screenshot screenshot
+    #     sleep 0.1
+    #     count = count + 1
+    #   end
+    # }
     steps.each { |step|
       if checkAssertions # ran pre-tests (only available to main test)
         Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first, runId: runId)
@@ -31,14 +42,13 @@ module ResultsHelper
       tab_id = "#{step.windowId}-#{step.tabId}"
       if step.tabId.present? && current_tab_id != tab_id
         if tabs.exclude? tab_id
-          driver.execute_script "window.open('_blank', '#{tab_id}')"
+          driver.execute_script "window.open('', '#{tab_id}')"
           tabs << tab_id
         end
         driver.switch_to.window tab_id
       end
 
-      # wait
-      sleep step.wait/1000
+      sleep step.wait/1000 # wait
 
       begin
         case step.action_type
@@ -130,8 +140,14 @@ module ResultsHelper
 
       # save screenshot
       md5 = Digest::MD5.hexdigest "#{runId}-#{step.order}"
-      screenshot = "#{mediaFolder}#{md5}.png"
-      driver.save_screenshot screenshot
+      screenshot = "#{mediaFolder}/#{md5}.png"
+
+      begin
+        driver.save_screenshot screenshot
+      rescue
+        a = 9
+        b = 8
+      end
 
       # upload to AWS
       client = Aws::S3::Client.new(region: 'us-east-1')
@@ -139,6 +155,9 @@ module ResultsHelper
       bucket = resource.bucket(ENV['bucket'])
       bucket.object("#{md5}.png").upload_file(screenshot, acl:'public-read')
     }
+
+    sleep 1
+    done = true
 
     if checkAssertions # check assertions
       tabs.each { |tab_id|

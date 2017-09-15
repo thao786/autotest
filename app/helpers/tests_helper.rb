@@ -132,14 +132,13 @@ module TestsHelper
 
       driver = Selenium::WebDriver.for :chrome, desired_capabilities: caps, options: options
     end
-
-    begin
-      runSteps(driver, test, test.id)
-    rescue
-      # render json: false, :status => 404
-    end
+    runSteps(driver, test, test.id)
+    # begin
+    #   runSteps(driver, test, test.id)
+    # rescue
+    #   # render json: false, :status => 404
+    # end
     driver.quit
-    FileUtils.remove_entry "#{ENV['HOME']}/#{ENV['picDir']}/#{test.id}"
     @test.update(running: false)
   end
 end

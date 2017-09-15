@@ -19,15 +19,9 @@ driver = Selenium::WebDriver.for :chrome, desired_capabilities: caps, options: o
 
 driver = Selenium::WebDriver.for :chrome
 
-driver.get "http://rumie.org"
+driver.get "http://google.org"
 
 driver.save_screenshot '/home/ubuntu/sc.png'
 
 logs = driver.manage.logs.get('browser')
 logs.each { |x| p x }
-
-
-
-
-
-
