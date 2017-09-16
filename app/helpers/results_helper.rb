@@ -18,17 +18,6 @@ module ResultsHelper
     }
 
     steps = Step.where(test: test, active: true)
-    done = false
-    # Thread.new { # continuously take screenshots
-    #   count = 0
-    #   while done == false
-    #     p done
-    #     screenshot = "#{mediaFolder}/#{count.to_s.rjust(5, '0')}.png"
-    #     driver.save_screenshot screenshot
-    #     sleep 0.1
-    #     count = count + 1
-    #   end
-    # }
     steps.each { |step|
       if checkAssertions # ran pre-tests (only available to main test)
         Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first, runId: runId)
