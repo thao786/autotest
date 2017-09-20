@@ -2,26 +2,29 @@ require 'selenium-webdriver'
 require 'chromedriver-helper'
 require 'headless'
 
-headless = Headless.new
+headless = Headless.new(video: { provider: :ffmpeg })
 headless.start
 
 caps = Selenium::WebDriver::Remote::Capabilities.chrome('desiredCapabilities' => {'takesScreenshot' => true}, 'chromeOptions' => {'binary' => '/chromium-browser'})
 
 options = Selenium::WebDriver::Chrome::Options.new
-options.add_argument('--headless')
-options.add_argument('--no-sandbox')
-options.add_argument('--disable-gpu')
-options.add_argument('--remote-debugin-port=9222')
 options.add_argument('--screen-size=1200x800')
 
 driver = Selenium::WebDriver.for :chrome, desired_capabilities: caps, options: options
+headless.video.start_capture
+driver.get "http://rumie.org"
+sleep 10
+driver.quit
+
+headless.video.stop_and_save("/home/ubuntu/vid.mov")
 
 
-driver = Selenium::WebDriver.for :chrome
+client = Aws::S3::Client.new(region: 'us-east-1')
+resource = Aws::S3::Resource.new(client: client)
+bucket = resource.bucket('autotest-test')
+bucket.object("vid.mov").upload_file('/home/ubuntu/vid.mov', acl:'public-read')
 
-driver.get "http://google.org"
 
-driver.save_screenshot '/home/ubuntu/sc.png'
 
-logs = driver.manage.logs.get('browser')
-logs.each { |x| p x }
+# logs = driver.manage.logs.get('browser')
+# logs.each { |x| p x }

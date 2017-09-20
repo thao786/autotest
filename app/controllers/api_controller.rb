@@ -34,12 +34,17 @@ class ApiController < ActionController::Base
       render json: false
     end
 
-    @test = Test.find(params[:test_id])
+    test = Test.find(params[:test_id])
     begin
-      helpers.runTest @test
+      helpers.runTest test
     rescue
       render json: false, :status => 404
     end
+  end
+
+  def saveVideoFrame
+    test = Test.find(params[:test_id])
+    render plain: 9
   end
 
   def intro
