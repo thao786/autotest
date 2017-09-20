@@ -1,21 +1,22 @@
+#!/usr/bin/ruby
+
 require 'selenium-webdriver'
-require 'chromedriver-helper'
 require 'headless'
 
 headless = Headless.new(video: { provider: :ffmpeg })
 headless.start
 
-caps = Selenium::WebDriver::Remote::Capabilities.chrome('desiredCapabilities' => {'takesScreenshot' => true}, 'chromeOptions' => {'binary' => '/chromium-browser'})
+caps = Selenium::WebDriver::Remote::Capabilities.chrome('desiredCapabilities' => {'takesScreenshot' => true}, 'chromeOptions' => {'binary' => '/usr/bin/chromium-browser'})
 
 options = Selenium::WebDriver::Chrome::Options.new
 options.add_argument('--screen-size=1200x800')
 
 driver = Selenium::WebDriver.for :chrome, desired_capabilities: caps, options: options
 headless.video.start_capture
-driver.get "http://rumie.org"
-sleep 10
-driver.quit
+driver.get "https://www.youtube.com/watch?v=TytGOeiW0aE"
 
+
+driver.quit
 headless.video.stop_and_save("/home/ubuntu/vid.mov")
 
 
