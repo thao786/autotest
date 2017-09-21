@@ -1,6 +1,4 @@
 module TestsHelper
-  MAX_ID = 9999999
-
   def showUrl (test)
     "/test/#{test.name}/#{test.id}"
   end
@@ -14,7 +12,7 @@ module TestsHelper
     array.join
   end
 
-  def score (selector) # the higher the score, the higher its priority
+  def score(selector) # the higher the score, the higher its priority
     # select based on children count. the fewer children the higher score
     case selector[:selectorType]
       when 'href'
@@ -33,27 +31,35 @@ module TestsHelper
   end
 
   def parseDraft(session_id)
-    start_time = Draft.where(session_id: session_id).minimum(:stamp)
     test = Test.where(session_id: session_id).first
     order = Step.where(test: test).maximum(:order)
     order ||= 0
 
     while Draft.where(session_id: session_id).count > 0
-      first_event = Draft.where(session_id: session_id).first
+      first_event = Draft.where(session_id: session_id).order(:stamp).first
+
+      next_event = if first_event.action_type == 'click'
+                      # use x,y coordination to find same clicks
+                      Draft.where.not(x: first_event.x, y: first_event.y)
+                           .where(session_id: session_id).order(:stamp).first
+                  else
+                      Draft.where.not(action_type: first_event.action_type)
+                           .where(session_id: session_id).order(:stamp).first
+                  end
+      next_id = next_event.nil? ? 9999999 : next_event.id
+      next_stamp = next_event.nil? ? DateTime.now.strftime('%Q').to_i : next_event.stamp
       order = order + 1
-      step = Step.create(wait: first_event.stamp - start_time, webpage: first_event.webpage,
-                         order: order, test: test, device_type: 'browser', active: true,
-                         tabId: first_event.tabId, windowId: first_event.windowId,
-                         action_type: first_event.action_type,
-                         screenwidth: first_event.screenwidth, screenheight: first_event.screenheight)
+      step = Step.create(wait: next_stamp - first_event.stamp,
+           order: order, test: test, device_type: 'browser', active: true,
+           tabId: first_event.tabId, windowId: first_event.windowId,
+           action_type: first_event.action_type, webpage: first_event.webpage,
+           screenwidth: first_event.screenwidth, screenheight: first_event.screenheight)
       chunk = nil
+
       case first_event.action_type
         when 'pageload' # not sure what to do
           first_event.destroy!
         when 'resize'
-          next_event = Draft.where.not(action_type: 'resize')
-                           .where(session_id: session_id).first
-          next_id = next_event.nil? ? MAX_ID : next_event.id
           chunk = Draft.where("id < ?", next_id)
                       .where(session_id: session_id, action_type: 'resize')
           last_resize = chunk.last
@@ -63,36 +69,28 @@ module TestsHelper
           # for now, just pick the last position
           # find the chunk of scroll events
           # the last scroll event should be follow by a different action_type
-          next_event = Draft.where.not(action_type: 'scroll')
-                           .where(session_id: session_id).first
-          next_id = next_event.nil? ? MAX_ID : next_event.id
           chunk = Draft.where("id < ?", next_id)
                              .where(session_id: session_id, action_type: 'scroll')
           last_scroll = chunk.last
           step.update(scrollTop: last_scroll.scrollTop.to_s, scrollLeft: last_scroll.scrollLeft.to_s)
         when 'keypress' # merge all typed into 1 string
-          # similar to scroll
-          next_event = Draft.where.not(action_type: 'keypress')
-                              .where(session_id: session_id).first
-          next_id = next_event.nil? ? MAX_ID : next_event.id
-          chunk = Draft.where("id < ?", next_id).where(session_id: session_id, action_type: 'keypress')
+          chunk = Draft.where("id < ?", next_id)
+                      .where(session_id: session_id, action_type: 'keypress')
 
           # compress into 1 string
           typed = chunk.inject('') { |str, draft|
             "#{str}#{draft.typed}"
           }
           step.update(typed: typed)
-        when 'click' # use x,y coordination to find same clicks
-          next_event = Draft.where.not(x: first_event.x, y: first_event.y)
-                           .where(session_id: session_id).first
+        when 'click'
           # this can be a double click, need to check for time interval
-          next_id = next_event.nil? ? MAX_ID : next_event.id
           chunk = Draft.where("id < ?", next_id)
                         .where(session_id: session_id, action_type: 'click')
 
           # sort selectors in order: href, button, id, class, tag
-          selectors = chunk.collect {|click| click.selector }.uniq.compact
-               .reject { |c| c.empty? }.sort! { |x,y| score(x) <=> score(y)}
+          selectors = chunk.collect { |click| click.selector }.uniq.compact
+               .reject { |c| c.empty? }
+               .sort! { |x,y| score(x) <=> score(y)}
                .reverse
           step.update(config: {selectors: selectors, x: first_event.x, y: first_event.y},
                   selector: selectors.first)

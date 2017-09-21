@@ -18,6 +18,9 @@ sudo apt update
 sudo apt install unzip
 unzip chromedriver_linux64.zip
 ./chromedriver
+# chromedriver must be able to run on its own for Selenium to connect
+
+
 
 sudo apt install chromium-browser
 sudo apt-get install libgconf-2-4
