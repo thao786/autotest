@@ -28,6 +28,7 @@ sudo apt-get install libmysqlclient-dev
 sudo apt-get install xvfb
 sudo apt-get install ffmpeg
 
+
 git clone https://github.com/thao786/autotest.git
 bundle install
 
@@ -38,10 +39,10 @@ aws configure
 
 
 
+ffmpeg -i vid.mov -pix_fmt yuv420p vid.mp4
 
 
 
-ffmpeg -i vid.mov -codec copy vid.mp4
 
 
-scp -i ec2.pem ubuntu@ec2-54-201-188-160.us-west-2.compute.amazonaws.com:~/vid.mov ~/vid.mov
+
