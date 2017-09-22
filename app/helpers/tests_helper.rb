@@ -105,34 +105,4 @@ module TestsHelper
 
     Draft.destroy_all(session_id: session_id)
   end
-
-  def runTest(test)
-    Result.where(test: test).destroy_all # only 1 test can be ran at a time
-    @test.update(running: true)
-    folder = "#{ENV['HOME']}/#{ENV['picDir']}/#{test.id}"
-    FileUtils.rm_r folder if Dir.exist?(folder)
-    Dir.mkdir folder
-
-    if Rails.env.development?
-      driver = Selenium::WebDriver.for :chrome
-    else
-      headless = Headless.new
-      headless.start
-
-      caps = Selenium::WebDriver::Remote::Capabilities.chrome('desiredCapabilities' => {'takesScreenshot' => true}, 'chromeOptions' => {'binary' => '/chromium-browser'})
-
-      options = Selenium::WebDriver::Chrome::Options.new
-      options.add_argument('--screen-size=1200x800')
-
-      driver = Selenium::WebDriver.for :chrome, desired_capabilities: caps, options: options
-    end
-    runSteps(driver, test, test.id)
-    # begin
-    #   runSteps(driver, test, test.id)
-    # rescue
-    #   # render json: false, :status => 404
-    # end
-    driver.quit
-    @test.update(running: false)
-  end
 end

@@ -36,15 +36,29 @@ class ApiController < ActionController::Base
 
     test = Test.find(params[:test_id])
     begin
-      helpers.runTest test
+      headless = Headless.new
+      headless.start
+
+      caps = Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => {'binary' => '/usr/bin/chromium-browser'})
+
+      options = Selenium::WebDriver::Chrome::Options.new
+      options.add_argument('--screen-size=1200x800')
+
+      driver = Selenium::WebDriver.for :chrome, desired_capabilities: caps, options: options
+
+      headless.video.start_capture
+      runSteps(driver, test, test.id)
+      headless.video.stop_and_save("/home/ubuntu/vid.mov")
+      driver.quit
+
+      client = Aws::S3::Client.new(region: 'us-east-1')
+      resource = Aws::S3::Resource.new(client: client)
+      bucket = resource.bucket('autotest-test')
+      bucket.object("vid.mov").upload_file('/home/ubuntu/vid.mov', acl:'public-read')
+      render json: true
     rescue
       render json: false, :status => 404
     end
-  end
-
-  def saveVideoFrame
-    test = Test.find(params[:test_id])
-    render plain: 9
   end
 
   def intro

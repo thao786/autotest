@@ -31,7 +31,7 @@
           </div>
 
           <div class="form-group">
-            <label for="extract">Extract from resulted page load:</label><br>
+            <label for="extract">Extract from resulted page load (available to later steps):</label> body_text<%= @step.id %><br>
 
             <div id="extract-list" class="form-group">
               <% @step.extracts.each do |extract| %>

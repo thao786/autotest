@@ -120,10 +120,14 @@ module ResultsHelper
                       runId: runId, error: error)
       end
 
+      body_text = driver.execute_script 'return document.body.textContent'
+      # check if body_text has even numbers of ( and )
+
       # add extractions to params
       step.extracts.each { |extract|
         extract_value = driver.execute_script extract.command
         paramStr = "#{paramStr}
+body_text#{step.id} = %(#{body_text})
 #{extract.title} = \"#{extract_value}\""
       }
 

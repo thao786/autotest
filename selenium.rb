@@ -6,7 +6,7 @@ require 'headless'
 headless = Headless.new(video: {:frame_rate => 12, provider: :ffmpeg, :codec => 'h264'})
 headless.start
 
-caps = Selenium::WebDriver::Remote::Capabilities.chrome('desiredCapabilities' => {'takesScreenshot' => true}, 'chromeOptions' => {'binary' => '/usr/bin/chromium-browser'})
+caps = Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => {'binary' => '/usr/bin/chromium-browser'})
 
 options = Selenium::WebDriver::Chrome::Options.new
 options.add_argument('--screen-size=1200x800')

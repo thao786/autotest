@@ -33,7 +33,7 @@ Rails.application.routes.draw do
 
   match 'api/check', to: 'api#check', via: [:get, :post]
   match 'api/saveEvent', to: 'api#saveEvent', via: [:post]
-  match 'api/saveVideoFrame', to: 'api#saveVideoFrame', via: [:get, :post]
+  get 'api/runTest', to: 'api#runTest'
 
   match 'suites/saveConfig', to: 'suites#saveConfig', via: [:post]
 
