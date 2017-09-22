@@ -14,7 +14,9 @@
           Test Running
         </button>
     <% else %>
-        <button id="runTest" class="btn-primary btn">Run Test</button>
+        <% if @test.steps.count > 0 %>
+          <button id="runTest" class="btn-primary btn">Run Test</button>
+        <% end %>
     <% end %>
 
     <button id="addNewStep" class="btn-primary btn">Add Step</button>
