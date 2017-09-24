@@ -44,17 +44,21 @@ class ApiController < ActionController::Base
       options = Selenium::WebDriver::Chrome::Options.new
       options.add_argument('--screen-size=1200x800')
 
+      md5 = Digest::MD5.hexdigest "videoCapture-#{runId}"
+      videoPath = "#{ENV['HOME']}/#{ENV['mediaDir']}/#{runId}/#{md5}"
+
       driver = Selenium::WebDriver.for :chrome, desired_capabilities: caps, options: options
 
       headless.video.start_capture
       runSteps(driver, test, test.id)
-      headless.video.stop_and_save("/home/ubuntu/vid.mov")
+      headless.video.stop_and_save("#{videoPath}.mov")
       driver.quit
 
+      `ffmpeg -i #{videoPath}.mov -pix_fmt yuv420p #{videoPath}.mp4`
       client = Aws::S3::Client.new(region: 'us-east-1')
       resource = Aws::S3::Resource.new(client: client)
       bucket = resource.bucket('autotest-test')
-      bucket.object("vid.mov").upload_file('/home/ubuntu/vid.mov', acl:'public-read')
+      bucket.object("#{videoPath}.mp4").upload_file("#{md5}.mp4", acl:'public-read')
       render json: true
     rescue
       render json: false, :status => 404

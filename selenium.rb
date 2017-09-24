@@ -29,3 +29,31 @@ bucket.object("vid.mov").upload_file('/home/ubuntu/vid.mov', acl:'public-read')
 
 # logs = driver.manage.logs.get('browser')
 # logs.each { |x| p x }
+
+# export Elastic Beanstalk ENV to a file
+file = "#{ENV['HOME']}/export.sh"
+File.write(
+    file,
+    [
+        "#!/bin/sh",
+        "\n",
+        "export bucket=#{ENV['bucket']}",
+        "export GOOGLE_ID=#{ENV['GOOGLE_ID']}",
+        "export RDS_PASSWORD=#{ENV['RDS_PASSWORD']}",
+        "export RDS_USERNAME=#{ENV['RDS_USERNAME']}",
+        "export GOOGLE_SECRET=#{ENV['GOOGLE_SECRET']}",
+        "export RDS_PORT=#{ENV['RDS_PORT']}",
+        "export mediaDir=media"
+    ].join("\n")
+)
+
+
+
+
+
+
+
+
+
+
+
