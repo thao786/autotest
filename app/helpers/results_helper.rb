@@ -10,7 +10,6 @@ module ResultsHelper
 
   def runSteps(driver, test, runId, checkAssertions = true)
     tabs = [] # the first tab is always blank for easier management
-    mediaFolder = "#{ENV['HOME']}/#{ENV['picDir']}/#{runId}"
     paramStr = ''
     test.test_params.each { |param|
       paramStr = "#{paramStr}
@@ -130,17 +129,6 @@ module ResultsHelper
 body_text#{step.id} = %(#{body_text})
 #{extract.title} = \"#{extract_value}\""
       }
-
-      # save screenshot
-      md5 = Digest::MD5.hexdigest "#{runId}-#{step.order}"
-      screenshot = "#{mediaFolder}/#{md5}.png"
-      driver.save_screenshot screenshot
-
-      # upload to AWS
-      client = Aws::S3::Client.new(region: 'us-east-1')
-      resource = Aws::S3::Resource.new(client: client)
-      bucket = resource.bucket(ENV['bucket'])
-      bucket.object("#{md5}.png").upload_file(screenshot, acl:'public-read')
     }
 
     if checkAssertions # check assertions

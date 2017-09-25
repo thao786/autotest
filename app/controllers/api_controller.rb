@@ -30,7 +30,7 @@ class ApiController < ActionController::Base
   end
 
   def runTest
-    unless params[:password] == ENV['beanstalk_password']
+    unless params[:password] == ENV['GOOGLE_SECRET']
       render json: false
     end
 
@@ -49,7 +49,7 @@ class ApiController < ActionController::Base
 
       driver = Selenium::WebDriver.for :chrome, desired_capabilities: caps, options: options
 
-      headless.video.start_capture
+      headless.video.start_capture # start recording
       runSteps(driver, test, test.id)
       headless.video.stop_and_save("#{videoPath}.mov")
       driver.quit
@@ -58,7 +58,7 @@ class ApiController < ActionController::Base
       client = Aws::S3::Client.new(region: 'us-east-1')
       resource = Aws::S3::Resource.new(client: client)
       bucket = resource.bucket('autotest-test')
-      bucket.object("#{videoPath}.mp4").upload_file("#{md5}.mp4", acl:'public-read')
+      bucket.object("#{md5}.mp4").upload_file("#{videoPath}.mp4", acl:'public-read')
       render json: true
     rescue
       render json: false, :status => 404
