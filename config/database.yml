@@ -24,7 +24,7 @@ test:
   database: <%= ENV['RDS_DB_NAME'] %>
 
 production:
-  <<: *default
+  adapter: mysql2
   host: <%= ENV['RDS_HOSTNAME'] %>
   port: <%= ENV['RDS_PORT'] %>
   username: <%= ENV['RDS_USERNAME'] %>

@@ -39,6 +39,8 @@ File.write(
         "\n",
         "export bucket=#{ENV['bucket']}",
         "export GOOGLE_ID=#{ENV['GOOGLE_ID']}",
+        "export RDS_HOSTNAME=#{ENV['RDS_HOSTNAME']}",
+        "export RDS_DB_NAME=#{ENV['RDS_DB_NAME']}",
         "export RDS_PASSWORD=#{ENV['RDS_PASSWORD']}",
         "export RDS_USERNAME=#{ENV['RDS_USERNAME']}",
         "export GOOGLE_SECRET=#{ENV['GOOGLE_SECRET']}",

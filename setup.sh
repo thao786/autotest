@@ -40,6 +40,12 @@ sudo apt install awscli
 aws configure
 
 
+mkdir ~/media
+RAILS_ENV=production rails c
+
+
+
+
 
 
 ffmpeg -i vid.mov -pix_fmt yuv420p vid.mp4
