@@ -1,6 +1,5 @@
 module StepHelper
   def translateClickSelector (selector)
-    selector[:selectorType] ||= selector['selectorType']
     eq = selector[:eq].to_i ||= 1
     # eq = 1 + eq
 

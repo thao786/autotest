@@ -15,13 +15,13 @@ class StepController < ApplicationController
           return
       else
         @step.update(selector: {selectorType: form['selectorType'],
-                                eq: form['eq'] ||= 1, selector: form['selector']}.to_json)
+                                eq: form['eq'] ||= 1, selector: form['selector']})
       end
     elsif form['selector'] == 'coordination'
       @step.update(selector:
-           {selectorType: 'coordination', x: @step.config[:x], y: @step.config[:y]}.to_json)
+           {selectorType: 'coordination', x: @step.config[:x], y: @step.config[:y]})
     else # one of the default selectors
-      @step.update(selector: @step.config[:selectors][form['selector'].to_i].to_json)
+      @step.update(selector: @step.config[:selectors][form['selector'].to_i])
     end
 
     @step.update(wait: form['wait']) if form['wait'].present?
