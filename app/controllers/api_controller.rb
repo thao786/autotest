@@ -41,8 +41,9 @@ class ApiController < ActionController::Base
 
       caps = Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => {'binary' => '/usr/bin/chromium-browser'})
 
+      first_step = Step.where(test: @test).first
       options = Selenium::WebDriver::Chrome::Options.new
-      options.add_argument('--screen-size=1200x800')
+      options.add_argument("--screen-size=#{first_step.screenwidth}x#{first_step.screenheight}")
 
       runId = test.id
       md5 = Digest::MD5.hexdigest "videoCapture-#{runId}"

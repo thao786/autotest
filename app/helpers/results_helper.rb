@@ -9,6 +9,8 @@ module ResultsHelper
   end
 
   def runSteps(driver, test, runId, checkAssertions = true)
+    Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first, runId: runId) if checkAssertions # only check main test's assertions
+
     tabs = [] # the first tab is always blank for easier management
     paramStr = ''
     test.test_params.each { |param|
@@ -19,7 +21,6 @@ module ResultsHelper
     steps = Step.where(test: test, active: true)
     steps.each { |step|
       if checkAssertions # ran pre-tests (only available to main test)
-        Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first, runId: runId)
         step.pre_tests.each { |pre_test|
           runSteps(driver, pre_test, runId, false)
         }
@@ -53,7 +54,7 @@ module ResultsHelper
             when 'click'
               type = extractParams(paramStr,step.selector[:selectorType])
               selector = extractParams(paramStr,step.selector[:selector])
-              eq = extractParams(paramStr,step.selector[:eq])
+              eq = extractParams(paramStr,step.selector[:eq]).to_i
               element = case type # first, find DOM with WebDriver
                           when 'id'
                             driver.find_elements(:id => selector).first
@@ -116,7 +117,7 @@ module ResultsHelper
       rescue Exception => error
         Result.create(test: test, step: step, webpage: driver.current_url,
                       assertion: Assertion.where(assertion_type: "step-succeed").first,
-                      runId: runId, error: error)
+                      runId: runId, error: error[0..100])
       end
 
       body_text = driver.execute_script 'return document.body.textContent'

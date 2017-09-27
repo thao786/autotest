@@ -4,7 +4,7 @@ Thuy:
 - step show: perform action, and THEN wait
 - display video instead of screenshots
 - assertions: make it clear that it's JS
-
+- failed assertions: none if there's 0
 
 
 
@@ -19,8 +19,7 @@ REDESIGN
 
 Thao:
 - sign in failure should output error
-- resize screenshot
-
+- if click fails, click with JS
 
 
 
