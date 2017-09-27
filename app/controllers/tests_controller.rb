@@ -131,10 +131,8 @@ class TestsController < ApplicationController
 
     if Rails.env.development?
       first_step = Step.where(test: @test).first
-      options = Selenium::WebDriver::Chrome::Options.new
-      options.add_argument("--screen-size=#{first_step.screenwidth}x#{first_step.screenheight}")
-
-      driver = Selenium::WebDriver.for :chrome, options: options
+      driver = Selenium::WebDriver.for :chrome
+      driver.manage.window.resize_to(first_step.screenwidth, first_step.screenheight)
       helpers.runSteps(driver, @test, @test.id)
       driver.quit
     else # call the independent EC2 servers

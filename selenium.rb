@@ -11,7 +11,7 @@ caps = Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => {'bin
 options = Selenium::WebDriver::Chrome::Options.new
 options.add_argument('--screen-size=1200x800')
 
-driver = Selenium::WebDriver.for :chrome, desired_capabilities: caps, options: options
+driver = Selenium::WebDriver.for :chrome, options: options
 headless.video.start_capture
 driver.get "https://www.youtube.com/watch?v=TytGOeiW0aE"
 
