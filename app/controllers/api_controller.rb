@@ -36,7 +36,7 @@ class ApiController < ActionController::Base
 
     test = Test.find(params[:test_id])
     begin
-      headless = Headless.new
+      headless = Headless.new(video: {:frame_rate => 12, provider: :ffmpeg})
       headless.start
 
       caps = Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => {'binary' => '/usr/bin/chromium-browser'})
@@ -44,6 +44,7 @@ class ApiController < ActionController::Base
       options = Selenium::WebDriver::Chrome::Options.new
       options.add_argument('--screen-size=1200x800')
 
+      runId = test.id
       md5 = Digest::MD5.hexdigest "videoCapture-#{runId}"
       videoPath = "#{ENV['HOME']}/#{ENV['mediaDir']}/#{runId}/#{md5}"
 

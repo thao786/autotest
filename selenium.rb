@@ -3,7 +3,7 @@
 require 'selenium-webdriver'
 require 'headless'
 
-headless = Headless.new(video: {:frame_rate => 12, provider: :ffmpeg, :codec => 'h264'})
+headless = Headless.new(video: {:frame_rate => 12, provider: :ffmpeg})
 headless.start
 
 caps = Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => {'binary' => '/usr/bin/chromium-browser'})
@@ -12,8 +12,8 @@ options = Selenium::WebDriver::Chrome::Options.new
 options.add_argument('--screen-size=1200x800')
 
 driver = Selenium::WebDriver.for :chrome, desired_capabilities: caps, options: options
-driver.get "https://www.youtube.com/watch?v=TytGOeiW0aE"
 headless.video.start_capture
+driver.get "https://www.youtube.com/watch?v=TytGOeiW0aE"
 
 
 headless.video.stop_and_save("/home/ubuntu/vid.mov")

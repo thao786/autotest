@@ -41,8 +41,7 @@ aws configure
 
 
 mkdir ~/media
-RAILS_ENV=production rails c
-
+export RAILS_ENV=production
 
 
 

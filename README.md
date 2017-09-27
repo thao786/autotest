@@ -1,5 +1,12 @@
 Thuy:
-- dont display runTest button if theres no step
+- highlight pageload: is this the result of a click or Js? if yes, user needs to remove the step
+- delete step -> delete this comment? pop up box
+- step show: perform action, and THEN wait
+- display video instead of screenshots
+- assertions: make it clear that it's JS
+
+
+
 
 REDESIGN
 - redesign login screens

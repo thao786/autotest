@@ -47,7 +47,7 @@ module ResultsHelper
                 driver.get extractParams(paramStr,step.webpage)
               }
             when 'scroll'
-              driver.execute_script("scroll(#{extractParams(paramStr,step.scrollLeft)}, #{extractParams(paramStr,step.scrollTop)})")
+              driver.execute_script "scroll(#{extractParams(paramStr,step.scrollLeft)}, #{extractParams(paramStr,step.scrollTop)})"
             when 'keypress'
               driver.action.send_keys(extractParams(paramStr,step.typed)).perform
             when 'click'

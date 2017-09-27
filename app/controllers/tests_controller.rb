@@ -123,15 +123,15 @@ class TestsController < ApplicationController
   end
 
   def runTest
-    Result.where(test: test).destroy_all # only 1 test can be ran at a time
+    Result.where(test: @test).destroy_all # only 1 test can be ran at a time
     @test.update(running: true)
-    folder = "#{ENV['HOME']}/#{ENV['picDir']}/#{test.id}"
+    folder = "#{ENV['HOME']}/#{ENV['picDir']}/#{@test.id}"
     FileUtils.rm_r folder if Dir.exist?(folder)
     Dir.mkdir folder
 
     if Rails.env.development?
       driver = Selenium::WebDriver.for :chrome
-      runSteps(driver, test, test.id)
+      helpers.runSteps(driver, @test, @test.id)
       driver.quit
     else # call the independent EC2 servers
 
