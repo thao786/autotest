@@ -179,4 +179,9 @@ body_text#{step.id} = %(#{body_text})
       }
     end
   end
+
+  def getVideoPath(runID)
+    md5 = Digest::MD5.hexdigest "videoCapture-#{runId}"
+    "#{ENV['HOME']}/#{ENV['mediaDir']}/#{md5}"
+  end
 end

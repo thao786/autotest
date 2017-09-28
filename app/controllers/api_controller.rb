@@ -30,36 +30,34 @@ class ApiController < ActionController::Base
   end
 
   def runTest
-    unless params[:password] == ENV['GOOGLE_SECRET']
-      render json: false
-    end
+    render json: false if params[:password] != ENV['GOOGLE_ID']
 
     test = Test.find(params[:test_id])
     begin
       headless = Headless.new(video: {:frame_rate => 12, provider: :ffmpeg})
       headless.start
 
+      # test = Test.first
       caps = Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => {'binary' => '/usr/bin/chromium-browser'})
 
-      first_step = Step.where(test: @test).first
-      runId = test.id
-      md5 = Digest::MD5.hexdigest "videoCapture-#{runId}"
-      videoPath = "#{ENV['HOME']}/#{ENV['mediaDir']}/#{runId}/#{md5}"
+      first_step = Step.where(test: test).first
+      run_id = test.id
+      video_path = getVideoPath run_id
 
       driver = Selenium::WebDriver.for :chrome, desired_capabilities: caps
       driver.manage.window.resize_to(first_step.screenwidth, first_step.screenheight)
 
       headless.video.start_capture # start recording
       runSteps(driver, test, test.id)
-      headless.video.stop_and_save("#{videoPath}.mov")
+      headless.video.stop_and_save("#{video_path}.mov")
       driver.quit
 
-      `ffmpeg -i #{videoPath}.mov -pix_fmt yuv420p #{videoPath}.mp4`
+      `ffmpeg -i #{video_path}.mov -pix_fmt yuv420p #{video_path}.mp4`
       client = Aws::S3::Client.new(region: 'us-east-1')
       resource = Aws::S3::Resource.new(client: client)
       bucket = resource.bucket('autotest-test')
-      bucket.object("#{md5}.mp4").upload_file("#{videoPath}.mp4", acl:'public-read')
-      render json: true
+      bucket.object("#{md5}.mp4").upload_file("#{video_path}.mp4", acl:'public-read')
+      render plain: "#{video_path}.mp4"
     rescue
       render json: false, :status => 404
     end

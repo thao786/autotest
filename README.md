@@ -5,6 +5,7 @@ Thuy:
 - display video instead of screenshots
 - assertions: make it clear that it's JS
 - failed assertions: none if there's 0
+- make click dropdownlist copyable
 
 
 
