@@ -9,7 +9,7 @@ class ApiController < ActionController::Base
 
   # save this event to draft and update test's cache response
   def saveEvent
-    if params[:action_type] == 'pageload' and params[:webpage].match? 'http.*google.*/_/chrome/newtab'
+    if params[:action_type] == 'pageload' and params[:webpage] =~ %r|http(.*)google(.*)//_//chrome//newtab|
       render json: true
     else
       test = Test.find_by(session_id: params[:session_id])
