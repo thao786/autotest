@@ -93,7 +93,7 @@ function reportEvent(data) { // acceptedOrigins.includes(event.origin)
     data.tabId = tabId;
     data.windowId = windowId;
     data.screenwidth = screen.width;
-    data.screenheight = screen.width;
+    data.screenheight = screen.height;
 
     console.log(data);
 
