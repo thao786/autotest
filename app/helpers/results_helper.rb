@@ -51,6 +51,8 @@ module ResultsHelper
               driver.execute_script "scroll(#{extractParams(paramStr,step.scrollLeft)}, #{extractParams(paramStr,step.scrollTop)})"
             when 'keypress'
               driver.action.send_keys(extractParams(paramStr,step.typed)).perform
+            when 'resize'
+              driver.manage.window.resize_to(step.screenwidth, step.screenheight)
             when 'click'
               type = extractParams(paramStr,step.selector[:selectorType])
               selector = extractParams(paramStr,step.selector[:selector])
