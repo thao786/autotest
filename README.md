@@ -21,10 +21,11 @@ REDESIGN
 
 
 Thao:
-- sign in failure should output error
-- if click fails, click with JS
+- package ChromePlugin for users to download
 - get rid of 404 bootstrap error
 - when 500 happens, email Thao
+- sign in failure should output error
+- if click fails, click with JS
 - make local do HTTPS
 
 
