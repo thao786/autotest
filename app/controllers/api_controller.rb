@@ -57,6 +57,10 @@ class ApiController < ActionController::Base
       resource = Aws::S3::Resource.new(client: client)
       bucket = resource.bucket('autotest-test')
       bucket.object("#{md5}.mp4").upload_file("#{video_path}.mp4", acl:'public-read')
+
+      # File.delete "#{video_path}.mov"
+      # File.delete "#{video_path}.mp4"
+
       render plain: "#{video_path}.mp4"
     rescue
       render json: false, :status => 404

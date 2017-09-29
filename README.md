@@ -1,4 +1,5 @@
 Thuy:
+- show how long the test take (add the sum of the steps' wait)
 - highlight pageload: is this the result of a click or Js? if yes, user needs to remove the step
 - delete step -> delete this comment? pop up box
 - step show: perform action, and THEN wait
@@ -22,7 +23,9 @@ REDESIGN
 Thao:
 - sign in failure should output error
 - if click fails, click with JS
-
+- get rid of 404 bootstrap error
+- when 500 happens, email Thao
+- make local do HTTPS
 
 
 
