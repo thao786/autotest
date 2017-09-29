@@ -39,13 +39,10 @@
     </div>
 
     <div class="col-xs-6">
-      <% Step.where(test: @test, active: true).each_with_index do |step, index| %>
-          <% url = step.screenShot(@runId) %>
-          Step <b><%= index + 1 %></b>: <%= step.title %> <br>
-          <a href="<%= url %>">
-            <img class="step-screenshot" height="200" src="<%= url %>">
-          </a><br><br>
-      <% end %>
+      <% url = getVideoPath(@runId) %>
+      <video width=100% controls>
+        <source src="<%= url %>" type="video/mp4">
+      </video>
     </div>
   </div>
 </div>

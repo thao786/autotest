@@ -181,7 +181,8 @@ body_text#{step.id} = %(#{body_text})
   end
 
   def getVideoPath(runID)
-    md5 = Digest::MD5.hexdigest "videoCapture-#{runId}"
-    "#{ENV['HOME']}/#{ENV['mediaDir']}/#{md5}"
+    md5 = Digest::MD5.hexdigest "videoCapture-#{runID}"
+    # "#{ENV['HOME']}/#{ENV['mediaDir']}/#{md5}"
+    "https://s3.amazonaws.com/#{ENV['bucket']}/#{md5}.mp4"
   end
 end
