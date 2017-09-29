@@ -8,7 +8,6 @@ var tabId = 0;
 var windowId = 0;
 
 chrome.storage.local.get(function(data) {
-    console.log(data);
     if (data.session_id.trim().length > 0) {
         sessionId = data.session_id;
         origin = data.host;
