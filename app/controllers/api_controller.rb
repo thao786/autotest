@@ -72,6 +72,10 @@ class ApiController < ActionController::Base
   end
 
   def fonts
-    send_file "#{ENV['HOME']}/autotest/vendor/assets/fonts/#{params[:font]}.#{params[:format]}"
+    if Rails.env.development?
+      send_file "#{ENV['HOME']}/autotest/vendor/assets/fonts/#{params[:font]}.#{params[:format]}"
+    else # redirect
+      redirect_back fallback_location: "https://s3.amazonaws.com/autotest-test/glyphicons-halflings-regular.ttf"
+    end
   end
 end
