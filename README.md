@@ -3,9 +3,7 @@ Thuy:
 - highlight pageload: is this the result of a click or Js? if yes, user needs to remove the step
 - delete step -> delete this comment? pop up box
 - step show: perform action, and THEN wait
-- display video instead of screenshots
 - assertions: make it clear that it's JS
-- failed assertions: none if there's 0
 - make click dropdownlist copyable
 
 
@@ -21,8 +19,7 @@ REDESIGN
 
 
 Thao:
-- package ChromePlugin for users to download
-- get rid of 404 bootstrap error
+- package ChromePlugin for users to download: create a repository
 - when 500 happens, email Thao
 - sign in failure should output error
 - if click fails, click with JS
