@@ -1,6 +1,6 @@
 <div class="step-list-item <%= step.complete? ? '' : 'non-complete-step' %>" data-step="<%= step.id %>">
   <span>Step <b><%= (defined?(index) ? index : step.order)  + 1 %></b>: </span>
-  wait <span class="wait"><b><%= step.wait %></b></span> millisec, then<br>
+
   <%= Step.web_step_types[step.action_type] %>
 
   <% case step.action_type
@@ -19,6 +19,8 @@
       <% when 'resize' %> to <span><%= step.screenwidth %> x <%= step.screenheight %></span>
       <% else %>
   <% end %>
+
+  <br>wait <span class="wait"><b><%= step.wait %></b></span> millisec<br>
 
   <button class="hover-edit-btn btn visible-hover">
     <span class="glyphicon glyphicon-edit"></span> Edit
