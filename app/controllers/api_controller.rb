@@ -37,7 +37,6 @@ class ApiController < ActionController::Base
       headless = Headless.new(video: {:frame_rate => 12, provider: :ffmpeg})
       headless.start
 
-      # test = Test.first
       caps = Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => {'binary' => '/usr/bin/chromium-browser'})
 
       first_step = Step.where(test: test).first
@@ -69,9 +68,5 @@ class ApiController < ActionController::Base
 
   def intro
     render template: 'layouts/intro'
-  end
-
-  def fonts
-    send_file "#{ENV['HOME']}/autotest/vendor/assets/fonts/#{params[:font]}.#{params[:format]}"
   end
 end

@@ -3,9 +3,7 @@ Thuy:
 - delete step -> delete this comment? pop up box
 - step show: perform action, and THEN wait
 - assertions: make it clear that it's JS
-- failed assertions: none if there's 0
 - make click dropdownlist copyable
-
 
 
 
@@ -17,13 +15,10 @@ REDESIGN
 
 
 
-
 Thao:
-- package ChromePlugin for users to download
-- get rid of 404 bootstrap error
+- package ChromePlugin for users to download: create a repository
 - when 500 happens, email Thao
 - sign in failure should output error
-- if click fails, click with JS
 - make local do HTTPS
 
 
@@ -34,5 +29,4 @@ WRITE usage tutorials:
 - warn users about pageload step: they might need to delete this
 - the assertion should output TRUE
 - emphasize Autotest can handle multiple tabs
-- make it clear that Autotest use OCR to see visible text
 
