@@ -8,13 +8,13 @@ module ResultsHelper
     end
   end
 
-  def runSteps(driver, test, runId, checkAssertions = true)
-    Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first, runId: runId) if checkAssertions # only check main test's assertions
+  def runSteps(driver, test, run_id, checkAssertions = true)
+    Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first, runId: run_id) if checkAssertions # only check main test's assertions
 
     tabs = [] # the first tab is always blank for easier management
-    paramStr = ''
+    param_str = ''
     test.test_params.each { |param|
-      paramStr = "#{paramStr}
+      param_str = "#{param_str}
 #{param.label} = \"#{param.val}\""
     }
 
@@ -22,7 +22,7 @@ module ResultsHelper
     steps.each { |step|
       if checkAssertions # ran pre-tests (only available to main test)
         step.pre_tests.each { |pre_test|
-          runSteps(driver, pre_test, runId, false)
+          runSteps(driver, pre_test, run_id, false)
         }
       end
 
@@ -41,22 +41,22 @@ module ResultsHelper
         Timeout::timeout(step.wait/1000) { # wait
           case step.action_type
             when 'pageload'
-              driver.get extractParams(paramStr,step.webpage)
+              driver.get extractParams(param_str,step.webpage)
             when 'pageloadCurl'
               # load headers and params
               Thread.new {
-                driver.get extractParams(paramStr,step.webpage)
+                driver.get extractParams(param_str,step.webpage)
               }
             when 'scroll'
-              driver.execute_script "scroll(#{extractParams(paramStr,step.scrollLeft)}, #{extractParams(paramStr,step.scrollTop)})"
+              driver.execute_script "scroll(#{extractParams(param_str,step.scrollLeft)}, #{extractParams(param_str,step.scrollTop)})"
             when 'keypress'
-              driver.action.send_keys(extractParams(paramStr,step.typed)).perform
+              driver.action.send_keys(extractParams(param_str,step.typed)).perform
             when 'resize'
               driver.manage.window.resize_to(step.screenwidth, step.screenheight)
             when 'click'
-              type = extractParams(paramStr,step.selector[:selectorType])
-              selector = extractParams(paramStr,step.selector[:selector])
-              eq = extractParams(paramStr,step.selector[:eq]).to_i
+              type = extractParams(param_str,step.selector[:selectorType])
+              selector = extractParams(param_str,step.selector[:selector])
+              eq = extractParams(param_str,step.selector[:eq]).to_i
               element = case type # first, find DOM with WebDriver
                           when 'id'
                             driver.find_elements(:id => selector).first
@@ -84,31 +84,13 @@ module ResultsHelper
                             nil
                       end
               if element.present?
-                element.click
+                begin
+                  element.click
+                rescue Exception => error
+                  click_with_js(driver, type, selector, eq)
+                end
               else # when WebDriver's find_elements fails, find with JS
-                js_selector = case type
-                                when 'id'
-                                  "document.getElementById('#{selector}')"
-                                when 'class'
-                                  "document.getElementsByClassName('#{selector}')[#{eq}]"
-                                when 'tag'
-                                  "document.getElementsByTagName('#{selector}')[#{eq}]"
-                                when 'name'
-                                  "document.getElementsByName('#{selector}')[#{eq}]"
-                                when 'partialLink' # use XPath, cant use eq
-                                  "document.evaluate('//a[text()[contains(.,\'#{selector}')]]\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue"
-                                when 'href'
-                                  "document.querySelectorAll('a[href=\'#{selector}\']')[#{eq}]"
-                                when 'partialHref'
-                                  "document.querySelectorAll('a[href*=\'#{selector}\']')[#{eq}]"
-                                when 'button' # use XPath, cant use eq
-                                  "document.evaluate('//button[text()[contains(.,\'#{selector}')]]\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue"
-                                when 'css'
-                                  "document.querySelectorAll('#{selector}')[#{eq}]"
-                                else
-                                  nil
-                              end
-                driver.execute_script("#{js_selector}.click()")
+                click_with_js(driver, type, selector, eq)
               end
             else
               true
@@ -119,7 +101,7 @@ module ResultsHelper
       rescue Exception => error
         Result.create(test: test, step: step, webpage: driver.current_url,
                       assertion: Assertion.where(assertion_type: "step-succeed").first,
-                      runId: runId, error: error[0..100])
+                      runId: run_id, error: error[0..100])
       end
 
       body_text = driver.execute_script 'return document.body.textContent'
@@ -128,7 +110,7 @@ module ResultsHelper
       # add extractions to params
       step.extracts.each { |extract|
         extract_value = driver.execute_script extract.command
-        paramStr = "#{paramStr}
+        param_str = "#{param_str}
 body_text#{step.id} = %(#{body_text})
 #{extract.title} = \"#{extract_value}\""
       }
@@ -144,14 +126,14 @@ body_text#{step.id} = %(#{body_text})
           if log.message.include? 'Failed to load resource: the server responded with a status'
             Result.create(test: test, webpage: driver.current_url,
                           assertion: Assertion.where(assertion_type: "http-200").first,
-                          runId: runId, error: log)
+                          runId: run_id, error: log)
           end
         }
 
         assertions = Assertion.where(test: test, active: true)
         assertions.each { |assertion|
           if assertion.webpage.blank? || assertion.webpage == driver.current_url
-            condition = extractParams(paramStr, assertion.condition)
+            condition = extractParams(param_str, assertion.condition)
             passed = case assertion.assertion_type
                        when 'text-in-page'
                          text = driver.execute_script 'return document.body.textContent'
@@ -172,7 +154,7 @@ body_text#{step.id} = %(#{body_text})
                      end
             unless passed
               Result.create(test: test, webpage: driver.current_url,
-                            assertion: assertion, runId: runId)
+                            assertion: assertion, runId: run_id)
             end
           end
         }
@@ -180,8 +162,34 @@ body_text#{step.id} = %(#{body_text})
     end
   end
 
-  def getVideoPath(runID)
-    md5 = Digest::MD5.hexdigest "videoCapture-#{runID}"
+  def click_with_js(driver, type, selector, eq)
+    js_selector = case type
+                    when 'id'
+                      "document.getElementById('#{selector}')"
+                    when 'class'
+                      "document.getElementsByClassName('#{selector}')[#{eq}]"
+                    when 'tag'
+                      "document.getElementsByTagName('#{selector}')[#{eq}]"
+                    when 'name'
+                      "document.getElementsByName('#{selector}')[#{eq}]"
+                    when 'partialLink' # use XPath, cant use eq
+                      "document.evaluate('//a[text()[contains(.,\'#{selector}')]]\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue"
+                    when 'href'
+                      "document.querySelectorAll('a[href=\'#{selector}\']')[#{eq}]"
+                    when 'partialHref'
+                      "document.querySelectorAll('a[href*=\'#{selector}\']')[#{eq}]"
+                    when 'button' # use XPath, cant use eq
+                      "document.evaluate('//button[text()[contains(.,\'#{selector}')]]\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue"
+                    when 'css'
+                      "document.querySelectorAll('#{selector}')[#{eq}]"
+                    else
+                      nil
+                  end
+    driver.execute_script("#{js_selector}.click()")
+  end
+
+  def getVideoPath(run_id)
+    md5 = Digest::MD5.hexdigest "videoCapture-#{run_id}"
     # "#{ENV['HOME']}/#{ENV['mediaDir']}/#{md5}"
     "https://s3.amazonaws.com/#{ENV['bucket']}/#{md5}.mp4"
   end

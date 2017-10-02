@@ -142,7 +142,7 @@ $(document).on("click", ".delete-step", function(e) {
     var step_id = $(this).closest('.step-list-item').data('step');
     var list_item = $(this).parent();
 
-    if(confirm('Are you sure you would like to delete this comment?')) {
+    if(confirm('Are you sure you would like to delete this step?')) {
         $.ajax({
             type: "GET",
             url: '/step/delete_step',
