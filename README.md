@@ -1,9 +1,7 @@
 Thuy:
-- show how long the test take (add the sum of the steps' wait)
 - highlight pageload: is this the result of a click or Js? if yes, user needs to remove the step
 - delete step -> delete this comment? pop up box
 - step show: perform action, and THEN wait
-- display video instead of screenshots
 - assertions: make it clear that it's JS
 - failed assertions: none if there's 0
 - make click dropdownlist copyable
