@@ -1,11 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Autotest</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag "application", media: "all" %>
+</head>
+
+<body>
 <h2>Wellcome to autotest!</h2>
 
 <% if user_signed_in? %>
     <a href="/suites">See your Tests</a>
-<% else %>
-    <%= link_to('Login', new_user_session_path)  %>
 
-    <%= link_to "Google", user_google_oauth2_omniauth_authorize_path %>
+    <button class="btn btn-primary"><%= link_to('Log Out', destroy_user_session_path, :method => :delete) %></button>
+<% else %>
+    <button class="btn btn-primary"><a href="<%= new_user_session_path %>">Sign In</a></button>
+
+    <button class="btn btn-danger"><a href="<%= user_google_oauth2_omniauth_authorize_path %>">Sign In with Google</a></button>
+or
+    <button class="btn btn-primary"><a href="<%= new_user_registration_path %>">Sign Up</a></button>
 <% end %>
 
 <h3>What is AutoTest</h3>
@@ -26,5 +42,7 @@
 
 
 <h3>Upcoming features</h3>
-<ul>View test result in video</ul>
 <ul>Download your test in code so you can reproduce your tests locally</ul>
+
+</body>
+</html>
