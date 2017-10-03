@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Autotest</title>
+  <title>UI Checks</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<h2>Wellcome to autotest!</h2>
+<h2>Wellcome to UI Checks!</h2>
 
 <% if user_signed_in? %>
     <a href="/suites">See your Tests</a>
@@ -25,28 +25,28 @@ or
     <button class="btn btn-primary"><a href="<%= new_user_registration_path %>">Sign Up</a></button>
 <% end %>
 
-<h3>What is AutoTest</h3>
-<p>AutoTest records your Web and Mobile (coming soon) actions and translate them into code
-  that can be ran by Selenium. Thus, <b>little to none</b> programming knowledge
-  is required.</p>
+<h3>What is UI Checks</h3>
+<p>Our <a href="https://s3.amazonaws.com/autotest-prod/UI_Check_Plugin.zip
+">Chrome Extension</a> records your testing actions and translate them into code that can be ran by Selenium. You can review the testing actions in a video afterward. Our platform current supports only Web testing, but Mobile testing is underway.</p>
+
+<p><b>Little to none</b> programming skill is required to use UI Checks. However, knowledge about HTML, CSS and Javascript is helpful.</p>
 
 <h3>How It Works</h3>
 <p>
 <h5><a href="/doc">Web</a></h5>
   You need to install <a href="https://s3.amazonaws.com/autotest-prod/UI_Check_Plugin.zip
-">our Chrome extension</a> and activate it. To record a test, you need to create a test under a test suite and click "Start Recording Steps". The extension will listen to your actions on Chrome Browser and give a replicable steps after. You can edit the step list once recording is complete.
+">our Chrome extension</a> and activate it. Once you click "Start Recording Steps", the extension will start listening to your actions on Chrome Browser. To end the recording session, hit "Stop Recording Steps" and an editable list of action steps will be shown.
 </p>
 
 <p>
-  A test can be ran anytime when you click "Run Test". Once the running is complete, you will get
-  a result page that includes screenshots and assertion results.
+  A test can only be ran by one user when you click "Run Test". Once the running is complete, you will get a result page that includes video capture and assertion results.
 </p>
 
 <h3>Feedback</h3>
-<p>We welcome your feedbacks! Please email us at roseskindergarten at gmail.com</p>
+<p>We welcome your feedbacks! Please contact us at roseskindergarten at gmail.com</p>
 
 <h3>Upcoming features</h3>
-<ul>Download your test in code so you can reproduce your tests locally</ul>
+<ul>Download your test in code so you can reproduce your tests locally.</ul>
 
 </body>
 </html>
