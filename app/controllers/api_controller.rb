@@ -45,7 +45,7 @@ class ApiController < ActionController::Base
 
       first_step = Step.where(test: test).first
       run_id = test.id
-      video_path = getVideoPath run_id
+      video_path = helpers.getVideoPath run_id
 
       driver = Selenium::WebDriver.for :chrome, desired_capabilities: caps
       driver.manage.window.resize_to(first_step.screenwidth, first_step.screenheight)
