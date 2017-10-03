@@ -29,8 +29,12 @@ class ApiController < ActionController::Base
     end
   end
 
+  # request has to be encrypted with a private key (to make sure it comes from Beanstalk)
+  # too much work to create security group for each Beanstalk instance
+  # only make sense when decrypted with the public key
+  # anybody can read, but its just test_id anyway
   def runTest
-    render json: false if params[:password] != ENV['GOOGLE_ID']
+    # render json: false if params[:password] != ENV['GOOGLE_ID']
 
     test = Test.find(params[:test_id])
     begin
@@ -60,7 +64,7 @@ class ApiController < ActionController::Base
       # File.delete "#{video_path}.mov"
       # File.delete "#{video_path}.mp4"
 
-      render plain: "#{video_path}.mp4"
+      render json: true
     rescue
       render json: false, :status => 404
     end
