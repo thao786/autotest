@@ -65,8 +65,8 @@ class ApiController < ActionController::Base
       # File.delete "#{video_path}.mp4"
 
       render json: true
-    rescue
-      render json: false, :status => 404
+    rescue Exception => error
+      render plain: error.message, :status => 404
     end
   end
 
