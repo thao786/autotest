@@ -51,7 +51,7 @@ class ApiController < ActionController::Base
       driver.manage.window.resize_to(first_step.screenwidth, first_step.screenheight)
 
       headless.video.start_capture # start recording
-      runSteps(driver, test, test.id)
+      helpers.runSteps(driver, test, test.id)
       headless.video.stop_and_save("#{video_path}.mov")
       driver.quit
 
