@@ -16,9 +16,8 @@ REDESIGN
 
 
 Thao:
-- package ChromePlugin for users to download: create a repository
 - when 500 happens, email Thao
-- sign in failure should output error
+- make video private. only show temporary url
 - make local do HTTPS
 
 
