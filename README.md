@@ -1,7 +1,5 @@
 Thuy:
 - highlight pageload: is this the result of a click or Js? if yes, user needs to remove the step
-- delete step -> delete this comment? pop up box
-- step show: perform action, and THEN wait
 - assertions: make it clear that it's JS
 - make click dropdownlist copyable
 
