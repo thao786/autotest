@@ -62,8 +62,8 @@ class ApiController < ActionController::Base
       bucket = resource.bucket('autotest-test')
       bucket.object("#{md5}.mp4").upload_file("#{video_path_on_disk}.mp4", acl:'public-read')
 
-      File.delete "#{video_path}.mov"
-      File.delete "#{video_path}.mp4"
+      File.delete "#{video_path_on_disk}.mov"
+      File.delete "#{video_path_on_disk}.mp4"
 
       render plain: helpers.video_aws_path(run_id)
     rescue Exception => error
