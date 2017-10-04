@@ -45,21 +45,22 @@ class ApiController < ActionController::Base
 
       first_step = Step.where(test: test).first
       run_id = test.id
-      video_path = helpers.getVideoPath run_id
+      md5 = helpers.hash_video run_id
+      video_path_on_disk = "#{ENV['HOME']}/#{ENV['mediaDir']}/#{md5}"
 
       driver = Selenium::WebDriver.for :chrome, desired_capabilities: caps
       driver.manage.window.resize_to(first_step.screenwidth, first_step.screenheight)
 
       headless.video.start_capture # start recording
       helpers.runSteps(driver, test, test.id)
-      headless.video.stop_and_save("#{video_path}.mov")
+      headless.video.stop_and_save("#{video_path_on_disk}.mov")
       driver.quit
 
-      `ffmpeg -i #{video_path}.mov -pix_fmt yuv420p #{video_path}.mp4`
+      `ffmpeg -i #{video_path_on_disk}.mov -pix_fmt yuv420p #{video_path_on_disk}.mp4`
       client = Aws::S3::Client.new(region: 'us-east-1')
       resource = Aws::S3::Resource.new(client: client)
       bucket = resource.bucket('autotest-test')
-      bucket.object("#{md5}.mp4").upload_file("#{video_path}.mp4", acl:'public-read')
+      bucket.object("#{md5}.mp4").upload_file("#{video_path_on_disk}.mp4", acl:'public-read')
 
       # File.delete "#{video_path}.mov"
       # File.delete "#{video_path}.mp4"

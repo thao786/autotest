@@ -39,9 +39,9 @@
     </div>
 
     <div class="col-xs-8">
-      <% url = getVideoPath(@runId) %>
+      <% url = video_aws_path(@runId) %>
       <video width=100% controls>
-        <source src="<%= url %>" type="video/mp4">
+        <source src="<%= url %>.mp4" type="video/mp4">
       </video>
     </div>
   </div>

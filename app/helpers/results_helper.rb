@@ -188,9 +188,12 @@ body_text#{step.id} = %(#{body_text})
     driver.execute_script("#{js_selector}.click()")
   end
 
-  def getVideoPath(run_id)
-    md5 = Digest::MD5.hexdigest "videoCapture-#{run_id}"
-    # "#{ENV['HOME']}/#{ENV['mediaDir']}/#{md5}"
-    "https://s3.amazonaws.com/#{ENV['bucket']}/#{md5}.mp4"
+  def hash_video(run_id)
+    Digest::MD5.hexdigest "videoCapture-#{run_id}"
+  end
+
+  def video_aws_path(run_id)
+    md5 = hash_video(run_id)
+    "https://s3.amazonaws.com/#{ENV['bucket']}/#{md5}"
   end
 end
