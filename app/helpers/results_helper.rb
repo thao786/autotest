@@ -96,6 +96,8 @@ module ResultsHelper
               true
           end
         }
+
+        sleep step.wait/1000
       rescue Timeout::Error
         # carry on
       rescue Exception => error
