@@ -34,11 +34,11 @@ class ApiController < ActionController::Base
   # only make sense when decrypted with the public key
   # anybody can read, but its just test_id anyway
   def runTest
-    private_key_file = "#{ENV['HOME']}/private.pem"
-    private_key = OpenSSL::PKey::RSA.new(File.read(private_key_file), 'fall2010')
-    decrypted_data = private_key.private_decrypt(Base64.decode64(params[:data]))
-
     begin
+      private_key_file = "#{ENV['HOME']}/private.pem"
+      private_key = OpenSSL::PKey::RSA.new(File.read(private_key_file), 'fall2010')
+      decrypted_data = private_key.private_decrypt(Base64.decode64(params[:data]))
+
       data = JSON.parse decrypted_data
 
       if data['password'] == ENV['RDS_PASSWORD']
