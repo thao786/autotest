@@ -136,8 +136,13 @@ class TestsController < ApplicationController
       helpers.runSteps(driver, @test, @test.id)
       driver.quit
     else # call the independent EC2 servers
-
+      data = {:password => ENV['RDS_PASSWORD'], :test_id => @test.id}
+      json = JSON.generate data
+      public_key = OpenSSL::PKey::RSA.new(File.read("#{ENV['HOME']}/public.pem"))
+      encrypted_string = Base64.encode64(public_key.public_encrypt(json))
+      url = "http://34.213.223.51/api/runTest?data=#{encrypted_string}"
     end
+
     @test.update(running: false)
     render json: @test.id
   end
