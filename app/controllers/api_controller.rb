@@ -35,45 +35,43 @@ class ApiController < ActionController::Base
   # anybody can read, but its just test_id anyway
   def runTest
     begin
-      private_key_file = "#{ENV['HOME']}/private.pem"
-      private_key = OpenSSL::PKey::RSA.new(File.read(private_key_file), 'fall2010')
-      decrypted_data = private_key.private_decrypt(Base64.decode64(params[:data]))
+      secret_data = Base64::decode64(params[:data])
+      decipher = OpenSSL::Cipher::Cipher.new('aes-256-cbc')
+      decipher.decrypt
+      decipher.key = Digest::SHA256.digest ENV['RDS_PASSWORD']
+      decipher.iv  = ENV['iv']
+      decrypted_data = decipher.update(secret_data) + decipher.final
 
       data = JSON.parse decrypted_data
+      test = Test.find data['test_id']
+      headless = Headless.new(video: {:frame_rate => 12, provider: :ffmpeg})
+      headless.start
 
-      if data['password'] == ENV['RDS_PASSWORD']
-        test = Test.find data['test_id']
-        headless = Headless.new(video: {:frame_rate => 12, provider: :ffmpeg})
-        headless.start
+      caps = Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => {'binary' => '/usr/bin/chromium-browser'})
 
-        caps = Selenium::WebDriver::Remote::Capabilities.chrome('chromeOptions' => {'binary' => '/usr/bin/chromium-browser'})
+      first_step = Step.where(test: test).first
+      run_id = test.id
+      md5 = helpers.hash_video run_id
+      video_path_on_disk = "#{ENV['HOME']}/#{ENV['mediaDir']}/#{md5}"
 
-        first_step = Step.where(test: test).first
-        run_id = test.id
-        md5 = helpers.hash_video run_id
-        video_path_on_disk = "#{ENV['HOME']}/#{ENV['mediaDir']}/#{md5}"
+      driver = Selenium::WebDriver.for :chrome, desired_capabilities: caps
+      driver.manage.window.resize_to(first_step.screenwidth, first_step.screenheight)
 
-        driver = Selenium::WebDriver.for :chrome, desired_capabilities: caps
-        driver.manage.window.resize_to(first_step.screenwidth, first_step.screenheight)
+      headless.video.start_capture # start recording
+      helpers.runSteps(driver, test, test.id)
+      headless.video.stop_and_save("#{video_path_on_disk}.mov")
+      driver.quit
 
-        headless.video.start_capture # start recording
-        helpers.runSteps(driver, test, test.id)
-        headless.video.stop_and_save("#{video_path_on_disk}.mov")
-        driver.quit
+      `ffmpeg -i #{video_path_on_disk}.mov -pix_fmt yuv420p #{video_path_on_disk}.mp4`
+      client = Aws::S3::Client.new(region: 'us-east-1')
+      resource = Aws::S3::Resource.new(client: client)
+      bucket = resource.bucket('autotest-test')
+      bucket.object("#{md5}.mp4").upload_file("#{video_path_on_disk}.mp4", acl:'public-read')
 
-        `ffmpeg -i #{video_path_on_disk}.mov -pix_fmt yuv420p #{video_path_on_disk}.mp4`
-        client = Aws::S3::Client.new(region: 'us-east-1')
-        resource = Aws::S3::Resource.new(client: client)
-        bucket = resource.bucket('autotest-test')
-        bucket.object("#{md5}.mp4").upload_file("#{video_path_on_disk}.mp4", acl:'public-read')
+      File.delete "#{video_path_on_disk}.mov"
+      File.delete "#{video_path_on_disk}.mp4"
 
-        File.delete "#{video_path_on_disk}.mov"
-        File.delete "#{video_path_on_disk}.mp4"
-
-        render plain: helpers.video_aws_path(run_id)
-      else
-        render json: false
-      end
+      render plain: helpers.video_aws_path(run_id)
     rescue Exception => error
       p error.message
       render json: false, :status => 404
