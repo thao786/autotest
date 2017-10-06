@@ -15,8 +15,6 @@
 
 <% if user_signed_in? %>
     <a href="/suites">See your Tests</a>
-
-    <button class="btn btn-primary"><%= link_to('Log Out', destroy_user_session_path, :method => :delete) %></button>
 <% else %>
     <button class="btn btn-primary"><a href="<%= new_user_session_path %>">Sign In</a></button>
 
