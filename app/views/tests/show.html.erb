@@ -36,9 +36,9 @@
 <p>
   <strong>Lastest Run:</strong>
   <% if @result.present? %>
-      <% count = @test.results.where(runId: @result.runId).count %>
+      <% count = @test.results.where.not(assertion: Assertion.find_by(assertion_type: 'report')).where(runId: @result.runId).count %>
       <a href="<%= @result.url %>"><%= time_ago_in_words @result.created_at %></a>
-      (<%= pluralize(count - 1, ' failed assertion') %>)
+      (<%= pluralize(count, ' failed assertion') %>)
   <% else %>
       never ran before
   <% end %>
@@ -97,7 +97,7 @@
                 <%= render "step/show", step: step , index: index %>
             <% end %>
         <% else %>
-            <p>No step to display yet.</p>
+            <p>Once your test recording session is finished, its steps will be listed here.</p>
         <% end %>
       </div>
     </div>
