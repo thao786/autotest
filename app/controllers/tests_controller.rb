@@ -150,7 +150,7 @@ class TestsController < ApplicationController
       encrypted_string = Base64.encode64(encrypted).gsub(/\n/, '')
 
       selenium_url = "http://localhost:3000/api/runTest?data=#{encrypted_string}"
-      video_url = open(selenium_url).read
+      open(selenium_url).read
     end
 
     @test.update(running: false)
