@@ -135,7 +135,8 @@ class TestsController < ApplicationController
       driver.manage.window.resize_to(first_step.screenwidth, first_step.screenheight)
       helpers.runSteps(driver, @test, @test.id)
       driver.quit
-    else # call the independent EC2 servers
+    else
+      # call the independent EC2 servers
       data = {:test_id => @test.id}
       json = JSON.generate data
 
@@ -148,7 +149,8 @@ class TestsController < ApplicationController
       encrypted << cipher.final
       encrypted_string = Base64.encode64(encrypted).gsub(/\n/, '')
 
-      url = "http://localhost:3000/api/runTest?data=#{encrypted_string}"
+      selenium_url = "http://localhost:3000/api/runTest?data=#{encrypted_string}"
+      video_url = open(selenium_url).read
     end
 
     @test.update(running: false)
