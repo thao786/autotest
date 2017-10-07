@@ -7,7 +7,7 @@
     @test.session_expired_at.to_formatted_s(:number) > Time.now.to_formatted_s(:number) %>
     <button id="stopRecording" class="btn btn-danger">Stop recording steps</button>
 <% else %>
-    <button id="startRecording" class="btn-primary btn">Recording Steps</button>
+    <button id="startRecording" class="btn-primary btn">Record Steps</button>
     <% if @test.running %>
         <button id="showRunningTest" type="button" class="btn btn-danger" disabled>
           <span class="glyphicon glyphicon-repeat normal-left-spinner"></span>
@@ -22,7 +22,7 @@
     <button id="addNewStep" class="btn-primary btn">Add Step</button>
 <% end %>
 
-<h4 style="display: block; width:300px; margin: 0 auto;">Test: <%= @test.title %>
+<h4 style="display: block; width:300px; margin: 0 auto;">Title: <%= @test.title %>
   <%= render "tests/delete_btn", test: @test %> -
   <%= render "tests/edit_btn", test: @test %>
 </h4>
