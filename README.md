@@ -16,12 +16,9 @@ REDESIGN
 Thao:
 - make video have better UI: big PLAY button on screen
 - run test with FireFox too
-- redundant SUITE in /doc
-- remove suite in test list, suite show
 - broken: test search
 - delete test in list
-- delete test failed: doesnt redirect to suite
-- update time: more detailed
+- detect browser to show Warning
 
 - when 500 happens, email Thao
 - make video private. only show temporary url
