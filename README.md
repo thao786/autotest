@@ -14,7 +14,7 @@ REDESIGN
 
 
 Thao:
-- make video have better UI: big PLAY button on screen
+- paginations
 - run test with FireFox too
 - broken: test search
 - detect browser to show Warning

@@ -15,7 +15,9 @@
         <td><a href="<%= showUrl test %>"> <%= test.title %></a></td>
         <td>
           <%= test.description %></td>
-        <td><%= render "tests/delete_btn", test: test %></td>
+        <td><%= render "tests/delete_btn", test: test %>
+            <%= render "tests/edit_btn", test: test %>
+        </td>
       </tr>
     <% end %>
   </tbody>

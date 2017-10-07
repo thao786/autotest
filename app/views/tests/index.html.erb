@@ -30,8 +30,7 @@
           <td><a href="<%= showUrl test %>"> <%= test.title %></a></td>
           <td><%= test.description %></td>
           <td><%= render "tests/delete_btn", test: test %> -
-            <a><span class="glyphicon glyphicon-edit" title="Edit Test"
-                     onclick="showEditTestModal('<%= test.id %>');"></span></a>
+            <%= render "tests/edit_btn", test: test %>
           </td>
           <td><% if test.results.count > 0 %>
                   <%= time_ago_in_words test.results.first.created_at %>
