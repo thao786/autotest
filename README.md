@@ -14,6 +14,8 @@ REDESIGN
 
 
 Thao:
+- make video have better UI: big PLAY button on screen
+- run test with FireFox too
 - when 500 happens, email Thao
 - make video private. only show temporary url
 - make local do HTTPS
