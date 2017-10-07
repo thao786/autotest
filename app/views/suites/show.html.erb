@@ -8,6 +8,8 @@
 <a class="add-test-modal pointer" data-suite="<%= @suite.id %>">
   <span class="glyphicon glyphicon-plus"></span> Add Test</a>
 
+<%= render "suites/delete_btn", suite: @suite %>
+
 <div class="container-fluid">
   <div class="col-sm-4"><br>
     <label>Suite config:</label>

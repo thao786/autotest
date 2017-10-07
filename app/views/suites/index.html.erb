@@ -25,10 +25,7 @@
       <td><%= suite.updated_at.strftime("%B %d, %Y") %></td>
 
       <td>
-        <%= form_for suite, method: :delete, data: { confirm: 'Are you sure?' } do |f|  %>
-            <input type="hidden" name="id" value="<%= suite.id %>">
-            <button type="submit" class="btn btn-default">Delete</button>
-        <% end %>
+        <%= render "suites/delete_btn", suite: suite %>
         |
         <a class="add-test-modal pointer" data-suite="<%= suite.id %>">
           <span class="glyphicon glyphicon-plus"></span> Add Test</a>
