@@ -1,3 +1,8 @@
+<link href="http://vjs.zencdn.net/6.2.7/video-js.css" rel="stylesheet">
+<script src="http://vjs.zencdn.net/6.2.7/video.js"></script>
+
+
+
 <h2> Result for test <a href="<%= @test.url %>"><b><%= @test.title %></b></a></h2>
 
 <p>
@@ -40,8 +45,14 @@
 
     <div class="col-xs-8">
       <% url = video_aws_path(@runId) %>
-      <video width=100% controls>
-        <source src="<%= url %>.mp4" type="video/mp4">
+
+      <video id="my-video" class="video-js" controls preload="auto" width="640"
+             data-setup="{}">
+        <source src="<%= url %>.mp4" type='video/mp4'>
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a web browser that
+          <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+        </p>
       </video>
     </div>
   </div>

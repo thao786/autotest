@@ -17,7 +17,6 @@ Thao:
 - make video have better UI: big PLAY button on screen
 - run test with FireFox too
 - broken: test search
-- delete test in list
 - detect browser to show Warning
 
 - when 500 happens, email Thao

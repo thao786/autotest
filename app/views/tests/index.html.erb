@@ -15,6 +15,7 @@
       <th>Suite</th>
       <th>Test Title</th>
       <th>Description</th>
+      <th>Actions</th>
       <th>Last Ran</th>
       <th>Created At</th>
     </tr>
@@ -27,7 +28,11 @@
         <tr>
           <td><%= link_to suite.title, controller: "suites", action: "show", id: suite.name %></td>
           <td><a href="<%= showUrl test %>"> <%= test.title %></a></td>
-          <td><%= render "tests/delete_btn", test: test %></td>
+          <td><%= test.description %></td>
+          <td><%= render "tests/delete_btn", test: test %> -
+            <a><span class="glyphicon glyphicon-edit" title="Edit Test"
+                     onclick="showEditTestModal('<%= test.id %>');"></span></a>
+          </td>
           <td><% if test.results.count > 0 %>
                   <%= time_ago_in_words test.results.first.created_at %>
               <% else %>
