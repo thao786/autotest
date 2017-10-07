@@ -50,16 +50,6 @@ $('#stopRecording').click(function() {
     });
 });
 
-/*
-    visual effect
- */
-$(".selector-select li").hover(
-    function() {
-        $( this ).css('font-size', '20px');
-    }, function() {
-        $( this ).css('font-size', '15px');
-    }
-);
 
 $("body").on('mouseenter', '.step-list-item', function() {
     $(this).find('.visible-hover').show();
@@ -501,6 +491,7 @@ $(document).on("click", "#runTest", function(e) {
             }
         },
         error: function(result, status, xhr) {
+            console.log(result);
             alert('Sorry, we could not run this test at this time.');
         }
     });
