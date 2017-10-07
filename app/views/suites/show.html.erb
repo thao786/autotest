@@ -25,7 +25,7 @@
   </div>
 
   <div class="col-sm-8">
-    <h2>Tests in this Suite (<%= @suite.tests.count %> total)</h2>
+    <h2>Total Tests: <%= @suite.tests.count %></h2>
 
     <% @tests = @suite.tests %>
     <%= render "tests/list", tests: @suite.tests %>

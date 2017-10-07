@@ -71,20 +71,15 @@ class ApiController < ActionController::Base
       File.delete "#{video_path_on_disk}.mov"
       File.delete "#{video_path_on_disk}.mp4"
 
-      if data[:user] == 'thao786'
+      if data[:user] == 'thao786' # for admins to bypass main server
         render json: helpers.video_aws_path(run_id)
       else
         render json: true
       end
     rescue Exception => error
-      p error.message
-      # email Thao
+      p error.message # email Thao
 
-      if data[:user] == 'thao786'
-        render json: error.message, :status => 404
-      else
-        render json: false, :status => 404
-      end
+      render json: error.message, :status => 404
     end
   end
 
