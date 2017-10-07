@@ -15,31 +15,27 @@
 
 <% if user_signed_in? %>
     <a href="/suites">See your Tests</a>
-
-    <button class="btn btn-primary"><%= link_to('Log Out', destroy_user_session_path, :method => :delete) %></button>
 <% else %>
-    <button class="btn btn-primary"><a href="<%= new_user_session_path %>">Sign In</a></button>
+    <a class="btn btn-primary" href="<%= new_user_session_path %>">Sign In</a>
 
-    <button class="btn btn-danger"><a href="<%= user_google_oauth2_omniauth_authorize_path %>">Sign In with Google</a></button>
+    <a class="btn btn-danger" href="<%= user_google_oauth2_omniauth_authorize_path %>">Sign In with Google</a>
 or
-    <button class="btn btn-primary"><a href="<%= new_user_registration_path %>">Sign Up</a></button>
+    <a class="btn btn-primary" href="<%= new_user_registration_path %>">Sign Up</a>
 <% end %>
 
 <h3>What is UI Checks</h3>
-<p>Our <a href="https://s3.amazonaws.com/autotest-prod/UI_Check_Plugin.zip
-">Chrome Extension</a> records your testing actions and translate them into code that can be ran by Selenium. You can review the testing actions in a video afterward. Our platform current supports only Web testing, but Mobile testing is underway.</p>
+<p>Our <a href="https://chrome.google.com/webstore/detail/uichecks-chrome-plugin/iicllodpmefpegdgkbjcknpbnehadokb">Chrome Extension</a> records your testing actions on <b>Chrome Browser</b> and translate them into code that can be ran by Selenium. You can review the testing actions in a video afterward. Our platform current supports only Web testing, but Mobile testing is underway.</p>
 
 <p><b>Little to none</b> programming skill is required to use UI Checks. However, knowledge about HTML, CSS and Javascript is helpful.</p>
 
 <h3>How It Works</h3>
 <p>
 <h5><a href="/doc">Web</a></h5>
-  You need to install <a href="https://s3.amazonaws.com/autotest-prod/UI_Check_Plugin.zip
-">our Chrome extension</a> and activate it. Once you click "Start Recording Steps", the extension will start listening to your actions on Chrome Browser. To end the recording session, hit "Stop Recording Steps" and an editable list of action steps will be shown.
+  You need to install and activate our <a href="https://chrome.google.com/webstore/detail/uichecks-chrome-plugin/iicllodpmefpegdgkbjcknpbnehadokb"> Chrome extension</a>. Once you click <button class="btn-primary btn">Record Steps</button>, the extension will start listening to your actions on Chrome Browser. To end the recording session, hit "Stop Recording Steps" and an editable list of action steps will be shown. Our browser test recording only works on Chrome but all other features are compatible with all other major Browsers.
 </p>
 
 <p>
-  A test can only be ran by one user when you click "Run Test". Once the running is complete, you will get a result page that includes video capture and assertion results.
+  A test can only be ran by one user when you click <button class="btn-primary btn">Run Test</button>. Once the running is complete, you will get a result page that includes video capture and assertion results.
 </p>
 
 <h3>Feedback</h3>

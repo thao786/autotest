@@ -14,6 +14,11 @@ REDESIGN
 
 
 Thao:
+- paginations
+- run test with FireFox too
+- broken: test search
+- detect browser to show Warning
+
 - when 500 happens, email Thao
 - make video private. only show temporary url
 - make local do HTTPS

@@ -1,14 +1,14 @@
 {
   "manifest_version": 2,
 
-  "name": "AutoTest plugin",
+  "name": "UIChecks Test Recorder",
   "description": "record test actions on client's sites",
   "version": "1.0.0.2",
 
   "browser_action": {
     "default_icon": "inactive.png",
     "default_popup": "popup.html",
-    "default_title": "Test.com plugin"
+    "default_title": "Record Browser Test Actions"
   },
   "content_scripts": [
     {

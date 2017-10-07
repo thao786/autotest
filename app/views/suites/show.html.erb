@@ -9,7 +9,7 @@
   <span class="glyphicon glyphicon-plus"></span> Add Test</a>
 
 <div class="container-fluid">
-  <div class="col-sm-6"><br>
+  <div class="col-sm-4"><br>
     <label>Suite config:</label>
 
     <%= form_tag("/suites/saveConfig", method: "post") do %>
@@ -22,7 +22,7 @@
     <% end %>
   </div>
 
-  <div class="col-sm-6">
+  <div class="col-sm-8">
     <h2>Tests in this Suite (<%= @suite.tests.count %> total)</h2>
 
     <% @tests = @suite.tests %>

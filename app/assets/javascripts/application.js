@@ -10,7 +10,6 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
 //= require jquery_ujs
 //= require chosen.jquery.js
 //= require_tree .
@@ -53,9 +52,9 @@ $(document).ready(function() {
                 data: {test_id: test_id},
                 success: function(html, status, xhr) {
                     if (window.location.pathname.match(/test\/.+\/[0-9]+/g))
-                        location.reload();
+                        window.location.href = '/tests';
                     else
-                        location.reload('/tests');
+                        location.reload();
                 }
             });
         }
