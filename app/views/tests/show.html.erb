@@ -30,7 +30,6 @@
 <p>
   <strong>Suite:</strong>
   <%= link_to suite.title, controller: "suites", action: "show", id: suite.name %>
-  <span class="glyphicon glyphicon-edit"></span>
 </p>
 
 <p>
@@ -40,7 +39,7 @@
       <a href="<%= @result.url %>"><%= time_ago_in_words @result.created_at %></a>
       (<%= pluralize(count, ' failed assertion') %>)
   <% else %>
-      never ran before
+      never before
   <% end %>
 </p>
 
