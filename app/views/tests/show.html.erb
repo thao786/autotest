@@ -28,19 +28,22 @@
 </h4>
 
 <p>
-  <strong>Suite:</strong>
-  <%= link_to suite.title, controller: "suites", action: "show", id: suite.name %>
+  Suite:
+  <strong>
+    <%= link_to suite.title, controller: "suites", action: "show", id: suite.name %></strong>
 </p>
 
 <p>
-  <strong>Lastest Run:</strong>
-  <% if @result.present? %>
-      <% count = @test.results.where.not(assertion: Assertion.find_by(assertion_type: 'report')).where(runId: @result.runId).count %>
-      <a href="<%= @result.url %>"><%= time_ago_in_words @result.created_at %></a>
-      (<%= pluralize(count, ' failed assertion') %>)
-  <% else %>
-      never before
-  <% end %>
+  Lastest Run:
+  <strong>
+    <% if @result.present? %>
+        <% count = @test.results.where.not(assertion: Assertion.find_by(assertion_type: 'report')).where(runId: @result.runId).count %>
+        <a href="<%= @result.url %>"><%= time_ago_in_words @result.created_at %></a>
+        (<%= pluralize(count, ' failed assertion') %>)
+    <% else %>
+        never before
+    <% end %>
+  </strong>
 </p>
 
 <% if @test.description.present? %>
@@ -89,7 +92,7 @@
       <div id="step-list">
         <% if @test.steps.count > 0 %>
             <% sumTime = 0 %>
-            <h5>Test length: <%= @test.steps.inject(0){|sum,step| sum + step.wait} %> millisec</h5>
+            Test length: <strong><%= @test.steps.inject(0){|sum,step| sum + step.wait} %> millisec</strong>
 
             <% @test.steps.order('steps.order').each_with_index do |step, index| %>
                 <%= render "step/show", step: step , index: index %>
