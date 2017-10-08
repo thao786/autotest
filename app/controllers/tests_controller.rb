@@ -135,6 +135,7 @@ class TestsController < ApplicationController
       driver.quit
     else
       # call the independent EC2 servers
+      begin
       data = {:test_id => @test.id}
       json = JSON.generate data
 
@@ -152,6 +153,9 @@ class TestsController < ApplicationController
 
       unless response.status[0] == '200' # failed
         error = response.read
+      end
+      rescue Exception => error
+        render json: error.message, :status => 404
       end
     end
 
