@@ -136,24 +136,22 @@ class TestsController < ApplicationController
     else
       # call the independent EC2 servers
       begin
-      data = {:test_id => @test.id}
-      json = JSON.generate data
+        data = {:test_id => @test.id, :user =>'thao786'}
+        json = JSON.generate data
 
-      cipher = OpenSSL::Cipher.new('AES-256-CBC')
-      cipher.encrypt  # set cipher to be encryption mode
-      cipher.key = Digest::SHA256.digest ENV['RDS_PASSWORD']
-      cipher.iv  = ENV['iv'] # 16 bytes
-      encrypted = ''
-      encrypted << cipher.update(json)
-      encrypted << cipher.final
-      encrypted_string = Base64.encode64(encrypted).gsub(/\n/, '')
+        cipher = OpenSSL::Cipher.new('AES-256-CBC')
+        cipher.encrypt  # set cipher to be encryption mode
+        cipher.key = Digest::SHA256.digest ENV['RDS_PASSWORD']
+        cipher.iv  = ENV['iv'] # 16 bytes
+        encrypted = ''
+        encrypted << cipher.update(json)
+        encrypted << cipher.final
+        encrypted_string = Base64.encode64(encrypted).gsub(/\n/, '')
 
-      selenium_url = "http://#{ENV['SEL_HOST']}/api/runTest?data=#{encrypted_string}"
-      response = open(selenium_url)
+        selenium_url = "http://#{ENV['SEL_HOST']}/api/runTest?data=#{encrypted_string}"
+        response = open(selenium_url)
 
-      unless response.status[0] == '200' # failed
         error = response.read
-      end
       rescue Exception => errorException
         error = errorException
       end
