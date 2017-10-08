@@ -452,11 +452,11 @@ $(document).on("click", "#runTest", function(e) {
         type: "GET",
         url: '/tests/runTest',
         data: {test_id: test_id},
-        success: function(runId, status, xhr) {
+        success: function(html, status, xhr) {
             $('#showRunningTest').remove();
             $('#runTest').show();
             // open result page in new tab
-            var win = window.open('/results/' + runId, '_blank');
+            var win = window.open('/results/' + test_id, '_blank');
             if (win) {
                 //Browser has allowed it to be opened
                 win.focus();
