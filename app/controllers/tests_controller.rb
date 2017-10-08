@@ -154,8 +154,8 @@ class TestsController < ApplicationController
       unless response.status[0] == '200' # failed
         error = response.read
       end
-      rescue Exception => error
-        render json: error.message, :status => 404
+      rescue Exception => errorException
+        error = errorException
       end
     end
 
