@@ -8,7 +8,9 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="new-step-form">
+        <form id="new-step-form" action="/step/save_new_step" method="post">
+            <input name="test_id" value="<%= @test.id %>" type="hidden">
+
             <div class="form-group">
               <label>Wait time in milliseconds:</label>
               <input name="wait" type="text" class="form-control" value="100">
@@ -22,7 +24,7 @@
                 <% end %>
               </select>
             </div>
-            <button type="button" class="btn btn-default submit">Save</button>
+            <button type="submit" class="btn btn-primary">Save</button>
         </form>
       </div>
     </div>

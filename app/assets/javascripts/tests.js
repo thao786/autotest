@@ -249,7 +249,7 @@ $(document).on("click", ".add-step-after, #addNewStep", function(e) {
     $.ajax({
         type: "GET",
         url: '/step/add_step_view',
-        data: {step_id: step_id},
+        data: {step_id: step_id, test_id: test_id},
         success: function(html, status, xhr) {
             $('body').append(html);
             $('#newStepModal').modal();
@@ -257,31 +257,6 @@ $(document).on("click", ".add-step-after, #addNewStep", function(e) {
         },
         error: function(result, status, xhr) {
             alert('Sorry, we could not remove a parameter at this time.');
-        }
-    });
-});
-
-$(document).on("click", "#new-step-form .submit", function(e) {
-    var step_id = $(this).closest('.modal.fade').data('step');
-    var form = $(this).closest('form');
-
-    $.ajax({
-        type: "POST",
-        url: '/step/save_new_step',
-        data: {step_id: step_id, test_id: test_id,
-            form: form.serialize()
-        },
-        success: function(html, status, xhr) {
-            $('.modal.fade').modal('hide');
-
-            // append the new step right after
-            if (step_id)
-                $(".step-list-item[data-step='" + step_id + "']").after(html);
-            else
-                $("#step-list").append(html);
-        },
-        error: function(result, status, xhr) {
-            alert('Sorry, we could not save step data at this time.');
         }
     });
 });
