@@ -9,8 +9,6 @@ module ResultsHelper
   end
 
   def runSteps(driver, test, run_id, checkAssertions = true)
-    Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first, runId: run_id) if checkAssertions # only check main test's assertions
-
     tabs = [] # the first tab is always blank for easier management
     param_str = ''
     test.test_params.each { |param|
@@ -34,7 +32,10 @@ module ResultsHelper
           driver.execute_script "window.open('', '#{tab_id}')"
           tabs << tab_id
         end
-        driver.switch_to.window tab_id
+        begin # if there's no such tab_id, stay in the current one
+          driver.switch_to.window tab_id
+        rescue # do nothing. carry on
+        end
       end
 
       begin
@@ -87,10 +88,10 @@ module ResultsHelper
                 begin
                   element.click
                 rescue Exception => error
-                  click_with_js(driver, type, selector, eq)
+                  click_with_js(test, driver, type, selector, eq)
                 end
               else # when WebDriver's find_elements fails, find with JS
-                click_with_js(driver, type, selector, eq)
+                click_with_js(test, driver, type, selector, eq)
               end
             else
               true
@@ -103,7 +104,7 @@ module ResultsHelper
       rescue Exception => error
         Result.create(test: test, step: step, webpage: driver.current_url,
                       assertion: Assertion.where(assertion_type: "step-succeed").first,
-                      runId: run_id, error: error[0..100])
+                      runId: run_id, error: error)
       end
 
       body_text = driver.execute_script 'return document.body.textContent'
@@ -119,17 +120,14 @@ body_text#{step.id} = %(#{body_text})
     }
 
     if checkAssertions # check assertions
+      console_log = ''
       tabs.each { |tab_id|
         driver.switch_to.window tab_id
 
         # check 404 and 500 errors for ALL tabs
         logs = driver.manage.logs.get('browser')
         logs.each { |log|
-          if log.message.include? 'Failed to load resource: the server responded with a status'
-            Result.create(test: test, webpage: driver.current_url,
-                          assertion: Assertion.where(assertion_type: "http-200").first,
-                          runId: run_id, error: log)
-          end
+          console_log = "#{console_log}<br><br>#{log.message}"
         }
 
         assertions = Assertion.where(test: test, active: true)
@@ -156,38 +154,69 @@ body_text#{step.id} = %(#{body_text})
                      end
             unless passed
               Result.create(test: test, webpage: driver.current_url,
-                            assertion: assertion, runId: run_id)
+                            assertion: assertion, runId: run_id, error: console_log)
             end
           end
         }
       }
+
+      Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first, runId: run_id)
     end
   end
 
-  def click_with_js(driver, type, selector, eq)
+  def click_with_js(test, driver, type, selector, eq)
     js_selector = case type
                     when 'id'
                       "document.getElementById('#{selector}')"
                     when 'class'
-                      "document.getElementsByClassName('#{selector}')[#{eq}]"
+                      "document.getElementsByClassName('#{selector}')"
                     when 'tag'
-                      "document.getElementsByTagName('#{selector}')[#{eq}]"
+                      "document.getElementsByTagName('#{selector}')"
                     when 'name'
-                      "document.getElementsByName('#{selector}')[#{eq}]"
+                      "document.getElementsByName('#{selector}')"
                     when 'partialLink' # use XPath, cant use eq
-                      "document.evaluate('//a[text()[contains(.,\'#{selector}')]]\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue"
+                      "document.evaluate(\"//a[text()[contains(.,\'#{selector}')]]\" ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue"
                     when 'href'
-                      "document.querySelectorAll('a[href=\'#{selector}\']')[#{eq}]"
+                      "document.querySelectorAll(\"a[href=\'#{selector}\']\")"
                     when 'partialHref'
-                      "document.querySelectorAll('a[href*=\'#{selector}\']')[#{eq}]"
+                      "document.querySelectorAll(\"a[href*=\'#{selector}\']\")"
                     when 'button' # use XPath, cant use eq
-                      "document.evaluate('//button[text()[contains(.,\'#{selector}')]]\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue"
-                    when 'css'
-                      "document.querySelectorAll('#{selector}')[#{eq}]"
-                    else
-                      nil
+                      "document.evaluate(\"//button[text()[contains(.,\'#{selector}')]]\" ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue"
+                    else # 'css'
+                      "document.querySelectorAll('#{selector}')"
                   end
-    driver.execute_script("#{js_selector}.click()")
+
+    begin # check if getElements array returns nil
+      count = driver.execute_script("return #{js_selector}.length")
+      if eq + 1 > count
+        Result.create(test: test, webpage: driver.current_url,
+                      runId: test.id, error: "There are only #{count} elements with selector #{selector}. Either eq=#{eq} is too high, or selector is invalid.")
+        return 1
+      end
+    rescue Exception => error
+      Result.create(test: test, webpage: driver.current_url,
+                    runId: test.id, error: "Invalid selector #{selector}: #{error.message}")
+      return 1
+    end
+
+    js_eq_selector = case type
+                       when 'id', 'button', 'partialLink' # use XPath, cant use eq
+                         js_selector
+                       when 'partialHref'
+                         "document.querySelectorAll(\"a[href*=\'#{selector}\']\")[#{eq}]"
+                       else # 'css' 'class' 'tag' 'name' 'href'
+                         "#{js_selector}[#{eq}]"
+                     end
+
+    begin # check if getElements array returns nil
+      driver.execute_script("#{js_eq_selector}.click()")
+    rescue Exception => error
+      Result.create(test: test, webpage: driver.current_url,
+                    runId: test.id, error: "Unavailable or Invisible selector #{translateClickSelector selector}: #{error.message}")
+      return 1
+    end
+
+    return 0
   end
 
   def hash_video(run_id)

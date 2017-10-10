@@ -22,26 +22,37 @@
     <button id="addNewStep" class="btn-primary btn">Add Step</button>
 <% end %>
 
-<h4 style="display: block; width:300px; margin: 0 auto;">Title: <%= @test.title %>
+<h4 style="display: block; width:300px; margin: 0 auto;"><%= @test.title %>
   <%= render "tests/delete_btn", test: @test %> -
   <%= render "tests/edit_btn", test: @test %>
 </h4>
 
 <p>
-  <strong>Suite:</strong>
-  <%= link_to suite.title, controller: "suites", action: "show", id: suite.name %>
-  <span class="glyphicon glyphicon-edit"></span>
+  Suite:
+  <strong>
+    <%= link_to suite.title, controller: "suites", action: "show", id: suite.name %></strong>
 </p>
-
 <p>
-  <strong>Lastest Run:</strong>
-  <% if @result.present? %>
-      <% count = @test.results.where.not(assertion: Assertion.find_by(assertion_type: 'report')).where(runId: @result.runId).count %>
-      <a href="<%= @result.url %>"><%= time_ago_in_words @result.created_at %></a>
-      (<%= pluralize(count, ' failed assertion') %>)
-  <% else %>
-      never ran before
-  <% end %>
+  Steps Last Recorded:
+  <strong>
+    <% if @test.steps.count > 0 %>
+        <%= @test.steps.first.created_at %>
+    <% else %>
+        never before
+    <% end %>
+  </strong>
+</p>
+<p>
+  Lastest Run:
+  <strong>
+    <% if @result.present? %>
+        <% count = @test.results.where.not(assertion: Assertion.find_by(assertion_type: 'report')).where(runId: @result.runId).count %>
+        <a href="<%= @result.url %>" target="_blank"><%= time_ago_in_words @result.created_at %></a>
+        (<%= pluralize(count, ' failed assertion') %>)
+    <% else %>
+        never before
+    <% end %>
+  </strong>
 </p>
 
 <% if @test.description.present? %>
@@ -65,15 +76,14 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-5">
-      <div><br> Define your test parameters<br>
+      <div><br> Define your <a href="/doc#testParam" target="_blank">test parameters</a><br>
         <div id="test_params"><%= render "tests/test_params" %></div>
 
-        <a id="add-test-params" class="pointer"> Add New Test Params</a>
-        
+        <button id="add-test-params" class="btn-primary btn"> Add New Test Params</button>
       </div>
 
-      <div><br> Assertions:
-        <a id="add-assertion" class="pointer"> Add Assertion</a><br>
+      <div><br><a href="/doc#assertion" target="_blank">Assertions</a>:
+        <button id="add-assertion" class="btn btn-primary"> Add Assertion</button><br>
 
         <div id="assertion-list">
           <% @test.assertions.each do |assertion| %>
@@ -91,7 +101,7 @@
       <div id="step-list">
         <% if @test.steps.count > 0 %>
             <% sumTime = 0 %>
-            <h5>The test takes <%= @test.steps.inject(0){|sum,step| sum + step.wait} %> milliseconds</h5>
+            Test length: <strong><%= @test.steps.inject(0){|sum,step| sum + step.wait} %> millisec</strong>
 
             <% @test.steps.order('steps.order').each_with_index do |step, index| %>
                 <%= render "step/show", step: step , index: index %>

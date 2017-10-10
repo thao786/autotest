@@ -50,16 +50,6 @@ $('#stopRecording').click(function() {
     });
 });
 
-/*
-    visual effect
- */
-$(".selector-select li").hover(
-    function() {
-        $( this ).css('font-size', '20px');
-    }, function() {
-        $( this ).css('font-size', '15px');
-    }
-);
 
 $("body").on('mouseenter', '.step-list-item', function() {
     $(this).find('.visible-hover').show();
@@ -259,7 +249,7 @@ $(document).on("click", ".add-step-after, #addNewStep", function(e) {
     $.ajax({
         type: "GET",
         url: '/step/add_step_view',
-        data: {step_id: step_id},
+        data: {step_id: step_id, test_id: test_id},
         success: function(html, status, xhr) {
             $('body').append(html);
             $('#newStepModal').modal();
@@ -267,31 +257,6 @@ $(document).on("click", ".add-step-after, #addNewStep", function(e) {
         },
         error: function(result, status, xhr) {
             alert('Sorry, we could not remove a parameter at this time.');
-        }
-    });
-});
-
-$(document).on("click", "#new-step-form .submit", function(e) {
-    var step_id = $(this).closest('.modal.fade').data('step');
-    var form = $(this).closest('form');
-
-    $.ajax({
-        type: "POST",
-        url: '/step/save_new_step',
-        data: {step_id: step_id, test_id: test_id,
-            form: form.serialize()
-        },
-        success: function(html, status, xhr) {
-            $('.modal.fade').modal('hide');
-
-            // append the new step right after
-            if (step_id)
-                $(".step-list-item[data-step='" + step_id + "']").after(html);
-            else
-                $("#step-list").append(html);
-        },
-        error: function(result, status, xhr) {
-            alert('Sorry, we could not save step data at this time.');
         }
     });
 });
@@ -487,11 +452,11 @@ $(document).on("click", "#runTest", function(e) {
         type: "GET",
         url: '/tests/runTest',
         data: {test_id: test_id},
-        success: function(runId, status, xhr) {
+        success: function(html, status, xhr) {
             $('#showRunningTest').remove();
             $('#runTest').show();
             // open result page in new tab
-            var win = window.open('/results/' + runId, '_blank');
+            var win = window.open('/results/' + test_id, '_blank');
             if (win) {
                 //Browser has allowed it to be opened
                 win.focus();
@@ -501,6 +466,7 @@ $(document).on("click", "#runTest", function(e) {
             }
         },
         error: function(result, status, xhr) {
+            console.log(result);
             alert('Sorry, we could not run this test at this time.');
         }
     });

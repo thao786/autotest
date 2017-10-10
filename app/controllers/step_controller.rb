@@ -1,4 +1,6 @@
 class StepController < ApplicationController
+  skip_before_filter :verify_authenticity_token
+
   before_action :set_step, :set_test
   before_action :authorize?
 
@@ -132,8 +134,6 @@ class StepController < ApplicationController
   end
 
   def save_new_step
-    form = Rack::Utils.parse_nested_query(params[:form])
-
     if @step
       # make room: increase all order by 1
       steps = Step.where("steps.order > ?", @step.order).where(test: @test)
@@ -141,14 +141,16 @@ class StepController < ApplicationController
         step.update(order: step.order + 1)
       }
       new_step = Step.create(test: @test, order: @step.order + 1,
-                             action_type: form['action_type'], wait: form['wait'])
+                             action_type: params['action_type'], wait: params['wait'])
     else
-      new_step = Step.create(test: @test, order: @test.steps.maximum('order') + 1,
-                             action_type: form['action_type'], wait: form['wait'])
+      order = @test.steps.maximum('order')
+      order ||= 0
+      new_step = Step.create(test: @test, order: order + 1,
+                             action_type: params['action_type'], wait: params['wait'])
     end
-    new_step.update(active: false)
 
-    render partial: "step/show", :locals => {:step => new_step}
+    new_step.update(active: false)
+    redirect_back fallback_location: @test
   end
 
   def removeExtract

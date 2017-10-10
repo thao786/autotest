@@ -5,7 +5,7 @@ class CreateResults < ActiveRecord::Migration[5.0]
       t.references :assertion, foreign_key: true
       t.references :step, foreign_key: true
       t.string :runId
-      t.string :error
+      t.text :error
       t.string :webpage
 
       t.timestamps
