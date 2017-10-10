@@ -136,19 +136,8 @@ class TestsController < ApplicationController
         driver.quit
       else
         # call the independent EC2 servers
-        data = {:test_id => @test.id}
-        json = JSON.generate data
-
-        cipher = OpenSSL::Cipher.new('AES-256-CBC')
-        cipher.encrypt  # set cipher to be encryption mode
-        cipher.key = Digest::SHA256.digest ENV['RDS_PASSWORD']
-        cipher.iv  = ENV['iv'] # 16 bytes
-        encrypted = ''
-        encrypted << cipher.update(json)
-        encrypted << cipher.final
-        encrypted_string = Base64.encode64(encrypted).gsub(/\n/, '')
-
-        selenium_url = "http://#{ENV['SEL_HOST']}/api/runTest?data=#{encrypted_string}"
+        hash = helpers.hash_data_secure_SEL_server @test.id
+        selenium_url = "http://#{ENV['SEL_HOST']}/api/runTest?test_id=#{@test.id}&hash=#{hash}"
         response = open(selenium_url)
 
         unless response.status[0] == '200' # failed

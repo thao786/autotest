@@ -56,10 +56,7 @@
 </p>
 
 <% if @test.description.present? %>
-    <p>
-      <strong>Description:</strong>
-      <%= @test.description %>
-    </p>
+    <p>Description: <strong><%= @test.description %></strong></p>
 <% end %>
 
 <div id="validation_err"></div>
