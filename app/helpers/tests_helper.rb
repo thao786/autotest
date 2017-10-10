@@ -92,6 +92,7 @@ module TestsHelper
                .reject { |c| c.empty? }
                .sort! { |x,y| score(x) <=> score(y)}
                .reverse
+          # if click on href, set eq=0
           step.update(config: {selectors: selectors, x: first_event.x, y: first_event.y},
                   selector: selectors.first)
         else

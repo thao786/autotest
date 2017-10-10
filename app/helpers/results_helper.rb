@@ -172,30 +172,54 @@ body_text#{step.id} = %(#{body_text})
                     when 'id'
                       "document.getElementById('#{selector}')"
                     when 'class'
-                      "document.getElementsByClassName('#{selector}')[#{eq}]"
+                      "document.getElementsByClassName('#{selector}')"
                     when 'tag'
-                      "document.getElementsByTagName('#{selector}')[#{eq}]"
+                      "document.getElementsByTagName('#{selector}')"
                     when 'name'
-                      "document.getElementsByName('#{selector}')[#{eq}]"
+                      "document.getElementsByName('#{selector}')"
                     when 'partialLink' # use XPath, cant use eq
-                      "document.evaluate('//a[text()[contains(.,\'#{selector}')]]\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue"
+                      "document.evaluate(\"//a[text()[contains(.,\'#{selector}')]]\" ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue"
                     when 'href'
-                      "document.querySelectorAll('a[href=\'#{selector}\']')[#{eq}]"
+                      "document.querySelectorAll(\"a[href=\'#{selector}\']\")"
                     when 'partialHref'
-                      "document.querySelectorAll('a[href*=\'#{selector}\']')[#{eq}]"
+                      "document.querySelectorAll(\"a[href*=\'#{selector}\']\")"
                     when 'button' # use XPath, cant use eq
-                      "document.evaluate('//button[text()[contains(.,\'#{selector}')]]\' ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue"
-                    when 'css'
-                      "document.querySelectorAll('#{selector}')[#{eq}]"
-                    else
-                      nil
+                      "document.evaluate(\"//button[text()[contains(.,\'#{selector}')]]\" ,document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null ).singleNodeValue"
+                    else # 'css'
+                      "document.querySelectorAll('#{selector}')"
                   end
+
     begin # check if getElements array returns nil
-      driver.execute_script("#{js_selector}.click()")
+      count = driver.execute_script("return #{js_selector}.length")
+      if eq + 1 > count
+        Result.create(test: test, webpage: driver.current_url,
+                      runId: test.id, error: "There are only #{count} elements with selector #{selector}. Either eq=#{eq} is too high, or selector is invalid.")
+        return 1
+      end
     rescue Exception => error
       Result.create(test: test, webpage: driver.current_url,
-                    runId: test.id, error: "Unavailable or Invisible selector #{translateClickSelector selector}. #{error.message}")
+                    runId: test.id, error: "Invalid selector #{selector}: #{error.message}")
+      return 1
     end
+
+    js_eq_selector = case type
+                       when 'id', 'button', 'partialLink' # use XPath, cant use eq
+                         js_selector
+                       when 'partialHref'
+                         "document.querySelectorAll(\"a[href*=\'#{selector}\']\")[#{eq}]"
+                       else # 'css' 'class' 'tag' 'name' 'href'
+                         "#{js_selector}[#{eq}]"
+                     end
+
+    begin # check if getElements array returns nil
+      driver.execute_script("#{js_eq_selector}.click()")
+    rescue Exception => error
+      Result.create(test: test, webpage: driver.current_url,
+                    runId: test.id, error: "Unavailable or Invisible selector #{translateClickSelector selector}: #{error.message}")
+      return 1
+    end
+
+    return 0
   end
 
   def hash_video(run_id)
