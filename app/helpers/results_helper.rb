@@ -106,7 +106,7 @@ module ResultsHelper
       rescue Exception => error
         Result.create(test: test, step: step, webpage: driver.current_url,
                       assertion: Assertion.where(assertion_type: "step-succeed").first,
-                      runId: run_id, error: error[0..100])
+                      runId: run_id, error: error)
       end
 
       body_text = driver.execute_script 'return document.body.textContent'
