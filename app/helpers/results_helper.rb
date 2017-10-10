@@ -9,8 +9,6 @@ module ResultsHelper
   end
 
   def runSteps(driver, test, run_id, checkAssertions = true)
-    Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first, runId: run_id) if checkAssertions # only check main test's assertions
-
     tabs = [] # the first tab is always blank for easier management
     param_str = ''
     test.test_params.each { |param|
@@ -122,17 +120,14 @@ body_text#{step.id} = %(#{body_text})
     }
 
     if checkAssertions # check assertions
+      console_log = ''
       tabs.each { |tab_id|
         driver.switch_to.window tab_id
 
         # check 404 and 500 errors for ALL tabs
         logs = driver.manage.logs.get('browser')
         logs.each { |log|
-          if log.message.include? 'Failed to load resource: the server responded with a status'
-            Result.create(test: test, webpage: driver.current_url,
-                          assertion: Assertion.where(assertion_type: "http-200").first,
-                          runId: run_id, error: log)
-          end
+          console_log = "#{console_log}<br><br>#{log.message}"
         }
 
         assertions = Assertion.where(test: test, active: true)
@@ -159,11 +154,13 @@ body_text#{step.id} = %(#{body_text})
                      end
             unless passed
               Result.create(test: test, webpage: driver.current_url,
-                            assertion: assertion, runId: run_id)
+                            assertion: assertion, runId: run_id, error: console_log)
             end
           end
         }
       }
+
+      Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first, runId: run_id)
     end
   end
 
