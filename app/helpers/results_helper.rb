@@ -34,7 +34,10 @@ module ResultsHelper
           driver.execute_script "window.open('', '#{tab_id}')"
           tabs << tab_id
         end
-        driver.switch_to.window tab_id
+        begin # if there's no such tab_id, stay in the current one
+          driver.switch_to.window tab_id
+        rescue # do nothing. carry on
+        end
       end
 
       begin
@@ -87,10 +90,10 @@ module ResultsHelper
                 begin
                   element.click
                 rescue Exception => error
-                  click_with_js(driver, type, selector, eq)
+                  click_with_js(test, driver, type, selector, eq)
                 end
               else # when WebDriver's find_elements fails, find with JS
-                click_with_js(driver, type, selector, eq)
+                click_with_js(test, driver, type, selector, eq)
               end
             else
               true
@@ -164,7 +167,7 @@ body_text#{step.id} = %(#{body_text})
     end
   end
 
-  def click_with_js(driver, type, selector, eq)
+  def click_with_js(test, driver, type, selector, eq)
     js_selector = case type
                     when 'id'
                       "document.getElementById('#{selector}')"
@@ -187,7 +190,12 @@ body_text#{step.id} = %(#{body_text})
                     else
                       nil
                   end
-    driver.execute_script("#{js_selector}.click()")
+    begin # check if getElements array returns nil
+      driver.execute_script("#{js_selector}.click()")
+    rescue Exception => error
+      Result.create(test: test, webpage: driver.current_url,
+                    runId: test.id, error: "Unavailable or Invisible selector #{translateClickSelector selector}. #{error.message}")
+    end
   end
 
   def hash_video(run_id)
