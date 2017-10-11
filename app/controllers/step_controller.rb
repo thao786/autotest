@@ -107,7 +107,7 @@ class StepController < ApplicationController
 
   def save_scroll
     form = Rack::Utils.parse_nested_query(params[:form])
-    if form['scrollTop'].match?(/[0-9]+/) && form['scrollLeft'].match?(/[0-9]+/)
+    if form['scrollTop'] =~ /[0-9]+/ && form['scrollLeft'] =~ /[0-9]+/
       @step.update(scrollTop: form['scrollTop'])
       @step.update(scrollLeft: form['scrollLeft'])
       @step.update(wait: form['wait']) if form['wait'].present?
