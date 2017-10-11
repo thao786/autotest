@@ -68,11 +68,8 @@ class ApiController < ActionController::Base
           File.delete "#{video_path_on_disk}.mov"
           File.delete "#{video_path_on_disk}.mp4"
 
-          if data[:user] == 'thao786' # for admins to bypass main server
-            render json: helpers.video_aws_path(run_id)
-          else
-            render json: true
-          end
+          p helpers.video_aws_path(run_id)
+          render json: true
         else
           render json: 'test is not marked as running by main server', :status => 404
         end
