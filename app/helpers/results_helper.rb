@@ -223,6 +223,10 @@ body_text#{step.id} = %(#{body_text})
     Digest::MD5.hexdigest "videoCapture-#{run_id}"
   end
 
+  def hash_data_secure_SEL_server(data)
+    Digest::MD5.hexdigest "#{ENV['RDS_HOSTNAME']}-#{data}"
+  end
+
   def video_aws_path(run_id)
     md5 = hash_video(run_id)
     "https://s3.amazonaws.com/#{ENV['bucket']}/#{md5}"

@@ -13,9 +13,16 @@
           <span class="glyphicon glyphicon-repeat normal-left-spinner"></span>
           Test Running
         </button>
+
+        <button id="runTest" class="btn-primary btn" style="display: none;">Run Test</button>
     <% else %>
         <% if @test.steps.count > 0 %>
-          <button id="runTest" class="btn-primary btn">Run Test</button>
+            <button id="showRunningTest" type="button" class="btn btn-danger" style="display: none;" disabled>
+              <span class="glyphicon glyphicon-repeat normal-left-spinner"></span>
+              Test Running
+            </button>
+
+            <button id="runTest" class="btn-primary btn">Run Test</button>
         <% end %>
     <% end %>
 
@@ -27,13 +34,12 @@
   <%= render "tests/edit_btn", test: @test %>
 </h4>
 
-<p>
-  Suite:
+<p>Suite:
   <strong>
     <%= link_to suite.title, controller: "suites", action: "show", id: suite.name %></strong>
 </p>
-<p>
-  Steps Last Recorded:
+
+<p>Steps Last Recorded:
   <strong>
     <% if @test.steps.count > 0 %>
         <%= @test.steps.first.created_at %>
@@ -42,8 +48,8 @@
     <% end %>
   </strong>
 </p>
-<p>
-  Lastest Run:
+
+<p>Lastest Run:
   <strong>
     <% if @result.present? %>
         <% count = @test.results.where.not(assertion: Assertion.find_by(assertion_type: 'report')).where(runId: @result.runId).count %>
@@ -56,10 +62,7 @@
 </p>
 
 <% if @test.description.present? %>
-    <p>
-      <strong>Description:</strong>
-      <%= @test.description %>
-    </p>
+    <p>Description: <strong><%= @test.description %></strong></p>
 <% end %>
 
 <div id="validation_err"></div>

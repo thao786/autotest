@@ -36,9 +36,18 @@
             <% end %>
           <% end %>
         <% else %>
-          <p>No failed assertions!</p>
+          <p>No failed assertions.</p>
         <% end %>
 
+
+      <h4>Last Screen Console Log:</h4>
+          <% log = Result.where(runId: @runId, assertion: Assertion.where(assertion_type: "report").first).first.error %>
+
+          <% if log %>
+              <%= log %>
+          <% else %>
+              Empty console log.
+          <% end %>
     </div>
 
     <div class="col-xs-8">
@@ -53,10 +62,5 @@
         </p>
       </video>
     </div>
-  </div>
-
-  <div class="row">
-    <h4>Console Log:</h4>
-    <%= Result.where(runId: @runId, assertion: Assertion.where(assertion_type: "report").first).first.error %>
   </div>
 </div>

@@ -123,44 +123,37 @@ class TestsController < ApplicationController
   end
 
   def runTest
-    Result.where(test: @test).destroy_all # only 1 test can be ran at a time
-    @test.update(running: true)
-    error = nil
+    if @test.running
+      render json: 'test already running', :status => 404
+    else
+      Result.where(test: @test).destroy_all # only 1 test can be ran at a time
+      @test.update(running: true)
+      error = nil
 
-    begin
-      if Rails.env.development?
-        first_step = Step.where(test: @test).first
-        driver = Selenium::WebDriver.for :chrome
-        driver.manage.window.resize_to(first_step.screenwidth, first_step.screenheight)
-        helpers.runSteps(driver, @test, @test.id)
-        driver.quit
-      else
-        # call the independent EC2 servers
-        data = {:test_id => @test.id}
-        json = JSON.generate data
+      begin
+        if Rails.env.development?
+          first_step = Step.where(test: @test).first
+          driver = Selenium::WebDriver.for :chrome
+          driver.manage.window.resize_to(first_step.screenwidth, first_step.screenheight) if first_step.screenwidth
+          helpers.runSteps(driver, @test, @test.id)
+          driver.quit
+        else
+          # call the independent EC2 servers
+          hash = helpers.hash_data_secure_SEL_server @test.id
+          selenium_url = "http://#{ENV['SEL_HOST']}/api/runTest?test_id=#{@test.id}&hash=#{hash}"
+          response = open(selenium_url)
 
-        cipher = OpenSSL::Cipher.new('AES-256-CBC')
-        cipher.encrypt  # set cipher to be encryption mode
-        cipher.key = Digest::SHA256.digest ENV['RDS_PASSWORD']
-        cipher.iv  = ENV['iv'] # 16 bytes
-        encrypted = ''
-        encrypted << cipher.update(json)
-        encrypted << cipher.final
-        encrypted_string = Base64.encode64(encrypted).gsub(/\n/, '')
-
-        selenium_url = "http://#{ENV['SEL_HOST']}/api/runTest?data=#{encrypted_string}"
-        response = open(selenium_url)
-
-        unless response.status[0] == '200' # failed
-          error = response.read
+          unless response.status[0] == '200' # failed
+            error = response.read
+          end
         end
+      rescue Exception => e
+        error = e.message
       end
-    rescue Exception => e
-      error = e.message
-    end
 
-    @test.update(running: false)
-    render json: error
+      @test.update(running: false)
+      render json: error
+    end
   end
 
   private
