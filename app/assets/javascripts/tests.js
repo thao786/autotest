@@ -121,7 +121,7 @@ $(".step-list-item .hover-edit-btn").on("click", function(e) { // add more heade
             modalFunction();
         },
         error: function(result, status, xhr) {
-            alert('Sorry, we could not remove a parameter at this time.');
+            alert('Sorry, we could not remove steps at this time.');
         }
     });
 });
@@ -441,20 +441,21 @@ $(document).on("click", "#edit-scroll-form .submit", function(e) {
     });
 });
 
+// to execute when test is done running
+function restore_btn_menu() {
+    $('#runTest').show(); // put back button menu
+    $('#showRunningTest').hide();
+}
+
 $(document).on("click", "#runTest", function(e) {
-    // change to spinning icon
-    $('<button id="showRunningTest" type="button" class="btn btn-danger" disabled>' +
-        '<span class="glyphicon glyphicon-repeat normal-left-spinner"></span> ' +
-        'Test Running</button>').insertAfter('#runTest');
-    $('#runTest').hide();
+    $('#runTest').hide(); // change to spinning icon
+    $('#showRunningTest').show();
 
     $.ajax({
         type: "GET",
         url: '/tests/runTest',
         data: {test_id: test_id},
         success: function(html, status, xhr) {
-            $('#showRunningTest').remove();
-            $('#runTest').show();
             // open result page in new tab
             var win = window.open('/results/' + test_id, '_blank');
             if (win) {
@@ -464,10 +465,12 @@ $(document).on("click", "#runTest", function(e) {
                 //Browser has blocked it
                 alert('Please allow popups for this website');
             }
+            restore_btn_menu();
         },
         error: function(result, status, xhr) {
             console.log(result);
-            alert('Sorry, we could not run this test at this time.');
+            restore_btn_menu();
+            alert('Sorry, we could not run this test at this time. Please try again later.');
         }
     });
 });

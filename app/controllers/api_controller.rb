@@ -39,6 +39,8 @@ class ApiController < ActionController::Base
         test = Test.find params[:test_id]
 
         if test.running
+          render json: 'test already running', :status => 404
+        else
           headless = Headless.new(video: {:frame_rate => 12, provider: :ffmpeg})
           headless.start
 
@@ -71,15 +73,12 @@ class ApiController < ActionController::Base
           else
             render json: true
           end
-        else
-          render json: 'hash not valid', :status => 404
         end
       else
         render json: 'hash not valid', :status => 404
       end
     rescue Exception => error
       p error.message # email Thao
-
       render json: error.message, :status => 404
     end
   end

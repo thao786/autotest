@@ -32,7 +32,9 @@
           <td><%= render "tests/delete_btn", test: test %> -
             <%= render "tests/edit_btn", test: test %>
           </td>
-          <td><% if test.results.count > 0 %>
+          <td><% if test.running %>
+                  running
+              <% elsif test.results.count > 0 %>
                   <%= time_ago_in_words test.results.first.created_at %>
               <% else %>
                   never ran before
