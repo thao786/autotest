@@ -35,12 +35,15 @@ class ApiController < ActionController::Base
   # anybody can read, but its just test_id anyway
   def runTest
     begin # check hash
+      p params
       if params[:hash] == helpers.hash_data_secure_SEL_server(params[:test_id])
         test = Test.find params[:test_id]
 
         if test.running
+           p 'test already running'
           render json: 'test already running', :status => 404
         else
+          p 'valid hash. now run test'
           headless = Headless.new(video: {:frame_rate => 12, provider: :ffmpeg})
           headless.start
 
@@ -75,6 +78,7 @@ class ApiController < ActionController::Base
           end
         end
       else
+        p 'hash not valid'
         render json: 'hash not valid', :status => 404
       end
     rescue Exception => error
