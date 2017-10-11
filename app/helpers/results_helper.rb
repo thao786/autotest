@@ -161,6 +161,7 @@ body_text#{step.id} = %(#{body_text})
       }
 
       Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first, runId: run_id)
+      test.update(running: false)
     end
   end
 

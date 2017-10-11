@@ -447,6 +447,17 @@ function restore_btn_menu() {
     $('#showRunningTest').hide();
 }
 
+function noti_timeout(msg, timeout) {
+    $('#test_noti').show();
+    $('#test_noti').html(msg);
+
+    setTimeout(
+        function () {
+            $("#test_noti").fadeOut().empty();
+        }
+        , timeout);
+}
+
 $(document).on("click", "#runTest", function(e) {
     $('#runTest').hide(); // change to spinning icon
     $('#showRunningTest').show();
@@ -456,13 +467,14 @@ $(document).on("click", "#runTest", function(e) {
         url: '/tests/runTest',
         data: {test_id: test_id},
         success: function(html, status, xhr) {
+            noti_timeout('Request to Run submitted. Please allow a few minutes for the test result.', 5000);
             // open result page in new tab
             var win = window.open('/results/' + test_id, '_blank');
             if (win) {
-                //Browser has allowed it to be opened
+                // Browser has allowed it to be opened
                 win.focus();
             } else {
-                //Browser has blocked it
+                // Browser has blocked it
                 alert('Please allow popups for this website');
             }
             restore_btn_menu();
@@ -470,7 +482,7 @@ $(document).on("click", "#runTest", function(e) {
         error: function(result, status, xhr) {
             console.log(result);
             restore_btn_menu();
-            alert('Sorry, we could not run this test at this time. Please try again later.');
+            noti_timeout('Sorry, we could not run this test at this time. Please try again later.', 5000);
         }
     });
 });

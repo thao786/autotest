@@ -128,7 +128,6 @@ class TestsController < ApplicationController
     else
       Result.where(test: @test).destroy_all # only 1 test can be ran at a time
       @test.update(running: true)
-      error = nil
 
       begin
         if Rails.env.development?
@@ -137,22 +136,23 @@ class TestsController < ApplicationController
           driver.manage.window.resize_to(first_step.screenwidth, first_step.screenheight) if first_step.screenwidth
           helpers.runSteps(driver, @test, @test.id)
           driver.quit
+          render json: 'ok', :status => 200
         else
           # call the independent EC2 servers
           hash = helpers.hash_data_secure_SEL_server @test.id
           selenium_url = "http://#{ENV['SEL_HOST']}/api/runTest?test_id=#{@test.id}&hash=#{hash}"
           response = open(selenium_url)
+          error = response.read
 
-          unless response.status[0] == '200' # failed
-            error = response.read
+          if response.status[0] == '200' # failed
+            render json: error, :status => 200
+          else
+            render json: error, :status => 404
           end
         end
       rescue Exception => e
-        error = e.message
+        render json: e.message, :status => 404
       end
-
-      @test.update(running: false)
-      render json: error
     end
   end
 
