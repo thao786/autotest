@@ -150,6 +150,16 @@ body_text#{step.id} = %(#{body_text})
                          source.exclude? condition
                        when 'page-title'
                          driver.execute_script('return document.title').include? condition
+                       when 'status-code'
+                         if test.steps.count == 1 # condition is status code in this case
+                           step = test.steps.first
+                           begin
+                             status = (open step.webpage).status.join
+                           rescue Exception => error
+                             status = error.message
+                           end
+                           status.include? condition
+                         end
                        else # self-enter JS command
                          driver.execute_script(assertion.condition) == 'true'
                      end
