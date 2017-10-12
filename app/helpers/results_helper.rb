@@ -127,7 +127,8 @@ body_text#{step.id} = %(#{body_text})
         # check 404 and 500 errors for ALL tabs
         logs = driver.manage.logs.get('browser')
         logs.each { |log|
-          console_log = "#{console_log}<br><br>#{log.message}"
+          console_log = "#{console_log}
+#{log.message}"
         }
 
         assertions = Assertion.where(test: test, active: true)
