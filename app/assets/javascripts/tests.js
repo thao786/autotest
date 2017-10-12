@@ -458,16 +458,31 @@ function noti_timeout(msg, timeout) {
         , timeout);
 }
 
+
 $(document).on("click", "#runTest", function(e) {
     $('#runTest').hide(); // change to spinning icon
     $('#showRunningTest').show();
+    var timeout = 5000;
 
     $.ajax({
         type: "GET",
         url: '/tests/runTest',
         data: {test_id: test_id},
         success: function(html, status, xhr) {
-            noti_timeout('Request to Run submitted. Please allow a few minutes for the test result.', 5000);
+            noti_timeout('Request to run test submitted. Please allow a few minutes for the test result.', timeout);
+            var checkTestRun = setTimeout(function(){
+                // check if test is done running
+                $.ajax({
+                    type: "GET",
+                    url: '/tests/check_test_running',
+                    data: {test_id: test_id},
+                    success: function(html, status, xhr) {
+                        console.log(html);
+                        clearTimeout(checkTestRun);
+                    }
+                });
+            }, 1500);
+
             // open result page in new tab
             var win = window.open('/results/' + test_id, '_blank');
             if (win) {
@@ -482,7 +497,7 @@ $(document).on("click", "#runTest", function(e) {
         error: function(result, status, xhr) {
             console.log(result);
             restore_btn_menu();
-            noti_timeout('Sorry, we could not run this test at this time. Please try again later.', 5000);
+            noti_timeout('Sorry, we could not run this test at this time. Please try again later.', timeout);
         }
     });
 });

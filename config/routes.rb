@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   get 'tests/generateSession', to: 'tests#generateSession'
   get 'tests/stopSession', to: 'tests#stopSession'
   get 'tests/runTest', to: 'tests#runTest'
+  get 'tests/check_test_running', to: 'tests#check_test_running'
 
   get 'assertions/newAssertionView', to: 'assertions#newAssertionView'
   match 'assertions/addAssertion', to: 'assertions#addAssertion', via: [:post]
