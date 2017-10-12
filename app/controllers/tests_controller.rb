@@ -138,9 +138,10 @@ class TestsController < ApplicationController
             helpers.runSteps(driver, @test, @test.id)
             driver.quit
           rescue Exception => error
+            p error.message
           end
 
-          test.update(running: false)
+          @test.update(running: false)
         }
         render json: {}
       else
@@ -151,7 +152,7 @@ class TestsController < ApplicationController
         error = response.read
 
         if response.status[0] == '200' # failed
-          render plain: error, :status => 200
+          render json: {}
         else
           render plain: error, :status => 404
         end
