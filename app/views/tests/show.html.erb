@@ -29,6 +29,8 @@
     <button id="addNewStep" class="btn-primary btn">Add Step</button>
 <% end %>
 
+<span id="test_noti"></span>
+
 <h4 style="display: block; width:300px; margin: 0 auto;"><%= @test.title %>
   <%= render "tests/delete_btn", test: @test %> -
   <%= render "tests/edit_btn", test: @test %>
@@ -86,17 +88,17 @@
       </div>
 
       <div><br><a href="/doc#assertion" target="_blank">Assertions</a>:
-        <button id="add-assertion" class="btn btn-primary"> Add Assertion</button><br>
+        <% if @test.assertions.count > 0 %>
+            <div id="assertion-list">
+              <% @test.assertions.each do |assertion| %>
+                  <%= render "assertions/show_assertion", assertion: assertion %>
+              <% end %>
+            </div>
+        <% else %>
+            none defined.
+        <% end %><br>
 
-        <div id="assertion-list">
-          <% @test.assertions.each do |assertion| %>
-              <%= render "assertions/show_assertion", assertion: assertion %>
-          <% end %>
-          <label><input class="default-assertion" type="checkbox" checked disabled>
-              All tabs return 200 status</label> <br>
-          <label><input class="default-assertion" type="checkbox" checked disabled>
-              All ajax requests return 200 status</label>
-        </div>
+        <button id="add-assertion" class="btn btn-primary">Add Assertion</button><br>
       </div>
     </div>
 

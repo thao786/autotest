@@ -128,32 +128,40 @@ class TestsController < ApplicationController
     else
       Result.where(test: @test).destroy_all # only 1 test can be ran at a time
       @test.update(running: true)
-      error = nil
 
-      begin
-        if Rails.env.development?
-          first_step = Step.where(test: @test).first
-          driver = Selenium::WebDriver.for :chrome
-          driver.manage.window.resize_to(first_step.screenwidth, first_step.screenheight) if first_step.screenwidth
-          helpers.runSteps(driver, @test, @test.id)
-          driver.quit
-        else
-          # call the independent EC2 servers
-          hash = helpers.hash_data_secure_SEL_server @test.id
-          selenium_url = "http://#{ENV['SEL_HOST']}/api/runTest?test_id=#{@test.id}&hash=#{hash}"
-          response = open(selenium_url)
-
-          unless response.status[0] == '200' # failed
-            error = response.read
+      if Rails.env.development?
+        Thread.new {
+          begin
+            first_step = Step.where(test: @test).first
+            driver = Selenium::WebDriver.for :chrome
+            driver.manage.window.resize_to(first_step.screenwidth, first_step.screenheight) if first_step.screenwidth
+            helpers.runSteps(driver, @test, @test.id)
+            driver.quit
+          rescue Exception => error
+            p error.message
           end
-        end
-      rescue Exception => e
-        error = e.message
-      end
 
-      @test.update(running: false)
-      render json: error
+          @test.update(running: false)
+        }
+        render json: {}
+      else
+        # call the independent EC2 servers
+        hash = helpers.hash_data_secure_SEL_server @test.id
+        selenium_url = "http://#{ENV['SEL_HOST']}/api/runTest?test_id=#{@test.id}&hash=#{hash}"
+        response = open(selenium_url)
+        error = response.read
+
+        if response.status[0] == '200' # failed
+          render json: {}
+        else
+          render plain: error, :status => 404
+        end
+      end
     end
+  end
+
+  def check_test_running
+    render json: @test.running
   end
 
   private
