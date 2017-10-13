@@ -33,6 +33,10 @@
       <% end %>
   </div>
 
+  <% unless step.complete? %>
+      <span style="color: red;">incomplete step: some data is missing.</span>
+  <% end %>
+
   <button class="add-step-after btn visible-hover">
       <span class="glyphicon glyphicon-plus"></span> Step after
   </button>

@@ -18,12 +18,8 @@ Thao:
 - run test with FireFox too
 - broken: test search
 - detect browser to show Warning
-- explicit INCOMPLETE steps
-- explicit console result read
-- test running: please wait while the test is running. Gonna take a few minutes
 - result: test might not look the same as the time u recorded
 
-- test record date
 - click: what if there is no such selector anymore???
 - we use window name to determine tabs. messing with it while using multiple tabs results in disasters
 
