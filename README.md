@@ -16,14 +16,10 @@ REDESIGN
 Thao:
 - paginations
 - run test with FireFox too
-- broken: test search
 - detect browser to show Warning
-- result: test might not look the same as the time u recorded
 
-- click: what if there is no such selector anymore???
-- we use window name to determine tabs. messing with it while using multiple tabs results in disasters
+- better user exprience when running test: show all warnings. Ex: we use window name to determine tabs. messing with it while using multiple tabs results in disasters
 
-- what if first action is not a pageload?
 - when 500 happens, email Thao
 - make video private. only show temporary url
 - make local do HTTPS
@@ -31,11 +27,8 @@ Thao:
 
 
 WRITE usage tutorials:
-- link to usage page from all keywords
 - create video to demonstrate concepts (get someone's perfect english)
 - warn users about pageload step: they might need to delete this
-- the assertion should output TRUE
-- emphasize Autotest can handle multiple tabs
 
-- create test BEFORE VS AFTER the feature is built
+- create test BEFORE VS AFTER the feature is built: Test driver development
 

@@ -16,7 +16,7 @@ class Assertion < ApplicationRecord
          'html-not-in-page' => 'HTML not Contained in Page',
          'page-title' => 'Page Title',
          'status-code' => 'Status Code',
-         'self-enter' => 'Enter Your Own Condition'
+         'self-enter' => 'Enter Your Own JavaScript Condition'
     }
   end
 

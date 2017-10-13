@@ -161,7 +161,7 @@ body_text#{step.id} = %(#{body_text})
                            status.include? condition
                          end
                        else # self-enter JS command
-                         driver.execute_script(assertion.condition) == 'true'
+                         driver.execute_script "return #{condition}"
                      end
             unless passed
               Result.create(test: test, webpage: driver.current_url,
