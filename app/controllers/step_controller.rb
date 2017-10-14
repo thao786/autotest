@@ -11,17 +11,18 @@ class StepController < ApplicationController
 
   def save_click
     form = Rack::Utils.parse_nested_query(params[:form])
-    if form['selectorType'].present? # selector form
-      if form['selector'].blank?
+    if form['selectorType'].present? # custom selector form
+      if form['selector'] == 'coordination'
+        @step.update(selector: {selectorType: 'coordination',
+                                x: form['x'] ||= @step.config[:x],
+                                y: form['y'] ||= @step.config[:y]})
+      elsif form['selector'].blank?
           render plain: 'CSS Selector Missing', :status => 404
           return
       else
         @step.update(selector: {selectorType: form['selectorType'],
-                                eq: form['eq'] ||= 1, selector: form['selector']})
+                                eq: form['eq'] ||= 0, selector: form['selector']})
       end
-    elsif form['selector'] == 'coordination'
-      @step.update(selector:
-           {selectorType: 'coordination', x: @step.config[:x], y: @step.config[:y]})
     else # one of the default selectors
       @step.update(selector: @step.config[:selectors][form['selector'].to_i])
     end
