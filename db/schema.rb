@@ -91,7 +91,6 @@ ActiveRecord::Schema.define(version: 20170713000338) do
   create_table "steps", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "test_id"
     t.datetime "time"
-    t.boolean  "active"
     t.string   "device_type"
     t.string   "typed"
     t.string  "scrollTop"

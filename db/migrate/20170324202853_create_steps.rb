@@ -3,7 +3,6 @@ class CreateSteps < ActiveRecord::Migration[5.0]
     create_table :steps do |t|
       t.references :test, foreign_key: true
       t.timestamp :time
-      t.boolean :active
       t.string :device_type
       t.string :typed
       t.string :scrollTop

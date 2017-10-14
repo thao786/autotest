@@ -513,7 +513,7 @@ function modalFunction() {
     $('#selectorType').on('change', function() {
         var selectorType = this.value;
         $('#custom-click-selector').html($('#choose-by-' + selectorType).html());
-        $('#custom-click-selector input[name="eq"]').val(1);
+        $('#custom-click-selector input[name="eq"]').val(0);
     });
 
     $('select[name="assertionType"]').on('change', function() {

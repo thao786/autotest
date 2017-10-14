@@ -14,11 +14,14 @@ REDESIGN
 
 
 Thao:
+- better click editing
 - paginations
 - run test with FireFox too
 - detect browser to show Warning
 
 - better user exprience when running test: show all warnings. Ex: we use window name to determine tabs. messing with it while using multiple tabs results in disasters
+
+    The testing environment doesnt have google plugins so make sure its the same
 
 - when 500 happens, email Thao
 - make video private. only show temporary url
