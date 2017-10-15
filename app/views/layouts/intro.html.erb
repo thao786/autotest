@@ -10,7 +10,7 @@
   <%= stylesheet_link_tag "application", media: "all" %>
 </head>
 
-  <body>
+<body>
 <div class="container-fluid">
     <div class="title-text">
         <div class="header-text">
@@ -20,8 +20,14 @@
     <div class="menu-item">
     <ul>
         <li><a href="#">Documentation</a></li>
-        <li><a href="#">View Tests</a></li>
-        <li><a href="#">Sign In</a></li>
+        <% if user_signed_in? %>
+            <a href="/suites">See your Tests</a>
+        <% else %>
+        <a class="btn btn-primary" href="<%= new_user_session_path %>">Sign In</a>
+    <a class="btn btn-danger" href="<%= user_google_oauth2_omniauth_authorize_path %>">Sign In with Google</a>
+    or
+    <a class="btn btn-primary" href="<%= new_user_registration_path %>">Sign Up</a>
+    <% end %></li>
     </ul>
     </div>
 </div>
@@ -94,7 +100,7 @@
         <div class="col-sm-6">
             <div class="fancy-tab"><h6>Test Existing Features</h6></div>
             <div class="content-wrap">
-                <p>You need to install and activate our Chrome Extension. Once you click Record Steps, the extension will start listening to your actions on Chrome Browser. To end the recording session, hit "Stop Recording Steps" and an editable list of action steps will be shown.</p>
+                <p>You need to install and activate our <a href="https://chrome.google.com/webstore/detail/uichecks-chrome-plugin/iicllodpmefpegdgkbjcknpbnehadokb"> Chrome extension</a>. Once you click Record Steps, the extension will start listening to your actions on Chrome Browser. To end the recording session, hit "Stop Recording Steps" and an editable list of action steps will be shown.</p>
             </div>
         </div>
         <div class="col-sm-6">
