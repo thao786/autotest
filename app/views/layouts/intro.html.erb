@@ -10,56 +10,107 @@
   <%= stylesheet_link_tag "application", media: "all" %>
 </head>
 
-<body>
-<a href="/doc" target="_blank">Documentation</a>
-<% if user_signed_in? %>
-    <a href="/suites">See your Tests</a>
-<% else %>
-    <a class="btn btn-primary" href="<%= new_user_session_path %>">Sign In</a>
-
-    <a class="btn btn-danger" href="<%= user_google_oauth2_omniauth_authorize_path %>">Sign In with Google</a>
-or
-    <a class="btn btn-primary" href="<%= new_user_registration_path %>">Sign Up</a>
-<% end %>
-
-<h3>What is UI Checks</h3>
-<p>You can test your digital properties effortlessly. Tests are created by a combination of automatic browser detecting and manually adding steps. Test results are captured in videos and evaluated by assertions.</p>
-
-
-<p><b>Little to none</b> programming skill is required to use UI Checks. However, knowledge about HTML, CSS and Javascript is helpful.</p>
-
+  <body>
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-xs-6">
-      <h3>Test Existing Features</h3>
-      <p>
-        You need to install and activate our <b><a href="https://chrome.google.com/webstore/detail/uichecks-chrome-plugin/iicllodpmefpegdgkbjcknpbnehadokb"> Chrome Extension</a></b>. Once you click <button class="btn-primary btn">Record Steps</button>, the extension will start listening to your actions on Chrome Browser. To end the recording session, hit "Stop Recording Steps" and an editable list of action steps will be shown.
-      </p>
+    <div class="title-text">
+        <div class="header-text">
+            <h1 id ="site-title">Autotest</h1>
+        </div>
     </div>
-
-    <div class="col-xs-6">
-      <h3>Test Driven Development</h3>
-      <p>
-        Test can be created even before your feature is actually built. To create a step, click <button class="btn-primary btn">Add Step</button> to select step type and set config data. You can run the test when the feature is actually built.
-      </p>
+    <div class="menu-item">
+    <ul>
+        <li><a href="#">Documentation</a></li>
+        <li><a href="#">View Tests</a></li>
+        <li><a href="#">Sign In</a></li>
+    </ul>
     </div>
-  </div>
 </div>
 
-<p>
-  A test can only be ran by one user when you click <button class="btn-primary btn">Run Test</button>. Once the running is complete, you will get a result page that includes video capture and assertion results.
-</p>
+<br>
 
-<h3>Limitations</h3>
-<p>Our browser test recording only works on Chrome but all other features are compatible with all other major Browsers.
-</p>
-<p>We current supports only Web testing, but Mobile testing is underway.</p>
+<div class="container-fluid main-bgr">
+    <div class="main-bgr-wrap">
+        <span id="wrap-title" class="clearfix">
+            <a>What is UI Checks</a>
+        </span>
+        <span id="wrap-content">You can test your digital properties effortlessly. Tests are created by a combination of automatic browser detecting and manually adding steps. Test results are captured in videos and evaluated by assertions.<br><b>Little to none</b> programming skill is required to use UI Checks. However, knowledge about HTML, CSS and Javascript is helpful.</span>
+    </div>
+</div>
 
-<h3>Feedback</h3>
-<p>We welcome your feedbacks! Please contact us at <b>roseskindergarten at gmail.com</b></p>
+<div class="container-fluid" id="promo-box-1">
+    <div class="inner-wrap">
+        <div class="promo-wrap">
+            <div class="promo-title">Test Existing Features</div>
+            <div class="promo-text">
+            A test can only be ran by one user when you click Run Test. Once the running is complete, you will get a result page that includes video capture and assertion results.
+            </div>
+        </div>
+    <a class="promo-action" shref="http://themegrill.com/themes/esteem-pro/">Run Test</a>
+    </div>
+</div>
 
-<h3>Upcoming features</h3>
-<ul>Download your test in code so you can reproduce your tests locally.</ul>
+<br><br>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1">
+            <div class="row">
+                <div class="col-sm-4 features">
+                    <div class="promo-circle">
+                        <div class="promo-circle-wrap">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                    <h3>Limitations</h3>
+                    <p>Our browser test recording only works on Chrome but all other features are compatible with all other major Browsers. We current supports only Web testing, but Mobile testing is underway.</p>
+                </div>
+                <div class="col-sm-4 features">
+                    <div class="promo-circle">
+                        <div class="promo-circle-wrap">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                    <h3>Feedbacks</h3>
+                    <p>We welcome your feedbacks! Please contact us at roseskindergarten at gmail.com</p>
+                </div>
+                <div class="col-sm-4 features">
+                    <div class="promo-circle">
+                        <div class="promo-circle-wrap">
+                            <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                    <h3>Upcoming Features</h3>
+                    <p>Download your test in code so you can reproduce your tests locally.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br><br>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="fancy-tab"><h6>Test Existing Features</h6></div>
+            <div class="content-wrap">
+                <p>You need to install and activate our Chrome Extension. Once you click Record Steps, the extension will start listening to your actions on Chrome Browser. To end the recording session, hit "Stop Recording Steps" and an editable list of action steps will be shown.</p>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="fancy-tab"><h6>Test Driven Development</h6></div>
+            <div class="content-wrap">
+                <p>Test can be created even before your feature is actually built. To create a step, click <span class="fancy-tab-btn">Add Step</span> to select step type and set config data. You can run the test when the feature is actually built.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br><br><br>
+
+<div class="container-fluid footer">
+<p>Copyright © 2017 Autotest. Developed for fun trololol.</p>
+</div>
 
 </body>
 </html>
