@@ -28,7 +28,6 @@ class StepController < ApplicationController
     end
 
     @step.update(wait: form['wait']) if form['wait'].present?
-    @step.update(active: true) if @step.complete?
     render json: true
   end
 
@@ -45,7 +44,6 @@ class StepController < ApplicationController
       render plain: 'Incorrect Format Or Blank Webpage', :status => 404
     end
     @step.update(wait: form['wait']) if form['wait'].present?
-    @step.update(active: true) if @step.complete?
   end
 
   def save_config
@@ -91,7 +89,6 @@ class StepController < ApplicationController
 
     @step.update(config: hash)
     @step.update(wait: form['wait']) if form['wait'].present?
-    @step.update(active: true) if @step.complete?
   end
 
   def save_keypress
@@ -103,7 +100,6 @@ class StepController < ApplicationController
       render json: false
     end
     @step.update(wait: form['wait']) if form['wait'].present?
-    @step.update(active: true) if @step.complete?
   end
 
   def save_scroll
@@ -115,7 +111,6 @@ class StepController < ApplicationController
     else
       render plain: 'Parameters can only contain numbers and not be blank.', :status => 404
     end
-    @step.update(active: true) if @step.complete?
   end
 
   def remove_header_param
@@ -141,16 +136,15 @@ class StepController < ApplicationController
       steps.each { |step|
         step.update(order: step.order + 1)
       }
-      new_step = Step.create(test: @test, order: @step.order + 1,
-                             action_type: params['action_type'], wait: params['wait'])
+      Step.create(test: @test, order: @step.order + 1,
+                  action_type: params['action_type'], wait: params['wait'])
     else
       order = @test.steps.maximum('order')
       order ||= 0
-      new_step = Step.create(test: @test, order: order + 1,
-                             action_type: params['action_type'], wait: params['wait'])
+      Step.create(test: @test, order: order + 1,
+                  action_type: params['action_type'], wait: params['wait'])
     end
 
-    new_step.update(active: false)
     redirect_back fallback_location: @test
   end
 
