@@ -9,7 +9,6 @@
   <thead>
   <tr>
     <th>Suite Title</th>
-    <th>Test Count</th>
     <th>Last Updated</th>
     <th>Actions</th>
   </tr>
@@ -20,8 +19,9 @@
     <tr>
       <td><%= link_to "#{suite.title}", controller: "suites", action: "show", id: suite.name %>
           <span class="glyphicon glyphicon-edit"></span>
+        <%= pluralize suite.tests.count, 'test' %>
       </td>
-      <td><%= link_to "#{suite.tests.count}", controller: "suites", action: "show", id: suite.name %></td>
+
       <td><%= suite.updated_at.strftime("%B %d, %Y") %></td>
 
       <td>
