@@ -1,7 +1,7 @@
 module StepHelper
   def translateClickSelector (selector)
     begin
-    eq = selector[:eq].to_i ||= 1
+      eq = selector[:eq].to_i ||= 1
 
       case selector[:selectorType]
         when 'href'
