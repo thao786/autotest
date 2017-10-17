@@ -9,7 +9,7 @@ module StepHelper
         when 'partialHref'
           "#{eq.ordinalize} <a> in which href containing #{selector[:selector]}"
         when 'button'
-          "#{eq.ordinalize} BUTTON which text containing '#{selector[:selector]}'"
+          "#{eq.ordinalize} BUTTON that says '#{selector[:selector]}'"
         when 'id'
           "##{selector[:selector]}"
         when 'css'

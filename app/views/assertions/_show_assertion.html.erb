@@ -1,15 +1,20 @@
 <div class="assertion" data-id="<%= assertion.id %>">
-    <span class="glyphicon glyphicon-remove remove-assertion" title="Delete This Assertion"></span>
+  <span class="glyphicon glyphicon-remove remove-assertion" title="Delete This Assertion"></span>
 
-      <input class="default-assertion disable-assertion" type="checkbox"
-             <%= assertion.active ? 'checked' : '' %> >
-  <%= Assertion.assertion_types[assertion.assertion_type]%>:
-  <b><%= assertion.condition %></b>
+  <!--<input class="default-assertion disable-assertion" type="checkbox" <%= assertion.active ? 'checked' : '' %> >-->
+
+  <span style="<%= assertion.test.steps.count > 1 ? 'text-decoration: line-through' : '' %>" >
+      <%= Assertion.assertion_types[assertion.assertion_type]%>:
+      <b><%= assertion.condition %></b>
+  </span>
 
   <% if assertion.webpage.present?  %>
       <span style="font-weight: normal;">on </span>
       <%= assertion.webpage %>
   <% end %>
 
+  <% if assertion.test.steps.count > 1 %>
+      <span style="font-style: italic; opacity: 0.8;">assertion not valid due to test has more than 1 step </span>
+  <% end %>
 </div>
        
