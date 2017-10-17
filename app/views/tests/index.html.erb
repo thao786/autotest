@@ -34,7 +34,8 @@
 
         <tr>
           <td><%= link_to suite.title, controller: "suites", action: "show", id: suite.name %></td>
-          <td><a href="<%= showUrl test %>"> <%= test.title %></a></td>
+          <td><a href="<%= showUrl test %>"> <%= test.title %> </a>
+            (<%= pluralize test.steps.count, 'step' %>)</td>
           <td><%= test.description %></td>
           <td><%= render "tests/delete_btn", test: test %> -
             <%= render "tests/edit_btn", test: test %>

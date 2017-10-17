@@ -16,6 +16,12 @@ module StepHelper
           "#{eq.ordinalize} element with CSS Selector #{selector[:selector]}"
         when 'tag'
           "#{eq.ordinalize} <#{selector[:selector].upcase}>"
+        when 'name'
+          "#{eq.ordinalize} input with name=#{selector[:selector].upcase}"
+        when 'tag'
+          "#{eq.ordinalize} <#{selector[:selector].upcase}>"
+        when 'tag'
+          "#{eq.ordinalize} <#{selector[:selector].upcase}>"
         when 'coordination'
           "coordination [#{selector[:x]}, #{selector[:y]}]"
         else

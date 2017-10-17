@@ -12,7 +12,7 @@
       <% suite = test.suite %>
 
       <tr>
-        <td><a href="<%= showUrl test %>"> <%= test.title %></a> (<%= test.steps.count %> steps)</td>
+        <td><a href="<%= showUrl test %>"> <%= test.title %></a> (<%= pluralize test.steps.count, 'step' %>)</td>
         <td>
           <%= test.description %></td>
         <td><%= render "tests/delete_btn", test: test %>
