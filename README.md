@@ -1,14 +1,11 @@
 Thuy:
 - highlight pageload: is this the result of a click or Js? if yes, user needs to remove the step
-- assertions: make it clear that it's JS
 - make click dropdownlist copyable
 
 
 
 REDESIGN
-- redesign login screens
 - redesign modal errors
-- make inactive steps more obvious
 - mark all Interpolatable fields obvious
 
 
@@ -26,12 +23,8 @@ Thao:
 - when 500 happens, email Thao
 - make video private. only show temporary url
 - make local do HTTPS
-- only accepts numbers for eq
 
 
-WRITE usage tutorials:
-- create video to demonstrate concepts (get someone's perfect english)
-- warn users about pageload step: they might need to delete this
 
-- create test BEFORE VS AFTER the feature is built: Test driver development
+
 

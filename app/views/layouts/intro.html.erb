@@ -14,21 +14,19 @@
 <div class="container-fluid">
     <div class="title-text">
         <div class="header-text">
-            <h1 id ="site-title">Autotest<small> Beta</small></h1>
+            <h1 id ="site-title">UICheck<small> Beta</small></h1>
         </div>
     </div>
     <div class="menu-item">
     <ul>
         <li><a href="/doc">Documentation</a></li>
-        <li><a href="#">Pricing</a></li>
-        <li><a href="#">Installing Extension</a></li>
         <% if user_signed_in? %>
             <a href="/suites">See your Tests</a>
         <% else %>
-        <a class="btn btn-primary" href="<%= new_user_session_path %>">Sign In</a>
-    
-        <a class="btn btn-primary" href="<%= new_user_registration_path %>">Sign Up</a>
-    <% end %></li>
+            <a class="btn btn-primary" href="<%= new_user_session_path %>">Sign In</a>
+            <a class="btn btn-primary" href="<%= new_user_registration_path %>">Sign Up</a>
+        <% end %>
+      </li>
     </ul>
     </div>
 </div>
@@ -36,47 +34,35 @@
 <br>
 
 <div class="container-fluid main-bgr">
-    <h1 class="trSH">one step installing
-                <br>Automated testing for non-coders
+    <h1 class="trSH">Automation test for non-coders
     </h1>
     <div class="euLS">
-        <p>Accelerate your software development and bring your great ideas to market faster with the world's largest automated testing</p></div>
+        <p>Detecting user actions with Chrome Extension</p>
+        <p>Receive Test Result in videos</p>
+        <p>Little or none programming skills required.</p>
+    </div>
     <div class="link_box_container">
         <a class="link_box" href="/doc" target="_blank">Documentation</a>
-        <a class="link_box" href="#" target="_blank">Install Extension</a>
+        <a class="link_box" href="https://chrome.google.com/webstore/detail/uichecks-chrome-plugin/iicllodpmefpegdgkbjcknpbnehadokb" target="_blank">Install Chrome Extension</a>
     </div>
-    <!-- <div class="main-bgr-wrap">
-        <span id="wrap-title" class="clearfix">
-            <a>What is UI Checks</a>
-        </span>
-        <span id="wrap-content">You can test your digital properties effortlessly. Tests are created by a combination of automatic browser detecting and manually adding steps. Test results are captured in videos and evaluated by assertions.<br><b>Little to none</b> programming skill is required to use UI Checks. However, knowledge about HTML, CSS and Javascript is helpful.</span>
-    </div> -->
 </div>
 
-<!--<div class="container-fluid" id="promo-box-1">
-     <div class="inner-wrap">
-        <div class="promo-wrap">
-            <div class="promo-title">Test Existing Features</div>
-            <div class="promo-text">
-            A test can only be ran by one user when you click Run Test. Once the running is complete, you will get a result page that includes video capture and assertion results.
-            </div>
-        </div>
-    <a class="promo-action" shref="http://themegrill.com/themes/esteem-pro/">Run Test</a>
-    </div> 
-</div>-->
 
 <br><br>
 
 <div class="container-fluid">
     <div class="row row-spec">
-        <h2 class="h2-title">Detailed Instruction</h2>
+        <h2 class="h2-title">Create and run a test in 5 minutes: </h2>
         <hr>
-        <div class="col-sm-6">
-            <p>1. No need to spend valuable time and resources developing and maintaining your own infrastructure</p>
-            <p>2. when you have access to the secure and reliable automated testing from </p>
-            <p>3. No need to spend valuable time and resources developing and maintaining your own infrastructure</p>
-            <p>4. when you have access to the secure and reliable automated testing from </p>
-        </div>
+        <ol class="col-sm-6">
+            <li>Install and enable Chrome Extension</li>
+            <li>Click <b>Record Steps</b> </li>
+            <li>Perform actions on Chrome Browser</li>
+            <li>Click <b>Stop Recording Steps</b> </li>
+            <li>Check and edit generated test</li>
+            <li>Click <b>Run Test</b> </li>
+            <li>Allow a few minutes for the test to run. Result video will appear when it is completed.</li>
+        </ol>
         <div class="col-sm-6">
             <iframe width="420" height="315"
             src="https://www.youtube.com/embed/XGSy3_Czz8k">
@@ -87,56 +73,20 @@
 
 <br><br>
 
-<div class="container-fluid" id="promo-box-1">
-    <div class="row">
-        <div class="col-sm-10 col-sm-offset-1">
-            <div class="row">
-                <div class="col-sm-4 features">
-                    <div class="promo-circle">
-                        <div class="promo-circle-wrap">
-                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                        </div>
-                    </div>
-                    <h3>Limitations</h3>
-                    <p>Our browser test recording only works on Chrome but all other features are compatible with all other major Browsers. We current supports only Web testing, but Mobile testing is underway.</p>
-                </div>
-                <div class="col-sm-4 features">
-                    <div class="promo-circle">
-                        <div class="promo-circle-wrap">
-                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
-                        </div>
-                    </div>
-                    <h3>Feedbacks</h3>
-                    <p>We welcome your feedbacks! Please contact us at roseskindergarten at gmail.com</p>
-                </div>
-                <div class="col-sm-4 features">
-                    <div class="promo-circle">
-                        <div class="promo-circle-wrap">
-                            <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
-                        </div>
-                    </div>
-                    <h3>Upcoming Features</h3>
-                    <p>Download your test in code so you can reproduce your tests locally.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<br><br>
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-6">
             <div class="fancy-tab"><h6>Test Existing Features</h6></div>
             <div class="content-wrap">
-                <p>You need to install and activate our <a href="https://chrome.google.com/webstore/detail/uichecks-chrome-plugin/iicllodpmefpegdgkbjcknpbnehadokb"> Chrome extension</a>. Once you click Record Steps, the extension will start listening to your actions on Chrome Browser. To end the recording session, hit "Stop Recording Steps" and an editable list of action steps will be shown.</p>
+                <p>Our <a href="https://chrome.google.com/webstore/detail/uichecks-chrome-plugin/iicllodpmefpegdgkbjcknpbnehadokb"> Chrome extension</a> listens to your browser actions to generate tests. UICheck spare you the headache of writing test code. You can replicate tests again and again to see results in videos. </p>
             </div>
         </div>
         <div class="col-sm-6">
             <div class="fancy-tab"><h6>Test Driven Development</h6></div>
             <div class="content-wrap">
-                <p>Test can be created even before your feature is actually built. To create a step, click <span class="fancy-tab-btn">Add Step</span> to select step type and set config data. You can run the test when the feature is actually built.</p>
+                <p>Test can be created even before your feature exists. Tests consists of steps which can be manually defined by users with our elaborated menu. You can run the test when your feature is actually built.</p>
             </div>
         </div>
     </div>
@@ -145,7 +95,7 @@
 <br><br><br>
 
 <div class="container-fluid footer">
-<p>Copyright © 2017 Autotest. Developed for fun trololol.</p>
+<p>Copyright © 2017 UICheck. Made in Toronto, Canada.</p>
 </div>
 
 </body>
