@@ -11,6 +11,13 @@ class StepController < ApplicationController
 
   def save_click
     form = Rack::Utils.parse_nested_query(params[:form])
+    if form['eq'].present?
+      unless form['eq'].strip =~ /[0-9]+/
+        render plain: 'Index has to be an integer', :status => 404
+        return
+      end
+    end
+
     if form['selectorType'].present? # custom selector form
       if form['selector'] == 'coordination'
         @step.update(selector: {selectorType: 'coordination',

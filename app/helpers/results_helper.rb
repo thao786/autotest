@@ -57,13 +57,18 @@ module ResultsHelper
                 driver.manage.window.resize_to(step.screenwidth, step.screenheight)
               when 'click'
                 type = extractParams(param_str,step.selector[:selectorType])
-                selector = extractParams(param_str,step.selector[:selector])
+                selector = extractParams(param_str,step.selector[:selector]).strip
                 eq = extractParams(param_str,step.selector[:eq]).to_i
                 element = case type # first, find DOM with WebDriver
                             when 'id'
                               driver.find_elements(:id => selector).first
                             when 'class'
-                              driver.find_elements(:class => selector)[eq]
+                              if selector.include? ' '
+                                selector_str = selector.split.join('.')
+                                driver.find_elements(:css => selector_str)[eq]
+                              else
+                                driver.find_elements(:class => selector)[eq]
+                              end
                             when 'tag'
                               driver.find_elements(:tag_name => selector)[eq]
                             when 'name'
@@ -183,7 +188,12 @@ module ResultsHelper
                     when 'id'
                       "document.getElementById('#{selector}')"
                     when 'class'
-                      "document.getElementsByClassName('#{selector}')"
+                      if selector.include? ' '
+                        selector_str = selector.split.join '.'
+                        "document.querySelectorAll('#{selector_str}')"
+                      else
+                        "document.getElementsByClassName('#{selector}')"
+                      end
                     when 'tag'
                       "document.getElementsByTagName('#{selector}')"
                     when 'name'

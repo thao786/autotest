@@ -9,7 +9,7 @@ module StepHelper
         when 'partialHref'
           "#{eq.ordinalize} <a> in which href containing #{selector[:selector]}"
         when 'button'
-          "#{eq.ordinalize} button with text containing #{selector[:selector]}"
+          "#{eq.ordinalize} BUTTON which text containing '#{selector[:selector]}'"
         when 'id'
           "##{selector[:selector]}"
         when 'css'
@@ -17,9 +17,9 @@ module StepHelper
         when 'tag'
           "#{eq.ordinalize} <#{selector[:selector].upcase}>"
         when 'name'
-          "#{eq.ordinalize} input with name=#{selector[:selector].upcase}"
-        when 'tag'
-          "#{eq.ordinalize} <#{selector[:selector].upcase}>"
+          "#{eq.ordinalize} input with name=#{selector[:selector]}"
+        when 'class'
+          "#{eq.ordinalize} element with class=#{selector[:selector]}"
         when 'tag'
           "#{eq.ordinalize} <#{selector[:selector].upcase}>"
         when 'coordination'

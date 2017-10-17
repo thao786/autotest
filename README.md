@@ -26,7 +26,7 @@ Thao:
 - when 500 happens, email Thao
 - make video private. only show temporary url
 - make local do HTTPS
-
+- only accepts numbers for eq
 
 
 WRITE usage tutorials:
