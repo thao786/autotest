@@ -27,4 +27,6 @@ Thao:
 
 
 
+VIDEO SCRIPT
+
 
