@@ -132,16 +132,14 @@ window.gpAsyncInit = function() {
     });
 };
 
-
-
-function getBrowser() {
+function isChrome() {
     if (typeof chrome !== "undefined") {
         if (typeof browser !== "undefined") {
-            return "Firefox";
+            return false; // "Firefox"
         } else {
-            return "Chrome";
+            return true;
         }
     } else {
-        return "Edge";
+        return false; // "Edge"
     }
 }

@@ -13,8 +13,8 @@
       <%= assertion.webpage %>
   <% end %>
 
-  <% if assertion.test.steps.count > 1 %>
-      <span style="font-style: italic; opacity: 0.8;">assertion not valid due to test has more than 1 step </span>
+  <% if assertion.test.steps.count > 1 || assertion.test.steps.first.action_type != 'pageload' %>
+      <span style="font-style: italic; opacity: 0.8;">assertion not valid: test can only contain a single url-load step </span>
   <% end %>
 </div>
        
