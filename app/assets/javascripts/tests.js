@@ -478,7 +478,7 @@ $(document).on("click", "#runTest", function(e) {
                     data: {test_id: test_id},
                     success: function(result, status, xhr) {
                         console.log(result);
-                        if (result == false) {
+                        if (!result) {
                             clearTimeout(checkTestRun);
                             restore_btn_menu();
 

@@ -41,7 +41,6 @@ class ApiController < ActionController::Base
       if test.running
         p 'valid hash. now run test'
         begin
-          Thread.new {
             headless = Headless.new(video: {:frame_rate => 12, provider: :ffmpeg})
             headless.start
 
@@ -71,12 +70,11 @@ class ApiController < ActionController::Base
             File.delete "#{video_path_on_disk}.mp4"
 
             p helpers.video_aws_path(run_id)
-            test.update(running: false)
-          }
         rescue Exception => error
           p error.message # email Thao
-          test.update(running: false)
         end
+
+        test.update(running: false)
         render json: true, :status => 200
       else
         render json: 'test is not marked as running by main server', :status => 404
