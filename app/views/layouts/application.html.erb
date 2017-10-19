@@ -15,15 +15,16 @@
 <%= render 'layouts/copyable' %>
 
   <div class="container-fluid">
-    <div class="title-text">
-        <div class="header-text">
-            <h1 id ="site-title">UIChecks<small> Beta</small></h1>
+    <a href="/">
+        <div class="title-text">
+            <div class="header-text">
+                <h1 id ="site-title">UIChecks<small> Beta</small></h1>
+            </div>
         </div>
-    </div>
+    </a>
     <% if user_signed_in? %>
     <div class="menu-item">
     <ul>
-      <li><%= link_to "Info Page", root_path %></li>
       <li><%= link_to 'All Suites', suites_path %></li>
       <li><%= link_to 'All Tests', tests_path %></li>
       <li><a href="/doc">User Guide</a></li>
