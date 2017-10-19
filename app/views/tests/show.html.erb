@@ -1,3 +1,9 @@
+<div class="container-fluid">
+<div class="row">
+<div class="col-sm-10 col-sm-offset-1">
+<h2 class="h2-title"> <strong>Test Title</strong>: <%= @test.title %>
+  <%= render "tests/delete_btn", test: @test %> -
+  <%= render "tests/edit_btn", test: @test %></h2>
 <% suite = @test.suite %>
 
 <div style="display: none;" id="page_info" data-test="<%= @test.id %>"></div>
@@ -119,3 +125,7 @@
 
   </div>
 </div>
+</div>
+</div>
+</div>
+
