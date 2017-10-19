@@ -107,7 +107,7 @@ class TestsController < ApplicationController
       if names[index].nil? || names[index].match?(/\s/) || names[index].empty?
         render plain: 'Blank not allowed', :status => 404 and return
       else
-        if TestParam.where(test: @test, label: names[index])
+        if TestParam.where(test: @test, label: names[index]).count > 0
           render plain: 'This test already has a parameter with this label', :status => 404 and return
         else
           TestParam.create(test: @test, label: names[index], val: values[index])

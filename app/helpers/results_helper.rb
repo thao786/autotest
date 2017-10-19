@@ -137,7 +137,7 @@ module ResultsHelper
           logs = driver.manage.logs.get('browser')
           logs.each { |log|
             console_log = "#{console_log}
-  #{log.message}"
+#{log.message}"
           }
 
           assertions = Assertion.where(test: test, active: true)

@@ -11,6 +11,7 @@ REDESIGN
 
 
 Thao:
+- better explanation of Ruby Interpolation
 - better click editing
 - paginations
 - run test with FireFox too
