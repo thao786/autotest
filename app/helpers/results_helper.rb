@@ -129,18 +129,19 @@ module ResultsHelper
 
     if checkAssertions # check assertions
       console_log = ''
-      tabs.each { |tab_id|
-        driver.switch_to.window tab_id
+      driver.window_handles.each { |handle_id|
+        driver.switch_to.window handle_id
 
-        # check 404 and 500 errors for ALL tabs
-        logs = driver.manage.logs.get('browser')
-        logs.each { |log|
-          console_log = "#{console_log}
-#{log.message}"
-        }
+        if driver.current_url != 'about:blank'
+          # check 404 and 500 errors for ALL tabs
+          logs = driver.manage.logs.get('browser')
+          logs.each { |log|
+            console_log = "#{console_log}
+  #{log.message}"
+          }
 
-        assertions = Assertion.where(test: test, active: true)
-        assertions.each { |assertion|
+          assertions = Assertion.where(test: test, active: true)
+          assertions.each { |assertion|
           if assertion.webpage.blank? || assertion.webpage == driver.current_url
             condition = extractParams(param_str, assertion.condition)
             passed = case assertion.assertion_type
@@ -177,6 +178,7 @@ module ResultsHelper
             end
           end
         }
+        end
       }
 
       Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first, runId: run_id, error: console_log)
