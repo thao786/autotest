@@ -83,8 +83,4 @@ class ApiController < ActionController::Base
       render json: false, :status => 404
     end
   end
-
-  def intro
-    render template: 'layouts/intro'
-  end
 end

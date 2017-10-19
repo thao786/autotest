@@ -12,6 +12,8 @@ REDESIGN
 
 Thao:
 - better explanation of Ruby Interpolation
+- only allow pretest to have no pretest itself
+
 - better click editing
 - paginations
 - run test with FireFox too

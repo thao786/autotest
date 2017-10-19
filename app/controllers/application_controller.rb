@@ -1,12 +1,8 @@
 require 'Util'
 
 class ApplicationController < ActionController::Base
-  before_action :authenticate_user!, except: [:documentation]
+  before_action :authenticate_user!
 
   protect_from_forgery with: :exception
   include Util
-
-  def documentation
-    render "doc/documentation"
-  end
 end
