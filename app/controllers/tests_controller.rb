@@ -148,10 +148,8 @@ class TestsController < ApplicationController
         # call the independent EC2 servers
         hash = helpers.hash_data_secure_SEL_server @test.id
         selenium_url = "http://#{ENV['SEL_HOST']}/api/runTest?test_id=#{@test.id}&hash=#{hash}"
-        Thread.new {
-          response = open(selenium_url)
-          error = response.read
-        }
+        response = open(selenium_url)
+        error = response.read
 
         render json: {}
       end
