@@ -12,15 +12,16 @@ class Step < ApplicationRecord
   has_many :pre_tests, class_name: 'Test', through: :prep_tests, :source => :test
 
   def self.web_step_types
-      {'pageload' => 'load url in browser', 'pageloadCurl' => 'load page with Curl',
+      {'pageload' => 'load url in browser',
+       # 'pageloadCurl' => 'load page with Curl',
        'scroll' => 'scroll', 'keypress' => 'type',
-           'click' => 'click', 'resize' => 'Resize'}
+       'click' => 'click', 'resize' => 'Resize'}
   end
 
   after_initialize :set_defaults, unless: :persisted? # The set_defaults will only work if the object is new
 
   def set_defaults
-    self.active ||= true
+    # self.active ||= true
   end
 
   def complete?

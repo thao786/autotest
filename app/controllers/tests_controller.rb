@@ -151,11 +151,7 @@ class TestsController < ApplicationController
         response = open(selenium_url)
         error = response.read
 
-        if response.status[0] == '200' # failed
-          render json: {}
-        else
-          render plain: error, :status => 404
-        end
+        render json: {}
       end
     end
   end

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>UI Checks</title>
+  <title>Welcome to UI Checks</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -11,38 +11,91 @@
 </head>
 
 <body>
-<h2>Welcome to UI Checks!</h2>
+<div class="container-fluid">
+    <div class="title-text">
+        <div class="header-text">
+            <h1 id ="site-title">UIChecks<small> Beta</small></h1>
+        </div>
+    </div>
+    <div class="menu-item">
+    <ul>
+        <li><a href="/doc">Documentation</a></li>
+        <% if user_signed_in? %>
+            <a href="/suites">See your Tests</a>
+        <% else %>
+            <a class="btn btn-primary" href="<%= new_user_session_path %>">Sign In</a>
+            <a class="btn btn-primary" href="<%= new_user_registration_path %>">Sign Up</a>
+        <% end %>
+      </li>
+    </ul>
+    </div>
+</div>
 
-<% if user_signed_in? %>
-    <a href="/suites">See your Tests</a>
-<% else %>
-    <a class="btn btn-primary" href="<%= new_user_session_path %>">Sign In</a>
+<br>
 
-    <a class="btn btn-danger" href="<%= user_google_oauth2_omniauth_authorize_path %>">Sign In with Google</a>
-or
-    <a class="btn btn-primary" href="<%= new_user_registration_path %>">Sign Up</a>
-<% end %>
+<div class="container-fluid main-bgr">
+    <h1 class="trSH">Automation test for non-coders
+    </h1>
+    <div class="euLS">
+        <p>Detecting user actions with Chrome Extension</p>
+        <p>Receive Test Result in videos</p>
+        <p>Little or none programming skills required.</p>
+    </div>
+    <div class="link_box_container">
+        <a class="link_box" href="/doc" target="_blank">Documentation</a>
+        <a class="link_box" href="https://chrome.google.com/webstore/detail/uichecks-chrome-plugin/iicllodpmefpegdgkbjcknpbnehadokb" target="_blank">Install Chrome Extension</a>
+    </div>
+</div>
 
-<h3>What is UI Checks</h3>
-<p>Our <a href="https://chrome.google.com/webstore/detail/uichecks-chrome-plugin/iicllodpmefpegdgkbjcknpbnehadokb">Chrome Extension</a> records your testing actions on <b>Chrome Browser</b> and translate them into code that can be ran by Selenium. You can review the testing actions in a video afterward. Our platform current supports only Web testing, but Mobile testing is underway.</p>
 
-<p><b>Little to none</b> programming skill is required to use UI Checks. However, knowledge about HTML, CSS and Javascript is helpful.</p>
+<br><br>
 
-<h3>How It Works</h3>
-<p>
-<h5><a href="/doc">Web</a></h5>
-  You need to install and activate our <a href="https://chrome.google.com/webstore/detail/uichecks-chrome-plugin/iicllodpmefpegdgkbjcknpbnehadokb"> Chrome extension</a>. Once you click <button class="btn-primary btn">Record Steps</button>, the extension will start listening to your actions on Chrome Browser. To end the recording session, hit "Stop Recording Steps" and an editable list of action steps will be shown. Our browser test recording only works on Chrome but all other features are compatible with all other major Browsers.
-</p>
+<div class="container-fluid">
+    <div class="row row-spec">
+        <h2 class="h2-title">Create and run a test in 5 minutes: </h2>
+        <hr>
+        <ol class="col-sm-6">
+            <li>Install and enable Chrome Extension</li>
+            <li>Click <b>Record Steps</b> </li>
+            <li>Perform actions on Chrome Browser</li>
+            <li>Click <b>Stop Recording Steps</b> </li>
+            <li>Check and edit generated test</li>
+            <li>Click <b>Run Test</b> </li>
+            <li>Allow a few minutes for the test to run. Result video will appear when it is completed.</li>
+        </ol>
+        <div class="col-sm-6">
+            <iframe width="420" height="315"
+            src="https://www.youtube.com/embed/XGSy3_Czz8k">
+            </iframe>
+        </div>
+    </div>
+</div>
 
-<p>
-  A test can only be ran by one user when you click <button class="btn-primary btn">Run Test</button>. Once the running is complete, you will get a result page that includes video capture and assertion results.
-</p>
+<br><br>
 
-<h3>Feedback</h3>
-<p>We welcome your feedbacks! Please contact us at <b>roseskindergarten at gmail.com</b></p>
 
-<h3>Upcoming features</h3>
-<ul>Download your test in code so you can reproduce your tests locally.</ul>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="fancy-tab"><h6>Test Existing Features</h6></div>
+            <div class="content-wrap">
+                <p>Our <a href="https://chrome.google.com/webstore/detail/uichecks-chrome-plugin/iicllodpmefpegdgkbjcknpbnehadokb"> Chrome extension</a> listens to your browser actions to generate tests. UICheck spare you the headache of writing test code. You can replicate tests again and again to see results in videos. </p>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="fancy-tab"><h6>Test Driven Development</h6></div>
+            <div class="content-wrap">
+                <p>Test can be created even before your feature exists. Tests consists of steps which can be manually defined by users with our elaborated menu. You can run the test when your feature is actually built.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br><br><br>
+
+<div class="container-fluid footer">
+<p>Copyright © 2017 UIChecks. Made in Toronto, Canada.</p>
+</div>
 
 </body>
 </html>

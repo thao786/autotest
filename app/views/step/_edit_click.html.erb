@@ -8,29 +8,38 @@
         </button>
       </div>
       <div class="modal-body">
-        <form class="edit-click-form">
-            <div class="form-group">
-            <div class="form-group">
-              <label for="wait">Wait:</label>
-              <input name="wait" type="text" class="form-control"
-                     value="<%= @step.wait %>" required>
-            </div>
-              <label>CSS Selectors of clicked elements: </label>
-              <select name="selector" class="form-control" required>
-                <% @step.config[:selectors].each_with_index do |selector, index| %>
-                    <option value="<%= index %>"
-                        <%= @step.config[:selectors][index].to_json == @step.selector ? 'selected' : '' %>>
-                        <%= translateClickSelector selector %>
-                    </option>
-                <% end %>
-                    <option value="coordination">
-                      Coordination [<%= @step.config[:x] %>, <%= @step.config[:y] %>] </option>
-              </select>
-              <button type="button" class="btn btn-primary submit">Save</button>
-            </div><hr>
-        </form>
+        <% if @step.config %>
+            <form class="edit-click-form">
+                <div class="form-group">
+                  <label for="wait">Wait:</label>
+                  <input name="wait" type="text" class="form-control" value="<%= @step.wait %>" required>
+                </div>
+
+                <div class="form-group">
+                  <label>CSS Selectors of clicked elements: </label>
+                  <select name="selector" class="form-control" required>
+                    <% @step.config[:selectors].each_with_index do |selector, index| %>
+                        <option value="<%= index %>"
+                            <%= @step.config[:selectors][index] == @step.selector ? 'selected' : '' %>>
+                            <%= translateClickSelector selector %>
+                        </option>
+                    <% end %>
+                        <option value="coordination">
+                          Coordination [<%= @step.config[:x] %>, <%= @step.config[:y] %>] </option>
+                  </select>
+                  <button type="button" class="btn btn-primary submit">Save</button>
+                </div>
+            </form>
+
+            <hr><h4>Or custom your own:</h4><hr>
+        <% end %>
 
         <form class="edit-click-form">
+          <div class="form-group">
+            <label for="wait">Wait:</label>
+            <input name="wait" type="text" class="form-control" value="<%= @step.wait %>" required>
+          </div>
+
           <div class="form-group form-inline">
             <label>Selectors of clicked elements: </label>
             <select id="selectorType" name="selectorType" class="form-control" required>
@@ -47,7 +56,7 @@
             </select>
           </div>
 
-          <%= render 'doc/string_interpolation_link' %>
+          <!--<%= render 'doc/string_interpolation_link' %>-->
           <div id="custom-click-selector">
               <div class="form-group form-inline">
                 <label>ID: </label>
@@ -162,14 +171,15 @@
         </div>
 
         <div id="choose-by-coordination" style="display: none;">
+          <input name="selector" type="hidden" value="coordination">
           <div class="form-group form-inline">
             <label>Click Coordination: </label>
             <br>
             <label>x: </label>
-            <input name="x" type="text" class="form-control" value="<%= @step.config[:x] %>" required>
+            <input name="x" type="text" class="form-control" required>
 
             <label>y: </label>
-            <input name="y" type="text" class="form-control" value="<%= @step.config[:y] %>" required>
+            <input name="y" type="text" class="form-control" required>
           </div>
         </div>
       </div>

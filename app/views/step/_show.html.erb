@@ -4,8 +4,10 @@
   <%= Step.web_step_types[step.action_type] %>
 
   <% case step.action_type
-       when 'pageload' %> <b><%= step.webpage %></b><br>
-          <span>screen size: <%= step.screenwidth %> x <%= step.screenheight %></span>
+       when 'pageload' %> <b><%= step.webpage %></b>
+      <% if step.screenwidth %>
+          <br><span>screen size: <%= step.screenwidth %> x <%= step.screenheight %></span>
+      <% end %>
 
       <% when 'scroll' %> to
           <span class="scrollLeft"><b><%= step.scrollLeft %></b></span> px
@@ -32,6 +34,10 @@
             <span class="hash-pair"><%= extract.title %></span>
       <% end %>
   </div>
+
+  <% unless step.complete? %>
+      <span style="color: red;">incomplete step: some data is missing.</span>
+  <% end %>
 
   <button class="add-step-after btn visible-hover">
       <span class="glyphicon glyphicon-plus"></span> Step after

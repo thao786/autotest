@@ -16,107 +16,115 @@ module ResultsHelper
 #{param.label} = \"#{param.val}\""
     }
 
-    steps = Step.where(test: test, active: true)
+    steps = Step.where(test: test)
     steps.each { |step|
-      if checkAssertions # ran pre-tests (only available to main test)
-        step.pre_tests.each { |pre_test|
-          runSteps(driver, pre_test, run_id, false)
-        }
-      end
-
-      # check if we need to switch tab
-      current_tab_id = driver.execute_script "return window.name"
-      tab_id = "#{step.windowId}-#{step.tabId}"
-      if step.tabId.present? && current_tab_id != tab_id
-        if tabs.exclude? tab_id
-          driver.execute_script "window.open('', '#{tab_id}')"
-          tabs << tab_id
+      if step.complete?
+        if checkAssertions # ran pre-tests (only available to main test)
+          step.pre_tests.each { |pre_test|
+            runSteps(driver, pre_test, run_id, false)
+          }
         end
-        begin # if there's no such tab_id, stay in the current one
-          driver.switch_to.window tab_id
-        rescue # do nothing. carry on
-        end
-      end
 
-      begin
-        Timeout::timeout(step.wait/1000) { # wait
-          case step.action_type
-            when 'pageload'
-              driver.get extractParams(param_str,step.webpage)
-            when 'pageloadCurl'
-              # load headers and params
-              Thread.new {
+        # check if we need to switch tab
+        current_tab_id = driver.execute_script "return window.name"
+        tab_id = "#{step.windowId}-#{step.tabId}"
+        if step.tabId.present? && current_tab_id != tab_id
+          if tabs.exclude? tab_id
+            driver.execute_script "window.open('', '#{tab_id}')"
+            tabs << tab_id
+          end
+          begin # if there's no such tab_id, stay in the current one
+            driver.switch_to.window tab_id
+          rescue # do nothing. carry on
+          end
+        end
+
+        begin
+          Timeout::timeout(step.wait/1000) { # wait
+            case step.action_type
+              when 'pageload'
                 driver.get extractParams(param_str,step.webpage)
-              }
-            when 'scroll'
-              driver.execute_script "scroll(#{extractParams(param_str,step.scrollLeft)}, #{extractParams(param_str,step.scrollTop)})"
-            when 'keypress'
-              driver.action.send_keys(extractParams(param_str,step.typed)).perform
-            when 'resize'
-              driver.manage.window.resize_to(step.screenwidth, step.screenheight)
-            when 'click'
-              type = extractParams(param_str,step.selector[:selectorType])
-              selector = extractParams(param_str,step.selector[:selector])
-              eq = extractParams(param_str,step.selector[:eq]).to_i
-              element = case type # first, find DOM with WebDriver
-                          when 'id'
-                            driver.find_elements(:id => selector).first
-                          when 'class'
-                            driver.find_elements(:class => selector)[eq]
-                          when 'tag'
-                            driver.find_elements(:tag_name => selector)[eq]
-                          when 'name'
-                            driver.find_elements(:name => selector)[eq]
-                          when 'partialLink' # link text
-                            driver.find_elements(:partial_link_text => selector)[eq]
-                          when 'href'
-                            driver.find_elements(:css => "a[href='#{selector}']")[eq]
-                          when 'partialHref'
-                            driver.find_elements(:css => "a[href*='#{selector}']")[eq]
-                          when 'button' # use XPath
-                            driver.find_elements(:xpath, "//button[text()[contains(.,'#{selector}')]]")[eq]
-                          when 'css'
-                            driver.find_elements(:css => selector)[eq]
-                          when 'coordination'
-                            elem = driver.find_elements(:tag_name => 'body').first
-                            driver.action.move_to(elem, 50, 50).click.perform
-                            elem
-                          else
-                            nil
-                      end
-              if element.present?
-                begin
-                  element.click
-                rescue Exception => error
+              when 'pageloadCurl'
+                # load headers and params
+                Thread.new {
+                  driver.get extractParams(param_str,step.webpage)
+                }
+              when 'scroll'
+                driver.execute_script "scroll(#{extractParams(param_str,step.scrollLeft)}, #{extractParams(param_str,step.scrollTop)})"
+              when 'keypress'
+                driver.action.send_keys(extractParams(param_str,step.typed)).perform
+              when 'resize'
+                driver.manage.window.resize_to(step.screenwidth, step.screenheight)
+              when 'click'
+                type = extractParams(param_str,step.selector[:selectorType])
+                selector = extractParams(param_str,step.selector[:selector]).strip
+                eq = extractParams(param_str,step.selector[:eq]).to_i
+                element = case type # first, find DOM with WebDriver
+                            when 'id'
+                              driver.find_elements(:id => selector).first
+                            when 'class'
+                              if selector.include? ' '
+                                selector_str = selector.split.join('.')
+                                driver.find_elements(:css => selector_str)[eq]
+                              else
+                                driver.find_elements(:class => selector)[eq]
+                              end
+                            when 'tag'
+                              driver.find_elements(:tag_name => selector)[eq]
+                            when 'name'
+                              driver.find_elements(:name => selector)[eq]
+                            when 'partialLink' # link text
+                              driver.find_elements(:partial_link_text => selector)[eq]
+                            when 'href'
+                              driver.find_elements(:css => "a[href='#{selector}']")[eq]
+                            when 'partialHref'
+                              driver.find_elements(:css => "a[href*='#{selector}']")[eq]
+                            when 'button' # use XPath
+                              driver.find_elements(:xpath, "//button[text()[contains(.,'#{selector}')]]")[eq]
+                            when 'css'
+                              driver.find_elements(:css => selector)[eq]
+                            when 'coordination'
+                              elem = driver.find_elements(:tag_name => 'body').first
+                              driver.action.move_to(elem, step.selector[:x], step.selector[:y]).click.perform
+                              elem
+                            else
+                              nil
+                        end
+                if element.present?
+                  begin
+                    element.click
+                  rescue Exception => error
+                    click_with_js(test, driver, type, selector, eq)
+                  end
+                else # when WebDriver's find_elements fails, find with JS
                   click_with_js(test, driver, type, selector, eq)
                 end
-              else # when WebDriver's find_elements fails, find with JS
-                click_with_js(test, driver, type, selector, eq)
-              end
-            else
-              true
+              else
+                true
+            end
+          }
+
+          sleep step.wait/1000
+
+          rescue Timeout::Error
+            # carry on
+          rescue Exception => error
+            Result.create(test: test, step: step, webpage: driver.current_url,
+                          assertion: Assertion.where(assertion_type: "step-succeed").first,
+                          runId: run_id, error: error)
           end
+
+        body_text = driver.execute_script 'return document.body.textContent'
+        # check if body_text has even numbers of ( and )
+
+        # add extractions to params
+        step.extracts.each { |extract|
+          extract_value = driver.execute_script extract.command
+          param_str = "#{param_str}
+  body_text#{step.id} = %(#{body_text})
+  #{extract.title} = \"#{extract_value}\""
         }
-
-        sleep step.wait/1000
-      rescue Timeout::Error
-        # carry on
-      rescue Exception => error
-        Result.create(test: test, step: step, webpage: driver.current_url,
-                      assertion: Assertion.where(assertion_type: "step-succeed").first,
-                      runId: run_id, error: error)
       end
-
-      body_text = driver.execute_script 'return document.body.textContent'
-      # check if body_text has even numbers of ( and )
-
-      # add extractions to params
-      step.extracts.each { |extract|
-        extract_value = driver.execute_script extract.command
-        param_str = "#{param_str}
-body_text#{step.id} = %(#{body_text})
-#{extract.title} = \"#{extract_value}\""
-      }
     }
 
     if checkAssertions # check assertions
@@ -150,8 +158,18 @@ body_text#{step.id} = %(#{body_text})
                          source.exclude? condition
                        when 'page-title'
                          driver.execute_script('return document.title').include? condition
+                       when 'status-code'
+                         if test.steps.count == 1 # condition is status code in this case
+                           step = test.steps.first
+                           begin
+                             status = (open step.webpage).status.join
+                           rescue Exception => error
+                             status = error.message
+                           end
+                           status.include? condition
+                         end
                        else # self-enter JS command
-                         driver.execute_script(assertion.condition) == 'true'
+                         driver.execute_script "return #{condition}"
                      end
             unless passed
               Result.create(test: test, webpage: driver.current_url,
@@ -170,7 +188,12 @@ body_text#{step.id} = %(#{body_text})
                     when 'id'
                       "document.getElementById('#{selector}')"
                     when 'class'
-                      "document.getElementsByClassName('#{selector}')"
+                      if selector.include? ' '
+                        selector_str = selector.split.join '.'
+                        "document.querySelectorAll('#{selector_str}')"
+                      else
+                        "document.getElementsByClassName('#{selector}')"
+                      end
                     when 'tag'
                       "document.getElementsByTagName('#{selector}')"
                     when 'name'

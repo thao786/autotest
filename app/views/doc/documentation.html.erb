@@ -21,28 +21,49 @@
       </div>
 
       <div id="test">
-        A <b>test</b> let you record web and mobile (android/iphone) actions. A test cannot be run simultenously. Recording a test will delete all its currently existing steps. Running a test will delete all its existing results. <br><br>
-        When the test is done recording, Autotest makes best guesses which actions user had done. However, users can change it afterward.
+        A <b>test</b> let you record web and mobile (android/iphone) actions. A test cannot be run simultenously. Recording a test will delete all its currently existing steps. Running a test will delete all its existing results.<br><br>
+        When the test is done recording, UI Checks makes best guesses which actions user had done. It's recommended to edit the step list after recording. There are a few cases where UI Check might need users's adjustment:
+        <ul>
+          <li><b>url load</b>: An url-load step means the user manually type and address into the Address Bar. But sometimes an url load can happen from other actions like clicking on a link, or popups. In these cases user need to delete the url-load step to prevent pages from loading twice.</li>
+          <li><b>selector for clicks</b>: UI Check prioritize links and buttons otherwise it's hard to decipher the exact selector of clicks that user intended.</li>
+        </ul>
+
+        UI Check handle multiple tabs when running test based on the tab window names. If the websites you intend to test change tab window names, multiple tab test results might not be accurate.
       </div>
 
       <div id="step">
         <h4>Step</h4>
-        A test consists of one or several <b>steps</b>. Autotest generates them as you perform the actions on browsers. You can edit, add or remove them (not during the recording). All steps have an editable wait time, which is the time delay amount before a step is ran.
-        <br><br>Step types:
+        A test consists of one or several <b>steps</b>. All steps have an editable wait time, which is the time delay amount before a step is ran. There are 2 ways to generate steps:
         <ul>
-          <li><b>pageload</b>: A pageload can result from the user manually loading new webpage from Address Bar, or from a click, etc. In later cases, user might want to delete the pageload step to prevent double page loading.</li>
+          <li><b>Chrome Extension recording</b>: When you hit Record Steps, the extension will listen your Chrome browser actions and report them to UI Checks. Once you are done (click Stop Recording Step), UI Checks will make best guesses to form a list of actions you just did.</li>
+
+          <li><b>Manually add them</b>: If your feature is not yet available to record by Chrome extension, you can add step by clicking Add Steps.</li>
+        </ul>
+
+        Step types:
+        <ul>
+          <li><b>pageload</b>: A pageload can result from the user manually loading new webpage from Address Bar, or from a click, etc.</li>
           <li><b>pageloadCurl</b>: request made by ping. User can set headers, HTTP methods (GET/POST) and parameters.</li>
           <li><b>scroll</b></li>
           <li><b>keypress</b>: detect user's keyboard actitivies.</li>
           <li><b>click</b>: detect the CSS selector of the element that the user clicked on. User can select the CSS Selector from a list of detected selectors, or define their own.</li>
         </ul>
+
+        Incomplete steps will be ignored when tests are executed.
       </div>
 
       <div id="assertion">
         <h4>Assertion</h4>
         An <b>assertion</b> defines how a test should turn out. You can use the pre-defined assertions, or write your own in Javascript. If you decide to write your own, the assertion should output Boolean true to be marked correct. Anything else is deemed failed.<br><br>
 
-        The Status Code assertion is only available to test that has only a url-load step. If it has more than 1 step, or a step of type other that url-load, this assertion will be ignored.
+        The Status Code assertion is only available to test that has only a url-load step. If it has more than 1 step, or a step of type other that url-load, this assertion will be ignored.<br><br>
+
+        When entering your own <b>JavaScript</b> assertion, the statement should return true for the assertion to pass. For example, to make sure that the web page contains exactly 1 &lt;body&gt; tag:
+        <pre>
+          <code>
+                document.getElementsByTagName('body').length == 1
+          </code>
+        </pre>
       </div>
 
       <div id="testParam">
@@ -62,7 +83,8 @@
 
       <div id="pretest">
         <h4>Pre Test</h4>
-        Each step can require a test to be execute before actually running the step. Ex: Log in. Pre tests can be found in config of each step.
+        Each step can require a test to be execute before actually running the step. For example, websites might require their users to sign in to use services.<br><br>
+        Pre tests can be found in config of each step.
       </div>
 
     </div>

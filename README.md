@@ -1,43 +1,76 @@
 Thuy:
 - highlight pageload: is this the result of a click or Js? if yes, user needs to remove the step
-- assertions: make it clear that it's JS
 - make click dropdownlist copyable
 - edit scroll broke
 
 
 
 REDESIGN
-- redesign login screens
 - redesign modal errors
-- make inactive steps more obvious
 - mark all Interpolatable fields obvious
 
 
 
 Thao:
+- better click editing
 - paginations
 - run test with FireFox too
-- broken: test search
 - detect browser to show Warning
+<<<<<<< HEAD
 - explicit INCOMPLETE steps
 - test running: please wait while the test is running. Gonna take a few minutes
 - result: test might not look the same as the time u recorded
 
 - we use window name to determine tabs. messing with it while using multiple tabs results in disasters
+=======
+- redirect sign in to /suites
+- better user exprience when running test: show all warnings. Ex: we use window name to determine tabs. messing with it while using multiple tabs results in disasters
 
-- what if first action is not a pageload?
+    The testing environment doesnt have google plugins so make sure its the same
+>>>>>>> master
+
 - when 500 happens, email Thao
 - make video private. only show temporary url
 - make local do HTTPS
 
 
 
-WRITE usage tutorials:
-- link to usage page from all keywords
-- create video to demonstrate concepts (get someone's perfect english)
-- warn users about pageload step: they might need to delete this
-- the assertion should output TRUE
-- emphasize Autotest can handle multiple tabs
 
-- create test BEFORE VS AFTER the feature is built
+VIDEO SCRIPT
+
+[open intro page]
+welcome to UI Check. This guide will show you how to create tests and run it on our platform.
+
+[sign in]
+
+[once in /suites. create a suite]
+first u need to create a suite. a test belongs to a suite. lets create one called 'testing'
+
+[create a test]
+now we can create tests. lets make one called 'browsing'. our test is now created. 
+
+[point to the Extension red symbol on address bar]
+lets try recording some steps with Google Extension. Before that make sure it is installed and activated. 
+
+[click Record Steps. Open reddit.com and browse around]
+now we are ready to record steps. Lets open reddit.com and see if UI Check can recognize the actions. When running test, browsers opened by Selenium does not have plugins or logged in state like your personal computer, so please keep that in mind.
+
+[click Stop Recording Steps]
+think I've read enough on reddit. lets look at the recorded actions. Here they are. We might want to edit those steps. Like this pageload, dont think I intentionally open the url. It was the result of my clicking on a link. so lets remove it.
+
+edit click
+
+create new step at last
+
+[define some assertion]
+you can choose from a list of assertions here. lets try HTMl Contained in Page. 
+
+[click Run Test]
+now we are ready to run the test. its going to take a few minutes for the test to run. ...
+
+[click play Video]
+now its done. so our assertion did not pass. the final page does not seem to contain the keyword. lets confirm in the result video.
+
+[]
+this concludes our test. thanks for watching.
 

@@ -131,3 +131,15 @@ window.gpAsyncInit = function() {
         });
     });
 };
+
+function isChrome() {
+    if (typeof chrome !== "undefined") {
+        if (typeof browser !== "undefined") {
+            return false; // "Firefox"
+        } else {
+            return true;
+        }
+    } else {
+        return false; // "Edge"
+    }
+}

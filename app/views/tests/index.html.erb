@@ -1,7 +1,14 @@
 <h2>All Tests (<%= testCount %> total)</h2>
 
-<a class="add-test-modal pointer">
-  <span class="glyphicon glyphicon-plus"></span> Add Test</a>
+<% if current_user.suites.count > 0 %>
+    <a class="add-test-modal pointer">
+      <span class="glyphicon glyphicon-plus"></span> Add Test</a>
+<% else %>
+    You do not have any suite yet. Please
+    <a class="add-suite-modal pointer">
+      <span class="glyphicon glyphicon-plus"></span> Add Suite</a>
+    before adding tests.
+<% end %><br><br>
 
 <div class="container">
 <!--<div class="form-inline">-->
@@ -27,7 +34,8 @@
 
         <tr>
           <td><%= link_to suite.title, controller: "suites", action: "show", id: suite.name %></td>
-          <td><a href="<%= showUrl test %>"> <%= test.title %></a></td>
+          <td><a href="<%= showUrl test %>"> <%= test.title %> </a>
+            (<%= pluralize test.steps.count, 'step' %>)</td>
           <td><%= test.description %></td>
           <td><%= render "tests/delete_btn", test: test %> -
             <%= render "tests/edit_btn", test: test %>
