@@ -186,6 +186,9 @@ h1#site-title, h3#site-title {
 .menu-item li a:hover{
   color:#ED564B;
 }
+.edit_suite{
+  display:inline;
+}
 .main-bgr{
   height:400px;
   background-color: aliceblue;
@@ -308,6 +311,9 @@ h1#site-title, h3#site-title {
 .footer{
   text-align: center;
   color: #e0e0e0;;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   border-top: 3px solid #ED564B;
   background-color: #333333;
   padding:15px 20px;
