@@ -55,7 +55,6 @@ class ApiController < ActionController::Base
             driver.manage.window.resize_to(first_step.screenwidth, first_step.screenheight)
 
             headless.video.start_capture # start recording
-            p 'start capture vid'
             helpers.runSteps(driver, test, test.id)
             headless.video.stop_and_save("#{video_path_on_disk}.mov")
             driver.quit
@@ -81,7 +80,7 @@ class ApiController < ActionController::Base
       end
     else
       p 'hash not valid'
-      render :status => 404
+      render json: false, :status => 404
     end
   end
 
