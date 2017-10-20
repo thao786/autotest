@@ -1,10 +1,12 @@
+<br><br>
 <div class="container-fluid">
 <div class="row">
 <div class="col-sm-10 col-sm-offset-1">
-    <p id="notice"><%= notice %></p>
-    <h2 class="h2-title">All Suites (<%= @suites.count %> total)</h2>
+<h2 class="h2-title">All Suites  - <small>You have created <b><%= @suites.count %></b> suites in total</small></h2>
+  <p id="notice"><%= notice %></p> 
 
-    <a class="add-suite-modal pointer">
+
+    <a class="add-suite-modal pointer inline-btn btn btn-default btn-lg">
       <span class="glyphicon glyphicon-plus"></span> Add Suite</a>
 
     <table class="table table-bordered">

@@ -19,6 +19,64 @@
   background: #2c3e50;
   color:white;
 }
+.banner-head{
+  
+  margin-bottom: 30px;
+    padding: 20px 15px;
+    text-align: center;
+    color: rgba(255,255,255,0.5);
+    background-color: #b84d45;
+    font-size: 1.25rem;
+    background-image: url(https://startbootstrap.com/assets/img/bg.png);
+  text-align:center;
+  color:white;
+}
+.banner-head h2{
+  font-size:40px;
+ text-transform:uppercase;
+    font-weight: 700;
+}
+.banner-head p{
+  font-size:20px;
+}
+.effect2
+{
+  position: relative;
+}
+.effect2:before, .effect2:after
+{
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 15px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width:300px;
+  background: #777;
+  -webkit-box-shadow: 0 15px 10px #777;
+  -moz-box-shadow: 0 15px 10px #777;
+  box-shadow: 0 15px 10px #777;
+  -webkit-transform: rotate(-3deg);
+  -moz-transform: rotate(-3deg);
+  -o-transform: rotate(-3deg);
+  -ms-transform: rotate(-3deg);
+  transform: rotate(-3deg);
+}
+.effect2:after
+{
+  -webkit-transform: rotate(3deg);
+  -moz-transform: rotate(3deg);
+  -o-transform: rotate(3deg);
+  -ms-transform: rotate(3deg);
+  transform: rotate(3deg);
+  right: 10px;
+  left: auto;
+}
+
+.inline-btn{
+  margin-bottom:12px;
+}
 
 button a {
   color: white;
@@ -378,9 +436,8 @@ h1#site-title, h3#site-title {
     transition: background-color .1s ease-in-out,color .1s ease-in-out,box-shadow .1s ease-in-out;
 }
 .h2-title{
-    font-weight: 300;
-    color: #e2231a;
-    font-size: 25px;
+    font-weight: 400;
+    font-size: 36px;
     line-height: 1.13;
     letter-spacing: 0;
 }

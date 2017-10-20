@@ -1,87 +1,56 @@
+<% suite = @test.suite %>
 <div class="container-fluid">
 <div class="row">
 <div class="col-sm-10 col-sm-offset-1">
-<h2 class="h2-title"> <strong>Test Title</strong>: <%= @test.title %>
-  <%= render "tests/delete_btn", test: @test %> -
-  <%= render "tests/edit_btn", test: @test %></h2>
-<% suite = @test.suite %>
+    <h2 class="h2-title"> <small>Test Title:</small> <%= @test.title %></h2>
+      <p>Suite:
+        <strong>
+          <%= link_to suite.title, controller: "suites", action: "show", id: suite.name %></strong>
+      </p>
 
+      <p>Steps Last Recorded:
+        <strong>
+          <% if @test.steps.count > 0 %>
+              <%= @test.steps.first.created_at %>
+          <% else %>
+              never before
+          <% end %>
+        </strong>
+      </p>
+
+      <p>Lastest Run:
+        <strong>
+          <% if @result.present? %>
+              <% count = @test.results.where.not(assertion: Assertion.find_by(assertion_type: 'report')).where(runId: @result.runId).count %>
+              <a href="<%= @result.url %>" target="_blank"><%= time_ago_in_words @result.created_at %></a>
+              (<%= pluralize(count, ' failed assertion') %>)
+          <% else %>
+              never before
+          <% end %>
+        </strong>
+      </p>
+
+      <% if @test.description.present? %>
+          <p>Description: <strong><%= @test.description %></strong></p>
+      <% end %>
+
+      <div id="validation_err"></div>
+
+      <% if suite.pre_tests.count > 0 %>
+          <div>To run before the test:
+            <% suite.pre_tests.each do |test| %>
+                <a class="hash-pair" href="<%= test.url %>"><%= test.title %></a>
+            <% end %>
+          </div>
+      <% end %>
+      <br>
+    <%= render "tests/delete_btn", test: @test %>
+    <%= render "tests/edit_btn", test: @test %>
+
+<br><br>
 <div style="display: none;" id="page_info" data-test="<%= @test.id %>"></div>
 
-<% if @test.session_expired_at and
-    @test.session_expired_at.to_formatted_s(:number) > Time.now.to_formatted_s(:number) %>
-    <button id="stopRecording" class="btn btn-danger">Stop recording steps</button>
-<% else %>
-    <button id="startRecording" class="btn-primary btn">Record Steps</button>
-    <% if @test.running %>
-        <button id="showRunningTest" type="button" class="btn btn-danger" disabled>
-          <span class="glyphicon glyphicon-repeat normal-left-spinner"></span>
-          Test Running
-        </button>
-
-        <button id="runTest" class="btn-primary btn" style="display: none;">Run Test</button>
-    <% else %>
-        <% if @test.steps.count > 0 %>
-            <button id="showRunningTest" type="button" class="btn btn-danger" style="display: none;" disabled>
-              <span class="glyphicon glyphicon-repeat normal-left-spinner"></span>
-              Test Running
-            </button>
-
-            <button id="runTest" class="btn-primary btn">Run Test</button>
-        <% end %>
-    <% end %>
-
-    <button id="addNewStep" class="btn-primary btn">Add Step</button>
-<% end %>
-
 <span id="test_noti"></span>
-
-<h4 style="display: block; width:300px; margin: 0 auto;"><%= @test.title %>
-  <%= render "tests/delete_btn", test: @test %> -
-  <%= render "tests/edit_btn", test: @test %>
-</h4>
-
-<p>Suite:
-  <strong>
-    <%= link_to suite.title, controller: "suites", action: "show", id: suite.name %></strong>
-</p>
-
-<p>Steps Last Recorded:
-  <strong>
-    <% if @test.steps.count > 0 %>
-        <%= @test.steps.first.created_at %>
-    <% else %>
-        never before
-    <% end %>
-  </strong>
-</p>
-
-<p>Lastest Run:
-  <strong>
-    <% if @result.present? %>
-        <% count = @test.results.where.not(assertion: Assertion.find_by(assertion_type: 'report')).where(runId: @result.runId).count %>
-        <a href="<%= @result.url %>" target="_blank"><%= time_ago_in_words @result.created_at %></a>
-        (<%= pluralize(count, ' failed assertion') %>)
-    <% else %>
-        never before
-    <% end %>
-  </strong>
-</p>
-
-<% if @test.description.present? %>
-    <p>Description: <strong><%= @test.description %></strong></p>
-<% end %>
-
-<div id="validation_err"></div>
-
-<% if suite.pre_tests.count > 0 %>
-    <div>To run before the test:
-      <% suite.pre_tests.each do |test| %>
-          <a class="hash-pair" href="<%= test.url %>"><%= test.title %></a>
-      <% end %>
-    </div>
-<% end %>
-
 
 <div class="container-fluid">
   <div class="row">
@@ -89,7 +58,7 @@
       <div><br> Define your <a href="/doc#testParam" target="_blank">test parameters</a><br>
         <div id="test_params"><%= render "tests/test_params" %></div>
 
-        <button id="add-test-params" class="btn-primary btn"> Add Test Params</button>
+        <button id="add-test-params" class="btn-primary btn inline-btn"> Add Test Params</button>
       </div>
 
       <div><br><a href="/doc#assertion" target="_blank">Assertions</a>:
@@ -103,11 +72,38 @@
             none defined.
         <% end %><br>
 
-        <button id="add-assertion" class="btn btn-primary">Add Assertion</button><br>
+        <button id="add-assertion" class="btn btn-primary inline-btn">Add Assertion</button><br>
       </div>
     </div>
 
     <div class="col-sm-7">
+    <div>
+      <% if @test.session_expired_at and
+        @test.session_expired_at.to_formatted_s(:number) > Time.now.to_formatted_s(:number) %>
+        <button id="stopRecording" class="btn btn-danger">Stop recording steps</button>
+       <% else %>
+        <button id="startRecording" class="btn-primary btn">Record Steps</button>
+        <% if @test.running %>
+            <button id="showRunningTest" type="button" class="btn btn-danger" disabled>
+              <span class="glyphicon glyphicon-repeat normal-left-spinner"></span>
+              Test Running
+            </button>
+
+            <button id="runTest" class="btn-primary btn" style="display: none;">Run Test</button>
+        <% else %>
+        <% if @test.steps.count > 0 %>
+            <button id="showRunningTest" type="button" class="btn btn-danger" style="display: none;" disabled>
+                  <span class="glyphicon glyphicon-repeat normal-left-spinner"></span>
+                  Test Running
+                </button>
+
+                <button id="runTest" class="btn-primary btn">Run Test</button>
+            <% end %>
+          <% end %>
+
+          <button id="addNewStep" class="btn-primary btn">Add Step</button>
+        <% end %>
+    </div>
       <div id="step-list">
         <% if @test.steps.count > 0 %>
             <% sumTime = 0 %>
@@ -129,3 +125,4 @@
 </div>
 </div>
 
+<br><br><br>
