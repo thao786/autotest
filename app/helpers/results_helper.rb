@@ -61,7 +61,7 @@ module ResultsHelper
                 eq = extractParams(param_str,step.selector[:eq]).to_i
                 element = case type # first, find DOM with WebDriver
                             when 'id'
-                              driver.find_elements(:id => selector).first
+                              driver.find_element(:id, selector)
                             when 'class'
                               if selector.include? ' '
                                 selector_str = selector.split.join('.')
