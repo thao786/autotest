@@ -1,7 +1,12 @@
+<div class="container-fluid banner-head">
+  <h2>Suite Title: <%= @suite.title %></h2>
+  <p>A complete documentation for you to explore</p>
+</div>
+<br>
 <div class="container-fluid">
 <div class="row">
 <div class="col-sm-10 col-sm-offset-1">
-<h2 class="h2-title"> <strong>Title:</strong> <%= @suite.title %>
+<h2 class="h2-title"> <strong>Suite Title:</strong> <%= @suite.title %>
 <%= render "suites/delete_btn", suite: @suite %></h2>
 <p id="notice"><%= notice %></p>
 
@@ -22,12 +27,12 @@
   </div>
 
   <div class="col-sm-8">
-    <h3>Total Tests: <%= @suite.tests.count %></h3>
+    <h3>Total Tests: <%= @suite.tests.count %>  <button type="button" data-suite="<%= @suite.id %>" class="btn btn-default btn-md add-test-modal pointer inline-btn">Add More Tests</button></h3>
 
+    
     <% @tests = @suite.tests %>
     <%= render "tests/list", tests: @suite.tests %>
 
-    <button type="button" data-suite="<%= @suite.id %>" class="btn btn-default btn-sm btn-block add-test-modal pointer">Add More Tests</button>
   </div>
 </div>
 
