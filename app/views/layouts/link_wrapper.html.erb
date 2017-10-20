@@ -11,13 +11,26 @@
 </head>
 <body>
 
-<a href="/">
-  <div class="title-text">
-    <div class="header-text">
-      <h1 id ="site-title">UIChecks<small> Beta</small></h1>
+<div class="container-fluid myheader">
+    <a href="/">
+      <div class="title-text">
+        <div class="header-text">
+          <h1 id ="site-title">UIChecks<small> Beta</small></h1>
+        </div>
+      </div>
+    </a>
+  <div class="menu-item">
+    <ul>
+        <li><a href="/doc">Documentation</a></li>
+        <% if user_signed_in? %>
+            <li><a href="/suites">See your Tests</a></li>
+        <% else %>
+            <li><a class="btn btn-primary" href="<%= new_user_session_path %>">Sign In</a></li>
+            <li><a class="btn btn-primary" href="<%= new_user_registration_path %>">Sign Up</a></li>
+        <% end %>
+    </ul>
     </div>
-  </div>
-</a>
+</div>
 
 <%= yield %>
 

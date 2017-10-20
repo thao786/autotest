@@ -15,6 +15,11 @@
  *= require chosen.css
  */
 
+.myheader{
+  background: #2c3e50;
+  color:white;
+}
+
 button a {
   color: white;
 }
@@ -162,6 +167,7 @@ h1#site-title, h3#site-title {
 .title-text{
   width: 20%;
   float: left;
+  color:white;
   margin-left:5%;
 }
 .menu-item{
@@ -180,11 +186,11 @@ h1#site-title, h3#site-title {
   margin:10px;
 }
 .menu-item li a{
-  color:#2c2c2c;
+  color:white;
   text-decoration: none;
 }
 .menu-item li a:hover{
-  color:#ED564B;
+  color:#18bc9c;
 }
 .edit_suite{
   display:inline;
@@ -310,12 +316,12 @@ h1#site-title, h3#site-title {
 }
 .footer{
   text-align: center;
-  color: #e0e0e0;;
-  position: absolute;
+  color: white;
+  position: relative;
   bottom: 0;
   width: 100%;
-  border-top: 3px solid #ED564B;
-  background-color: #333333;
+  border-top: 3px solid #18bc9c;
+  background-color: #2c3e50;
   padding:15px 20px;
 }
 @media (min-width: 544px){
