@@ -1,6 +1,5 @@
 Thuy:
 - move HAVE MORE TEST to the list' start
-    this button should send the suite id to pre-select it
     
 - highlight pageload: is this the result of a click or Js? if yes, user needs to remove the step
 - make click dropdownlist copyable

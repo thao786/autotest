@@ -8,6 +8,7 @@
         <li><a href="#suite"> Suite</a></li>
         <li><a href="#test"> Test</a></li>
         <li><a href="#step"> Step</a></li>
+        <li><a href="#click_index"> Click Index</a></li>
         <li><a href="#assertion"> Assertion</a></li>
         <li><a href="#testParam"> Test Parameters</a></li>
         <li><a href="#extract"> Page Extractions</a></li>
@@ -51,6 +52,12 @@
         </ul>
 
         Incomplete steps will be ignored when tests are executed.
+      </div>
+
+      <div id="click_index">
+        <h4>Click Index</h4>
+
+        A clicked element could have several selectors, depends on its nested level. Let's say the clicked button has class <b>btn btn-primary</b>. A page could contain several buttons with class <b>btn btn-primary</b>. If the clicked button is the first one in the page, it's index would be 0, since array index starts at 0, and so forth.
       </div>
 
       <div id="assertion">

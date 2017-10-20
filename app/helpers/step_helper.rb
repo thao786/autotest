@@ -5,23 +5,23 @@ module StepHelper
 
       case selector[:selectorType]
         when 'href'
-          "#{eq.ordinalize} <a href=#{selector[:selector]}>"
+          "<a href=#{selector[:selector]}>, index #{eq}"
         when 'partialHref'
-          "#{eq.ordinalize} <a> in which href containing #{selector[:selector]}"
+          "<a> in which href containing #{selector[:selector]}, index #{eq}"
         when 'button'
-          "#{eq.ordinalize} BUTTON that says '#{selector[:selector]}'"
+          "BUTTON that says '#{selector[:selector]}', index #{eq}"
         when 'id'
           "##{selector[:selector]}"
         when 'css'
-          "#{eq.ordinalize} element with CSS Selector #{selector[:selector]}"
+          "element with CSS Selector #{selector[:selector]}, index #{eq}"
         when 'tag'
-          "#{eq.ordinalize} <#{selector[:selector].upcase}>"
+          "<#{selector[:selector].upcase}>, index #{eq}"
         when 'name'
-          "#{eq.ordinalize} input with name=#{selector[:selector]}"
+          "input with name=#{selector[:selector]}, index #{eq}"
         when 'class'
-          "#{eq.ordinalize} element with class=#{selector[:selector]}"
+          "element with class=#{selector[:selector]}, index #{eq}"
         when 'tag'
-          "#{eq.ordinalize} <#{selector[:selector].upcase}>"
+          "<#{selector[:selector].upcase}>, index #{eq}"
         when 'coordination'
           "coordination [#{selector[:x]}, #{selector[:y]}]"
         else
