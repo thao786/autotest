@@ -27,7 +27,7 @@
     <% @tests = @suite.tests %>
     <%= render "tests/list", tests: @suite.tests %>
 
-    <button type="button" class="btn btn-default btn-sm btn-block add-test-modal pointer">Add More Tests</button>
+    <button type="button" data-suite="<%= @suite.id %>" class="btn btn-default btn-sm btn-block add-test-modal pointer">Add More Tests</button>
   </div>
 </div>
 
