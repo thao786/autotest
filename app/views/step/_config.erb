@@ -21,7 +21,7 @@
               <% Suite.where(user: current_user).each do |s| %>
                   <optgroup label="<%= s.title %>">
                     <% s.tests.each do |test| %>
-                        <% if @step.test != test %>
+                        <% if @step.test != test && test.prep_tests.count == 0 %>
                             <option value="<%= test.id %>"><%= test.title %></option>
                         <% end %>
                     <% end %>
