@@ -1,8 +1,9 @@
 module ResultsHelper
   def extractParams(paramStr, param)
     if param.class == String && /#\{.+\}/ =~ param
-      eval "#{paramStr}
-#{param}"
+      str = "#{paramStr}
+\"#{param}\""
+      eval str
     else
       param
     end
@@ -46,9 +47,7 @@ module ResultsHelper
                 driver.get extractParams(param_str,step.webpage)
               when 'pageloadCurl'
                 # load headers and params
-                Thread.new {
-                  driver.get extractParams(param_str,step.webpage)
-                }
+                driver.get extractParams(param_str,step.webpage)
               when 'scroll'
                 driver.execute_script "scroll(#{extractParams(param_str,step.scrollLeft)}, #{extractParams(param_str,step.scrollTop)})"
               when 'keypress'
