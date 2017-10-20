@@ -1,7 +1,4 @@
-<div class="container-fluid banner-head">
-  <h2>Suite Title: <%= @suite.title %></h2>
-  <p>A complete documentation for you to explore</p>
-</div>
+
 <br>
 <div class="container-fluid">
 <div class="row">
@@ -12,7 +9,7 @@
 
 <div class="row">
   <div class="col-sm-4"><br>
-    <div class="content-wrap">
+    <div class="content-wrap effect2">
       <label>Suite config:</label>
 
       <%= form_tag("/suites/saveConfig", method: "post") do %>
@@ -27,7 +24,7 @@
   </div>
 
   <div class="col-sm-8">
-    <h3>Total Tests: <%= @suite.tests.count %>  <button type="button" data-suite="<%= @suite.id %>" class="btn btn-default btn-md add-test-modal pointer inline-btn">Add More Tests</button></h3>
+    <h3>Total Tests: <%= @suite.tests.count %>  <button type="button" data-suite="<%= @suite.id %>" class="btn btn-default btn-md add-test-modal pointer inline-btn"><span class="glyphicon glyphicon-plus"></span> Add More Tests</button></h3>
 
     
     <% @tests = @suite.tests %>

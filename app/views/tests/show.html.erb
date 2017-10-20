@@ -6,7 +6,7 @@
 <div class="col-sm-10 col-sm-offset-1">
   <div class="row">
     <div class="col-sm-4">
-      <div class="page-tit">
+      <div class="content-wrap effect2">
       <h2 class="h2-title"> <small>Test Title:</small> <%= @test.title %></h2>
         <p>Suite:
           <strong>
@@ -54,7 +54,7 @@
 
     <br><br>
 
-    <div class="content-wrap">
+    <div class="content-wrap effect2">
       <div>
         Define your <a href="/doc#testParam" target="_blank">test parameters</a><br>
         <div id="test_params"><%= render "tests/test_params" %></div>
@@ -79,7 +79,6 @@
     </div>
 
 <div class="col-sm-8">
-  <br>
   <span id="test_noti"></span>
     <div style="display: none;" id="page_info" data-test="<%= @test.id %>"></div>
     <div>
@@ -97,7 +96,7 @@
             <button id="runTest" class="btn-default btn btn-lg" style="display: none;">Run Test</button>
         <% else %>
         <% if @test.steps.count > 0 %>
-            <button id="showRunningTest" type="button" class="btn btn-danger" style="display: none;" disabled>
+            <button id="showRunningTest" type="button" class="btn btn-danger btn-lg" style="display: none;" disabled>
                   <span class="glyphicon glyphicon-repeat normal-left-spinner"></span>
                   Test Running
                 </button>

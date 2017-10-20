@@ -20,21 +20,20 @@
   color:white;
 }
 .banner-head{
-  
   margin-bottom: 30px;
-    padding: 20px 15px;
-    text-align: center;
-    color: rgba(255,255,255,0.5);
-    background-color: #b84d45;
-    font-size: 1.25rem;
-    background-image: url(https://startbootstrap.com/assets/img/bg.png);
+  padding: 20px 15px;
+  text-align: center;
+  color: rgba(255,255,255,0.5);
+  background-color: #b84d45;
+  font-size: 1.25rem;
+  background-image: url(https://startbootstrap.com/assets/img/bg.png);
   text-align:center;
   color:white;
 }
 .banner-head h2{
   font-size:40px;
- text-transform:uppercase;
-    font-weight: 700;
+  text-transform:uppercase;
+  font-weight: 700;
 }
 .banner-head p{
   font-size:20px;
@@ -395,7 +394,7 @@ h1#site-title, h3#site-title {
 .trSH {
     text-align: center;
     color: #fff;
-    font-size: 30px;
+    font-size: 40px;
     line-height: 1.2;
     text-transform: uppercase;
     font-weight: 500;
@@ -444,7 +443,7 @@ h1#site-title, h3#site-title {
 .row-spec{
   padding:0 50px;
 }
-.row-spec p{
+.row-spec li{
   font-size:18px;
   line-height:1.5;
 

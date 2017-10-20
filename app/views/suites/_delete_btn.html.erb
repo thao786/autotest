@@ -1,4 +1,4 @@
 <%= form_for suite, method: :delete, data: { confirm: 'Delete this suite along with all its tests?' } do |f|  %>
     <input type="hidden" name="id" value="<%= suite.id %>">
-    <button type="submit" class="btn btn-default inline-btn">Delete Suite</button>
+    <button type="submit" class="btn btn-default inline-btn"> <span class="glyphicon glyphicon-remove"></span> Delete Suite</button>
 <% end %>
