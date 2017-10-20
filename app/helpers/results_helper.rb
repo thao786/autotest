@@ -132,7 +132,9 @@ module ResultsHelper
       driver.window_handles.each { |handle_id|
         driver.switch_to.window handle_id
 
-        if driver.current_url != 'about:blank'
+        if driver.current_url == 'about:blank' # close this empty tab
+          driver.execute_script 'window.close()'
+        else
           # check 404 and 500 errors for ALL tabs
           logs = driver.manage.logs.get('browser')
           logs.each { |log|
