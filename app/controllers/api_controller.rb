@@ -39,7 +39,10 @@ class ApiController < ActionController::Base
       test = Test.find params[:test_id]
 
       if test.running
+        render json: 'test is already running', :status => 404
+      else
         p 'valid hash. now run test'
+        test.update(running: true)
         headless = Headless.new(video: {:frame_rate => 12, provider: :ffmpeg})
         headless.start
 
@@ -74,8 +77,6 @@ class ApiController < ActionController::Base
 
         test.update(running: false)
         render json: true, :status => 200
-      else
-        render json: 'test is not marked as running by main server', :status => 404
       end
     else
       p 'hash not valid'

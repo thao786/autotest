@@ -131,9 +131,9 @@ class TestsController < ApplicationController
       render json: 'test already running', :status => 404
     else
       Result.where(test: @test).destroy_all # only 1 test can be ran at a time
-      @test.update(running: true)
 
       if Rails.env.development?
+        @test.update(running: true)
         Thread.new {
           begin
             first_step = Step.where(test: @test).first
@@ -144,16 +144,14 @@ class TestsController < ApplicationController
           rescue Exception => error
             p error.message
           end
-
-          @test.update(running: false)
         }
+        @test.update(running: false)
         render json: {}
       else
         # call the independent EC2 servers
         hash = helpers.hash_data_secure_SEL_server @test.id
         selenium_url = "http://#{ENV['SEL_HOST']}/api/runTest?test_id=#{@test.id}&hash=#{hash}"
-        response = open(selenium_url)
-        # error = response.read
+        response = open(selenium_url) # this fucker calls url twice
 
         render json: {}
       end
