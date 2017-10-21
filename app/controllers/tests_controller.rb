@@ -142,10 +142,10 @@ class TestsController < ApplicationController
             helpers.runSteps(driver, @test, @test.id)
             driver.quit
           rescue Exception => error
-            p error.message
+            p "run locally: #{error.message}"
           end
+          @test.update(running: false)
         }
-        @test.update(running: false)
         render json: {}
       else
         # call the independent EC2 servers

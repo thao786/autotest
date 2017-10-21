@@ -472,8 +472,7 @@ $(document).on("click", "#runTest", function(e) {
     $.ajax({
         type: "GET",
         url: '/tests/runTest',
-        data: {test_id: test_id},
-        success: function(html, status, xhr) {}
+        data: {test_id: test_id}
     });
 
     noti_timeout('Request to run test submitted. Please allow a few minutes for the test result.', timeout);
