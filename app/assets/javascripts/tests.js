@@ -7,28 +7,33 @@ $(document).ready(function() {
 test_id = $("#page_info").data('test');
 
 $('#startRecording').click(function() {
-    testUrl = window.location.pathname;
-    sessionId = '';
+    if (isChrome()) {
+        testUrl = window.location.pathname;
+        sessionId = '';
 
-    // get the session ID
-    $.ajax({
-        type: "GET",
-        url: '/tests/generateSession',
-        dataType: "text",
-        data: {test_id: test_id},
-        success: function(result, status, xhr) {
-            sessionId = result;
-            $('#notice').html('All your activities on Chrome will be recorded. Please make sure chrome extension is installed.');
+        // get the session ID
+        $.ajax({
+            type: "GET",
+            url: '/tests/generateSession',
+            dataType: "text",
+            data: {test_id: test_id},
+            success: function (result, status, xhr) {
+                sessionId = result;
+                $('#notice').html('All your activities on Chrome will be recorded. Please make sure chrome extension is installed.');
 
-            // activate the Chrome Plugin
-            window.postMessage({ type: "FROM_PAGE",
-                session_id: sessionId,
-                host: window.origin
-            }, "*");
+                // activate the Chrome Plugin
+                window.postMessage({
+                    type: "FROM_PAGE",
+                    session_id: sessionId,
+                    host: window.origin
+                }, "*");
 
-            location.reload();
-        }
-    });
+                location.reload();
+            }
+        });
+    } else {
+        alert('Record Steps only work on Google Chrome. Please switch browser and install Chrome Extension');
+    }
 });
 
 $('#stopRecording').click(function() {

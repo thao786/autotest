@@ -15,6 +15,68 @@
  *= require chosen.css
  */
 
+.myheader{
+  background: #2c3e50;
+  color:white;
+}
+.banner-head{
+  margin-bottom: 30px;
+  padding: 20px 15px;
+  text-align: center;
+  color: rgba(255,255,255,0.5);
+  background-color: #b84d45;
+  font-size: 1.25rem;
+  background-image: url(https://startbootstrap.com/assets/img/bg.png);
+  text-align:center;
+  color:white;
+}
+.banner-head h2{
+  font-size:40px;
+  text-transform:uppercase;
+  font-weight: 700;
+}
+.banner-head p{
+  font-size:20px;
+}
+.effect2
+{
+  position: relative;
+}
+.effect2:before, .effect2:after
+{
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 15px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width:300px;
+  background: #777;
+  -webkit-box-shadow: 0 15px 10px #777;
+  -moz-box-shadow: 0 15px 10px #777;
+  box-shadow: 0 15px 10px #777;
+  -webkit-transform: rotate(-3deg);
+  -moz-transform: rotate(-3deg);
+  -o-transform: rotate(-3deg);
+  -ms-transform: rotate(-3deg);
+  transform: rotate(-3deg);
+}
+.effect2:after
+{
+  -webkit-transform: rotate(3deg);
+  -moz-transform: rotate(3deg);
+  -o-transform: rotate(3deg);
+  -ms-transform: rotate(3deg);
+  transform: rotate(3deg);
+  right: 10px;
+  left: auto;
+}
+
+.inline-btn{
+  margin-bottom:12px;
+}
+
 button a {
   color: white;
 }
@@ -160,8 +222,9 @@ h1#site-title, h3#site-title {
     line-height: 36px;
 }
 .title-text{
-  width: 30%;
+  width: 20%;
   float: left;
+  color:white;
   margin-left:5%;
 }
 .menu-item{
@@ -180,11 +243,14 @@ h1#site-title, h3#site-title {
   margin:10px;
 }
 .menu-item li a{
-  color:#2c2c2c;
+  color:white;
   text-decoration: none;
 }
 .menu-item li a:hover{
-  color:#ED564B;
+  color:#18bc9c;
+}
+.edit_suite{
+  display:inline;
 }
 .main-bgr{
   height:400px;
@@ -230,7 +296,7 @@ h1#site-title, h3#site-title {
     width: 80%;
 }
 .promo-wrap {
-    width: 70%;
+    width: 80%;
     float: left;
     margin-left:5%;
 }
@@ -307,9 +373,12 @@ h1#site-title, h3#site-title {
 }
 .footer{
   text-align: center;
-  color: #e0e0e0;;
-  border-top: 3px solid #ED564B;
-  background-color: #333333;
+  color: white;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  border-top: 3px solid #18bc9c;
+  background-color: #2c3e50;
   padding:15px 20px;
 }
 @media (min-width: 544px){
@@ -325,7 +394,7 @@ h1#site-title, h3#site-title {
 .trSH {
     text-align: center;
     color: #fff;
-    font-size: 30px;
+    font-size: 40px;
     line-height: 1.2;
     text-transform: uppercase;
     font-weight: 500;
@@ -366,16 +435,15 @@ h1#site-title, h3#site-title {
     transition: background-color .1s ease-in-out,color .1s ease-in-out,box-shadow .1s ease-in-out;
 }
 .h2-title{
-    font-weight: 300;
-    color: #e2231a;
-    font-size: 25px;
+    font-weight: 400;
+    font-size: 36px;
     line-height: 1.13;
     letter-spacing: 0;
 }
 .row-spec{
   padding:0 50px;
 }
-.row-spec p{
+.row-spec li{
   font-size:18px;
   line-height:1.5;
 

@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get '/doc', to: 'application#documentation'
-
   get 'step/delete_step', to: 'step#delete_step'
   match 'step/save_click', to: 'step#save_click', via: [:post]
   get 'step/edit_view', to: 'step#edit_view'
@@ -36,7 +34,8 @@ Rails.application.routes.draw do
 
   match 'suites/saveConfig', to: 'suites#saveConfig', via: [:post]
 
-  root to: 'api#intro'
+  root to: 'doc#intro'
+  get '/doc', to: 'doc#doc'
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   resources :users, :plans, :suites, :tests, :results

@@ -79,10 +79,10 @@ ActiveRecord::Schema.define(version: 20170713000338) do
     t.integer  "assertion_id"
     t.integer  "step_id"
     t.string   "runId"
-    t.text     "error",        limit: 4294967295
+    t.text     "error",        limit: 65535
     t.string   "webpage"
-    t.datetime "created_at",                      default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at",                                                           null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["assertion_id"], name: "index_results_on_assertion_id", using: :btree
     t.index ["step_id"], name: "index_results_on_step_id", using: :btree
     t.index ["test_id"], name: "index_results_on_test_id", using: :btree
@@ -93,8 +93,8 @@ ActiveRecord::Schema.define(version: 20170713000338) do
     t.datetime "time"
     t.string   "device_type"
     t.string   "typed"
-    t.string  "scrollTop"
-    t.string  "scrollLeft"
+    t.string   "scrollTop"
+    t.string   "scrollLeft"
     t.string   "action_type"
     t.string   "selector"
     t.integer  "wait"
@@ -131,19 +131,24 @@ ActiveRecord::Schema.define(version: 20170713000338) do
 
   create_table "tests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "suite_id"
-    t.string   "title",                                           null: false
+    t.string   "title",                                            null: false
     t.string   "name"
     t.string   "session_id"
     t.datetime "session_expired_at"
     t.text     "description",        limit: 65535
-    t.boolean  "active",                           default: true, null: false
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.boolean  "active",                           default: true,  null: false
+    t.boolean  "running",                          default: false, null: false
+    t.string   "params"
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
     t.index ["suite_id"], name: "index_tests_on_suite_id", using: :btree
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "image"
     t.integer  "plan_id"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
@@ -157,9 +162,6 @@ ActiveRecord::Schema.define(version: 20170713000338) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "provider"
-    t.string   "uid"
-    t.string   "image"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["plan_id"], name: "index_users_on_plan_id", using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree

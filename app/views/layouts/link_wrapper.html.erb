@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome to UI Checks</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag "application", media: "all" %>
+</head>
+<body>
+
+<div class="container-fluid myheader">
+    <a href="/">
+      <div class="title-text">
+        <div class="header-text">
+          <h1 id ="site-title">UIChecks<small> Beta</small></h1>
+        </div>
+      </div>
+    </a>
+  <div class="menu-item">
+    <ul>
+        <li><a href="/contact">Contact Us</a></li>
+        <li><a href="/doc">User Guide</a></li>
+        <% if user_signed_in? %>
+            <li><a href="/suites">See your Tests</a></li>
+        <% else %>
+            <li><a class="btn btn-primary" href="<%= new_user_session_path %>">Sign In</a></li>
+            <li><a class="btn btn-primary" href="<%= new_user_registration_path %>">Sign Up</a></li>
+        <% end %>
+    </ul>
+    </div>
+</div>
+
+<%= yield %>
+
+<div class="container-fluid footer">
+<p>Copyright © 2017 UIChecks. Made in Toronto, Canada.</p>
+</div>
+
+</body>
+</html>

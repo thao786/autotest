@@ -14,26 +14,29 @@
 <body>
 <%= render 'layouts/copyable' %>
 
-<% if user_signed_in? %>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-xs-6">
-      <%= link_to "Info Page", root_path %>  |
-      <%= link_to 'All Suites', suites_path %> |
-      <%= link_to 'All Tests', tests_path %> |
-      <a href="/doc">Doc</a> |
+  <div class="container-fluid myheader">
+    <a href="/">
+        <div class="title-text">
+            <div class="header-text">
+                <h1 id ="site-title">UIChecks<small> Beta</small></h1>
+            </div>
+        </div>
+    </a>
+    <% if user_signed_in? %>
+    <div class="menu-item">
+    <ul>
+      <li><%= link_to 'All Suites', suites_path %></li>
+      <li><%= link_to 'All Tests', tests_path %></li>
+      <li><a href="/doc">User Guide</a></li>
+      <li><a href="https://chrome.google.com/webstore/detail/uichecks-chrome-plugin/iicllodpmefpegdgkbjcknpbnehadokb" target="_blank">Chrome Extension</a></li>
+      <li>Hi <b><%= current_user.email %></b></li>
+      <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
+    </ul>
     </div>
-
-
-    <div class="col-xs-4">
-      Hi <b><%= current_user.email %></b>
-    </div>
-
-    <div class="col-xs-2"><%= link_to('Logout', destroy_user_session_path, :method => :delete) %> </div>
-  </div>
+    <% end %>
 </div>
-<% end %>
 
   <%= yield %>
+
 </body>
 </html>

@@ -50,7 +50,7 @@ module TestsHelper
       next_stamp = next_event.nil? ? DateTime.now.strftime('%Q').to_i : next_event.stamp
       order = order + 1
       step = Step.create(wait: next_stamp - first_event.stamp,
-           order: order, test: test, device_type: 'browser', active: true,
+           order: order, test: test, device_type: 'browser',
            tabId: first_event.tabId, windowId: first_event.windowId,
            action_type: first_event.action_type, webpage: first_event.webpage,
            screenwidth: first_event.screenwidth, screenheight: first_event.screenheight)

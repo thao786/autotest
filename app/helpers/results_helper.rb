@@ -1,8 +1,9 @@
 module ResultsHelper
   def extractParams(paramStr, param)
     if param.class == String && /#\{.+\}/ =~ param
-      eval "#{paramStr}
-#{param}"
+      str = "#{paramStr}
+\"#{param}\""
+      eval str
     else
       param
     end
@@ -46,9 +47,7 @@ module ResultsHelper
                 driver.get extractParams(param_str,step.webpage)
               when 'pageloadCurl'
                 # load headers and params
-                Thread.new {
-                  driver.get extractParams(param_str,step.webpage)
-                }
+                driver.get extractParams(param_str,step.webpage)
               when 'scroll'
                 driver.execute_script "scroll(#{extractParams(param_str,step.scrollLeft)}, #{extractParams(param_str,step.scrollTop)})"
               when 'keypress'
@@ -61,7 +60,7 @@ module ResultsHelper
                 eq = extractParams(param_str,step.selector[:eq]).to_i
                 element = case type # first, find DOM with WebDriver
                             when 'id'
-                              driver.find_elements(:id => selector).first
+                              driver.find_element(:id, selector)
                             when 'class'
                               if selector.include? ' '
                                 selector_str = selector.split.join('.')
@@ -132,12 +131,14 @@ module ResultsHelper
       driver.window_handles.each { |handle_id|
         driver.switch_to.window handle_id
 
-        if driver.current_url != 'about:blank'
+        if driver.current_url == 'about:blank' # close this empty tab
+          driver.execute_script 'window.close()'
+        else
           # check 404 and 500 errors for ALL tabs
           logs = driver.manage.logs.get('browser')
           logs.each { |log|
             console_log = "#{console_log}
-  #{log.message}"
+#{log.message}"
           }
 
           assertions = Assertion.where(test: test, active: true)

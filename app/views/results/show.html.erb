@@ -14,7 +14,7 @@
       <h4>Failed Assertions: </h4>
         <% if @results.size > 1 %>
           <% @results.each do |result| %>
-            <% if result.assertion.assertion_type != 'report' %>
+            <% if result.assertion && result.assertion.assertion_type != 'report' %>
                 <p style="color: red;"><span class="glyphicon glyphicon-remove"></span>
 
                   <% if result.assertion.test %>

@@ -1,12 +1,18 @@
-<h2>Autotest Documentation</h2>
+<div class="container-fluid banner-head">
+  <h2>User Guide</h2>
+  <p>A complete documentation for you to explore</p>
+</div>
+
+<br><br><br>
 
 <div class="container-fluid">
   <div class="row">
-    <div class="col-xs-2" style="padding: 0px;">
+    <div class="col-xs-2" style="padding: 30px;">
       <ul style="list-style: none; padding: 0px;">
         <li><a href="#suite"> Suite</a></li>
         <li><a href="#test"> Test</a></li>
         <li><a href="#step"> Step</a></li>
+        <li><a href="#click_index"> Click Index</a></li>
         <li><a href="#assertion"> Assertion</a></li>
         <li><a href="#testParam"> Test Parameters</a></li>
         <li><a href="#extract"> Page Extractions</a></li>
@@ -52,6 +58,12 @@
         Incomplete steps will be ignored when tests are executed.
       </div>
 
+      <div id="click_index">
+        <h4>Click Index</h4>
+
+        A clicked element could have several selectors, depends on its nested level. Let's say the clicked button has class <b>btn btn-primary</b>. A page could contain several buttons with class <b>btn btn-primary</b>. If the clicked button is the first one in the page, it's index would be 0, since array index starts at 0, and so forth.
+      </div>
+
       <div id="assertion">
         <h4>Assertion</h4>
         An <b>assertion</b> defines how a test should turn out. You can use the pre-defined assertions, or write your own in Javascript. If you decide to write your own, the assertion should output Boolean true to be marked correct. Anything else is deemed failed.<br><br>
@@ -79,15 +91,21 @@
       <div id="rubyInterpolate">
         <h4>Ruby Interpolation</h4>
         You can insert predefined parameters or page extractions to field similar to <a href="http://www.rubydoc.info/github/rubyworks/facets/String.interpolate">Ruby's string interpolation</a>.
+
+        <img class="img-responsive" src="https://s3.amazonaws.com/autotest-prod/test-params-example.png">
+
+        The url-load step in the above example would have its webpage at runtime to be <b>https://www.google.ca/search?q=puppy</b>.
       </div>
 
       <div id="pretest">
         <h4>Pre Test</h4>
-        Each step can require a test to be execute before actually running the step. For example, websites might require their users to sign in to use services.<br><br>
+        Each step can require a test to be execute before actually running the step. For example, websites might require their users to sign in to use services. The pretest cannot have a pretest of its own, to prevent circular dependency.<br><br>
         Pre tests can be found in config of each step.
       </div>
 
     </div>
   </div>
 </div>
+
+<br><br><br>
 
