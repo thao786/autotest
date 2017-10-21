@@ -19,12 +19,11 @@
   <!--<button id="filter-test-btn">Filter Test</button>-->
 <!--</div><br>-->
 
-  <table class="table table-bordered">
+  <table class="table table-bordered" style="font-size: 15px;">
     <thead>
     <tr>
       <th>Suite</th>
       <th>Test Title</th>
-      <th>Description</th>
       <th>Actions</th>
       <th>Last Ran</th>
       <th>Created At</th>
@@ -39,7 +38,6 @@
           <td><%= link_to suite.title, controller: "suites", action: "show", id: suite.name %></td>
           <td><a href="<%= showUrl test %>"> <%= test.title %> </a>
             (<%= pluralize test.steps.count, 'step' %>)</td>
-          <td><%= test.description %></td>
           <td><%= render "tests/delete_btn", test: test %>
             <%= render "tests/edit_btn", test: test %>
           </td>

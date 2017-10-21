@@ -6,8 +6,8 @@
 <div class="col-sm-10 col-sm-offset-1">
   <div class="row">
     <div class="col-sm-4">
-      <div class="content-wrap effect2">
-      <h2 class="h2-title"> <small>Test Title:</small> <%= @test.title %></h2>
+      <div class="content-wrap">
+      <h2 class="h2-title"> <small>Title:</small> <%= @test.title %></h2>
         <p>Suite:
           <strong>
             <%= link_to suite.title, controller: "suites", action: "show", id: suite.name %></strong>
@@ -54,7 +54,7 @@
 
     <br><br>
 
-    <div class="content-wrap effect2">
+    <div class="content-wrap">
       <div>
         Define your <a href="/doc#testParam" target="_blank">test parameters</a><br>
         <div id="test_params"><%= render "tests/test_params" %></div>
