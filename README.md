@@ -1,4 +1,5 @@
 Thuy:
+- top banner resize when screen resize
 - add contact field and form
 - paginations
 - split editing click into 2 side by side forms
