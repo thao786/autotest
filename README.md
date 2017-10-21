@@ -16,9 +16,7 @@ REDESIGN
 
 
 Thao:
-- cant delete test when it is being ran
 - script cannot detect enter key
-- script to sync database
 
 - better user exprience when running test: show all warnings. Ex: we use window name to determine tabs. messing with it while using multiple tabs results in disasters
 

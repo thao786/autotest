@@ -29,10 +29,7 @@ class ApiController < ActionController::Base
     end
   end
 
-  # request has to be encrypted with a private key (to make sure it comes from Beanstalk)
-  # too much work to create security group for each Beanstalk instance
-  # only make sense when decrypted with the public key
-  # anybody can read, but its just test_id anyway
+  # request to be verify by a hash only beanstalk knows
   def runTest
     p params
     if params[:hash] == helpers.hash_data_secure_SEL_server(params[:test_id]) # check hash
