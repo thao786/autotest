@@ -16,6 +16,7 @@ REDESIGN
 
 
 Thao:
+- cant delete test when it is being ran
 - script cannot detect enter key
 - script to sync database
 

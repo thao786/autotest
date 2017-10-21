@@ -473,12 +473,7 @@ $(document).on("click", "#runTest", function(e) {
         type: "GET",
         url: '/tests/runTest',
         data: {test_id: test_id},
-        success: function(html, status, xhr) {},
-        error: function(result, status, xhr) {
-            console.log(result);
-            restore_btn_menu();
-            noti_timeout('Sorry, we could not run this test at this time. Please try again later.', timeout);
-        }
+        success: function(html, status, xhr) {}
     });
 
     noti_timeout('Request to run test submitted. Please allow a few minutes for the test result.', timeout);
