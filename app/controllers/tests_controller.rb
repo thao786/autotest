@@ -62,8 +62,12 @@ class TestsController < ApplicationController
 
   # DELETE /tests/1
   def destroy
-    @test.destroy
-    render json: true
+    if @test.running
+      render json: 'test is running', :status => 404
+    else
+      @test.destroy
+      render json: true
+    end
   end
 
   def add_new_param
@@ -149,7 +153,7 @@ class TestsController < ApplicationController
         hash = helpers.hash_data_secure_SEL_server @test.id
         selenium_url = "http://#{ENV['SEL_HOST']}/api/runTest?test_id=#{@test.id}&hash=#{hash}"
         response = open(selenium_url)
-        error = response.read
+        # error = response.read
 
         render json: {}
       end
