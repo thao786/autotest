@@ -1,10 +1,10 @@
 Thuy:
 - top banner resize when screen resize
-- add contact field and form
 - paginations
 - split editing click into 2 side by side forms
+- split log in screen into 2 side by side forms
     
-- highlight pageload: is this the result of a click or Js? if yes, user needs to remove the step
+- highlight pageload: is this the result of a click or JS? if yes, user needs to remove the step
 - make click dropdownlist copyable
 
 
@@ -16,7 +16,8 @@ REDESIGN
 
 
 Thao:
-- run test with FireFox too
+- script cannot detect enter key
+
 - better user exprience when running test: show all warnings. Ex: we use window name to determine tabs. messing with it while using multiple tabs results in disasters
 
     The testing environment doesnt have google plugins so make sure its the same
