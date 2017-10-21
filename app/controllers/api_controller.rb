@@ -57,7 +57,7 @@ class ApiController < ActionController::Base
         begin
           helpers.runSteps(driver, test, test.id)
         rescue Exception => error
-          p error.message # email Thao
+          p "api_controller runSteps: #{error.message}" # email Thao
         end
         headless.video.stop_and_save("#{video_path_on_disk}.mov")
         driver.quit
