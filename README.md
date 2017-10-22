@@ -1,4 +1,5 @@
 Thuy:
+- block record steps when test is running
 - top banner resize when screen resize
 - paginations
 - split editing click into 2 side by side forms

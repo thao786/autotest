@@ -29,7 +29,7 @@ class ApiController < ActionController::Base
     end
   end
 
-  # request to be verify by a hash only beanstalk knows
+  # request to be verify by a hash only beanstalk
   def runTest
     p params
     if params[:hash] == helpers.hash_data_secure_SEL_server(params[:test_id]) # check hash

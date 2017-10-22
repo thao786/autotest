@@ -13,7 +13,7 @@ rvm default
 
 
 
-wget https://chromedriver.storage.googleapis.com/2.32/chromedriver_linux64.zip
+wget https://chromedriver.storage.googleapis.com/2.33/chromedriver_linux64.zip
 sudo apt update
 sudo apt install unzip
 unzip chromedriver_linux64.zip
