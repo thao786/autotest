@@ -179,7 +179,7 @@ module ResultsHelper
         end
       }
 
-      Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first, runId: run_id, error: console_log)
+      Result.where(run_id: run_id).first.update(error: console_log)
     end
   end
 
