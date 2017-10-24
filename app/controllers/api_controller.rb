@@ -10,7 +10,7 @@ class ApiController < ActionController::Base
   # save this event to draft and update test's cache response
   def saveEvent
     if params[:action_type] == 'pageload' and params[:webpage] =~ %r|http(.*)google(.*)/_/chrome/newtab|
-      render json: true
+      render json: {}, :status => 404
     else
       test = Test.find_by(session_id: params[:session_id])
 
@@ -22,9 +22,9 @@ class ApiController < ActionController::Base
         draft = Draft.create(params.require(:draft).permit(:webpage, :stamp, :apk, :activity, :action_type, :session_id, :typed, :screenwidth, :screenheight, :scrollTop, :scrollLeft, :x, :y, :tabId, :windowId))
 
         draft.update(selector: {selector: params[:selector], eq: params[:eq].to_i, selectorType: params[:selectorType], childrenCount: params[:childrenCount].to_i})
-        render json: true
+        render json: {}
       else
-        render json: false
+        render json: {}, :status => 404
       end
     end
   end
