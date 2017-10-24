@@ -2,7 +2,7 @@ class CreateDrafts < ActiveRecord::Migration[5.0]
   def change
     create_table :drafts do |t|
       t.integer :stamp, :limit => 8
-      t.string :webpage
+      t.text :webpage
       t.string :apk
       t.string :activity
       t.string :action_type

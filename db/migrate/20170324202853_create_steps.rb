@@ -10,7 +10,7 @@ class CreateSteps < ActiveRecord::Migration[5.0]
       t.string :action_type
       t.string :selector
       t.integer :wait
-      t.string :webpage
+      t.text :webpage
       t.integer :order
       t.text :config
       t.integer :screenwidth
