@@ -9,6 +9,7 @@ class ApiController < ActionController::Base
 
   # save this event to draft and update test's cache response
   def saveEvent
+    begin
     if params[:action_type] == 'pageload' and params[:webpage] =~ %r|http(.*)google(.*)/_/chrome/newtab|
       render json: {}, :status => 404
     else
@@ -26,6 +27,9 @@ class ApiController < ActionController::Base
       else
         render json: {}, :status => 404
       end
+    end
+    rescue Exception => error
+      render json: {:errors => error.message}, :status => 404
     end
   end
 

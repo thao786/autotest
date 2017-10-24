@@ -106,6 +106,9 @@ function reportEvent(data) { // acceptedOrigins.includes(event.origin)
                 $("*").off("click");
                 $(window).unbind('scroll');
             }
+        },
+        error: function(result, status, xhr) {
+            console.log(result);
         }
     });
 }
