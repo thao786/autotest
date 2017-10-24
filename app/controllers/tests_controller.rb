@@ -135,15 +135,15 @@ class TestsController < ApplicationController
       if Rails.env.development?
         @test.update(running: true)
         Thread.new {
+          driver = Selenium::WebDriver.for :chrome
           begin
             first_step = Step.where(test: @test).first
-            driver = Selenium::WebDriver.for :chrome
             driver.manage.window.resize_to(first_step.screenwidth, first_step.screenheight) if first_step.screenwidth
             helpers.runSteps(driver, @test, @test.id)
-            driver.quit
           rescue Exception => error
             p "run locally: #{error.message}"
           end
+          driver.quit
           @test.update(running: false)
         }
         render json: {}
