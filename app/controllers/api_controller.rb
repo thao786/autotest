@@ -20,14 +20,9 @@ class ApiController < ActionController::Base
         params[:draft] = hash
 
         draft = Draft.create(params.require(:draft).permit(:webpage, :stamp, :apk, :activity, :action_type, :session_id, :typed, :screenwidth, :screenheight, :scrollTop, :scrollLeft, :x, :y, :tabId, :windowId))
-        e = 'ok'
-        begin
-        draft.update(selector: {selector: params[:selector], eq: params[:eq].to_i, selectorType: params[:selectorType], childrenCount: params[:childrenCount].to_i})
-        rescue Exception => error
-          e = error.message
-        end
 
-        render json: e
+        draft.update(selector: {selector: params[:selector], eq: params[:eq].to_i, selectorType: params[:selectorType], childrenCount: params[:childrenCount].to_i})
+        render json: true
       else
         render json: false
       end
