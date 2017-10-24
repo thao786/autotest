@@ -85,7 +85,8 @@
       <% if @test.session_expired_at and
         @test.session_expired_at.to_formatted_s(:number) > Time.now.to_formatted_s(:number) %>
         <button id="stopRecording" class="btn btn-danger btn-lg">Stop recording steps</button>
-       <% else %>
+        The recording session is valid until <%= @test.session_expired_at.to_formatted_s(:number) %>
+      <% else %>
         <button id="startRecording" class="btn-default btn btn-lg"><span class="glyphicon glyphicon-record"></span> Record Steps</button>
         <% if @test.running %>
             <button id="showRunningTest" type="button" class="btn btn-danger btn-lg" disabled>
