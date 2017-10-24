@@ -71,7 +71,7 @@ window.addEventListener("message", function(event) {
         chrome.storage.local.set({ session_id: '' }, function () {
             // de-activate plugin's icon
             chrome.runtime.sendMessage({type: "hidePopup"});
-            location.reload();
+            // location.reload();
         });
     }
 
@@ -83,8 +83,6 @@ function reportEvent(data) { // acceptedOrigins.includes(event.origin)
     if (acceptedOrigins.includes(window.location.origin) > 0 ||
         (data.action_type == 'click' && !data.valid))
         return;
-
-    console.log(window.location.origin);
 
     data.session_id = sessionId;
     data.stamp = Date.now();

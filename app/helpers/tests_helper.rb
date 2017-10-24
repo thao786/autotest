@@ -20,9 +20,9 @@ module TestsHelper
       when 'button'
         90001
       when 'id' # maybe only prioritize elements with less than 3 children
-        80000 + (10000 - selector[:childrenCount].to_i * 3000)
+        80000 + (10000 - selector[:childrenCount] * 3000)
       when 'css'
-        60000 + (10000 - selector[:childrenCount].to_i)
+        60000 + (10000 - selector[:childrenCount])
       when 'tag' # prioritize inline elements like img,span, h1
         500
       else
