@@ -40,7 +40,7 @@ class ApiController < ActionController::Base
       else
         p 'valid hash. now run test'
         test.update(running: true)
-        Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first, runId: test.id)
+        Result.create(test: test, assertion: Assertion.where(assertion_type: "report").first, run_id: test.id)
         headless = Headless.new(video: {:frame_rate => 12, provider: :ffmpeg})
         headless.start
 

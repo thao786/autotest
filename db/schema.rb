@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 20170713000338) do
     t.integer  "test_id"
     t.integer  "assertion_id"
     t.integer  "step_id"
-    t.string   "runId"
+    t.string   "run_id"
     t.text     "error",        limit: 65535
     t.string   "webpage"
     t.datetime "created_at",                 null: false
