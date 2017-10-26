@@ -1,5 +1,4 @@
 var acceptedOrigins = ["http://localhost:3000",
-    "https://localhost:90",
     "https://uichecks.com",
     "https://test.uichecks.com"];
 var origin = '';

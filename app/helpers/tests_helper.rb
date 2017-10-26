@@ -104,6 +104,6 @@ module TestsHelper
       end
     end
 
-    Draft.destroy_all(session_id: session_id)
+    Draft.where(session_id: session_id).destroy_all
   end
 end

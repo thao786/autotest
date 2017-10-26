@@ -1,0 +1,6 @@
+- always create DB autotest with utf8_general_ci
+- before deploying to AWS, do: rake assets:precompile
+
+
+
+
