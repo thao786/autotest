@@ -1,6 +1,6 @@
-var acceptedOrigins = ["http://localhost:3000",
-    "https://uichecks.com",
+var acceptedOrigins = ["https://uichecks.com",
     "https://test.uichecks.com"];
+
 var origin = '';
 var sessionId = '';
 var tabId = 0;
@@ -78,7 +78,7 @@ window.addEventListener("message", function(event) {
 
 }, false);
 
-function reportEvent(data) { // acceptedOrigins.includes(event.origin)
+function reportEvent(data) { // dont take actions from localhost:3000
     if (acceptedOrigins.includes(window.location.origin) > 0 ||
         (data.action_type == 'click' && !data.valid))
         return;
@@ -99,13 +99,7 @@ function reportEvent(data) { // acceptedOrigins.includes(event.origin)
         type: "post",
         data: data,
         url: origin + '/api/saveEvent',
-        success: function(result, status, xhr) {
-            if (result == 'false') {
-                location.reload();
-                $("*").off("click");
-                $(window).unbind('scroll');
-            }
-        },
+        success: function(result, status, xhr) {},
         error: function(result, status, xhr) {
             console.log(result);
         }

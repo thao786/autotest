@@ -11,6 +11,8 @@ class ApiController < ActionController::Base
   def saveEvent
     if params[:action_type] == 'pageload' and params[:webpage] =~ %r|http(.*)google(.*)/_/chrome/newtab|
       render json: {}, :status => 404
+    elsif Rails.env.development? and params[:webpage] =~ %r|localhost:3000|
+      render json: {}, :status => 404
     else
       test = Test.find_by(session_id: params[:session_id])
 
