@@ -23,18 +23,6 @@
           </strong>
         </p>
 
-        <p>Lastest Run:
-          <strong>
-            <% if @result.present? %>
-                <% count = @test.results.where.not(assertion: Assertion.find_by(assertion_type: 'report')).where(runId: @result.runId).count %>
-                <a href="<%= @result.url %>" target="_blank"><%= time_ago_in_words @result.created_at %></a>
-                (<%= pluralize(count, ' failed assertion') %>)
-            <% else %>
-                never before
-            <% end %>
-          </strong>
-        </p>
-
         <% if @test.description.present? %>
             <p>Description: <strong><%= @test.description %></strong></p>
         <% end %>
@@ -87,30 +75,14 @@
         <button id="stopRecording" class="btn btn-danger btn-lg">Stop recording steps</button>
         The recording session is valid until <%= @test.session_expired_at.to_formatted_s(:number) %>
       <% else %>
-        <button id="startRecording" class="btn-default btn btn-lg"><span class="glyphicon glyphicon-record"></span> Record Steps</button>
-        <% if @test.running %>
-            <button id="showRunningTest" type="button" class="btn btn-danger btn-lg" disabled>
-              <span class="glyphicon glyphicon-repeat normal-left-spinner"></span>
-              Test Running
-            </button>
-
-            <button id="runTest" class="btn-default btn btn-lg" style="display: none;">Run Test</button>
-        <% else %>
-        <% if @test.steps.count > 0 %>
-            <button id="showRunningTest" type="button" class="btn btn-danger btn-lg" style="display: none;" disabled>
-                  <span class="glyphicon glyphicon-repeat normal-left-spinner"></span>
-                  Test Running
-                </button>
-
-                <button id="runTest" class="btn-default btn btn-lg"><span class="glyphicon glyphicon-triangle-right"></span>Run Test</button>
-            <% end %>
-          <% end %>
-
+          <button id="startRecording" class="btn-default btn btn-lg"><span class="glyphicon glyphicon-record"></span> Record Steps</button>
           <button id="addNewStep" class="btn-default btn btn-lg"><span class="glyphicon glyphicon-plus"></span> Add Step</button>
-        <% end %>
-    </div>
+      <% end %>
 
-      <br><br>
+      <% if @test.steps.count > 0 %>
+          <button id="dl_code" class="btn-default btn btn-lg"><span class="glyphicon glyphicon-download"></span> Download Code</button>
+      <% end %>
+    </div><br><br>
 
       <div id="step-list">
           <% if @test.steps.count > 0 %>

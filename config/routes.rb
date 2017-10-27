@@ -20,8 +20,7 @@ Rails.application.routes.draw do
   get 'tests/add_new_param', to: 'tests#add_new_param'
   get 'tests/generateSession', to: 'tests#generateSession'
   get 'tests/stopSession', to: 'tests#stopSession'
-  get 'tests/runTest', to: 'tests#runTest'
-  get 'tests/check_test_running', to: 'tests#check_test_running'
+  get 'tests/dl_code', to: 'tests#dl_code'
 
   get 'assertions/newAssertionView', to: 'assertions#newAssertionView'
   match 'assertions/addAssertion', to: 'assertions#addAssertion', via: [:post]
@@ -30,7 +29,6 @@ Rails.application.routes.draw do
 
   match 'api/check', to: 'api#check', via: [:get, :post]
   match 'api/saveEvent', to: 'api#saveEvent', via: [:post]
-  match 'api/runTest', to: 'api#runTest', via: [:get, :post]
 
   match 'suites/saveConfig', to: 'suites#saveConfig', via: [:post]
 

@@ -158,8 +158,8 @@ class TestsController < ApplicationController
     end
   end
 
-  def check_test_running
-    render json: @test.running
+  def dl_code
+
   end
 
   private
