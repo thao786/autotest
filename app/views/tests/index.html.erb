@@ -2,7 +2,12 @@
 <div class="container-fluid">
 <div class="row">
 <div class="col-sm-10 col-sm-offset-1">
-<h2 class="h2-title">All Tests - <small>You have created <b><%= testCount %></b> tests in total</small></h2>
+
+<% if params[:suite_id] %>
+    <h2 class="h2-title">View Test in Suite <b><%= @tests.first.suite.name %></b></h2>
+<% else %>
+    <h2 class="h2-title">All Tests - <small>You have created <b><%= testCount %></b> tests in total</small></h2>
+<% end %>
 
 <% if current_user.suites.count > 0 %>
     <a class="add-test-modal pointer inline-btn btn btn-default btn-lg">
@@ -25,7 +30,6 @@
       <th>Suite</th>
       <th>Test Title</th>
       <th>Actions</th>
-      <th>Last Ran</th>
       <th>Created At</th>
     </tr>
     </thead>
@@ -40,14 +44,6 @@
             (<%= pluralize test.steps.count, 'step' %>)</td>
           <td><%= render "tests/delete_btn", test: test %>
             <%= render "tests/edit_btn", test: test %>
-          </td>
-          <td><% if test.running %>
-                  running
-              <% elsif test.results.count > 0 %>
-                  <%= time_ago_in_words test.results.first.created_at %>
-              <% else %>
-                  never ran before
-              <% end %>
           </td>
           <td><%= test.created_at %></td>
         </tr>

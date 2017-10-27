@@ -3,8 +3,12 @@ class TestsController < ApplicationController
 
   # GET /tests
   def index
-    @tests = Test.joins(:suite).where(suites: {user: current_user})
+    if params[:suite_id]     
+        @tests = Test.where(suite_id: params[:suite_id]).order(created_at: :desc)
+    else             
+        @tests = Test.joins(:suite).where(suites: {user: current_user})
                  .order(created_at: :desc)
+    end
   end
 
   # GET /tests/1
