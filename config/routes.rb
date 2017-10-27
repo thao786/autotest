@@ -36,5 +36,5 @@ Rails.application.routes.draw do
   get '/doc', to: 'doc#doc'
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
-  resources :users, :plans, :suites, :tests, :results
+  resources :users, :suites, :tests
 end
