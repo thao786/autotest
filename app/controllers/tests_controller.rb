@@ -138,7 +138,11 @@ class TestsController < ApplicationController
     if File.exist? file_path
       render plain: 'already generating', :status => 404
     else
-      helpers.generate_ruby(file_path, @test)
+      file = File.new(file_path, "a")
+      test.steps.each { |step|
+        helpers.generate_step(file, step)
+      }
+      file.close
 
       client = Aws::S3::Client.new(region: 'us-east-1')
       resource = Aws::S3::Resource.new(client: client)

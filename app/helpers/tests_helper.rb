@@ -107,11 +107,63 @@ module TestsHelper
     Draft.where(session_id: session_id).destroy_all
   end
 
-  def generate_ruby(file_path, test)
-    f = File.new(file_path, "a")
-    test.steps.each { |step|
-      f.puts("write your stuff here")
-    }
-    f.close
+  def generate_step(file, step)
+    return unless step.complete?
+
+    case current_user.language
+      when 'ruby'
+          case step.action_type
+            when 'pageload'
+              file.puts "driver.get #{step.webpage}"
+            when 'scroll'
+              file.puts "driver.execute_script 'scroll(#{step.scrollLeft}, #{step.scrollTop})'"
+            when 'keypress'
+              file.puts "driver.action.send_keys('#{step.typed}').perform"
+            when 'resize'
+              file.puts "driver.manage.window.resize_to(#{step.screenwidth}, #{step.screenheight})"
+            when 'click'
+              type = step.selector[:selectorType]
+              selector = step.selector[:selector].strip
+              eq = step.selector[:eq].to_i
+              case type # first, find DOM with WebDriver
+                  when 'id'
+                    file.puts "driver.find_element(:id, #{selector})"
+                  when 'class'
+                    if selector.include? ' '
+                      selector_str = selector.split.join('.')
+                      driver.find_elements(:css => selector_str)[eq]
+                    else
+                      driver.find_elements(:class => selector)[eq]
+                    end
+                  when 'tag'
+                    driver.find_elements(:tag_name => selector)[eq]
+                  when 'name'
+                    driver.find_elements(:name => selector)[eq]
+                  when 'partialLink' # link text
+                    driver.find_elements(:partial_link_text => selector)[eq]
+                  when 'href'
+                    driver.find_elements(:css => "a[href='#{selector}']")[eq]
+                  when 'partialHref'
+                    driver.find_elements(:css => "a[href*='#{selector}']")[eq]
+                  when 'button' # use XPath
+                    driver.find_elements(:xpath, "//button[text()[contains(.,'#{selector}')]]")[eq]
+                  when 'css'
+                    driver.find_elements(:css => selector)[eq]
+                  when 'coordination'
+                    elem = driver.find_elements(:tag_name => 'body').first
+                    driver.action.move_to(elem, step.selector[:x], step.selector[:y]).click.perform
+                    elem
+                  else
+                    nil
+              end
+            else
+              true
+          end
+      when 'java'
+      when 'python'
+      when 'javascript'
+      else
+        true
+    end
   end
 end
