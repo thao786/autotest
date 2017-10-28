@@ -130,40 +130,24 @@ class TestsController < ApplicationController
     render json: @test.id
   end
 
-  def runTest
-    if @test.running
-      render json: 'test already running', :status => 404
+  def generate_code
+    hash = Digest::MD5.hexdigest "#{ENV['RDS_HOSTNAME']}-#{data}"
+    languages = {'ruby'=>'rb', 'python'=>'py', 'java'=>'java', 'javascript'=>js}
+    file_name = "#{hash}.#{languages[current_user.language]}"
+    file_path = "#{ENV['picDir']}/#{file_name}"
+    if File.exist? file_path
+      render plain: 'already generating', :status => 404
     else
-      Result.where(test: @test).destroy_all # only 1 test can be ran at a time
+      helpers.generate_ruby(file_path, @test)
 
-      if Rails.env.development?
-        @test.update(running: true)
-        Thread.new {
-          driver = Selenium::WebDriver.for :chrome
-          begin
-            first_step = Step.where(test: @test).first
-            driver.manage.window.resize_to(first_step.screenwidth, first_step.screenheight) if first_step.screenwidth
-            helpers.runSteps(driver, @test, @test.id)
-          rescue Exception => error
-            p "run locally: #{error.message}"
-          end
-          driver.quit
-          @test.update(running: false)
-        }
-        render json: {}
-      else
-        # call the independent EC2 servers
-        hash = helpers.hash_data_secure_SEL_server @test.id
-        selenium_url = "http://#{ENV['SEL_HOST']}/api/runTest?test_id=#{@test.id}&hash=#{hash}"
-        response = open(selenium_url) # this fucker calls url twice
+      client = Aws::S3::Client.new(region: 'us-east-1')
+      resource = Aws::S3::Resource.new(client: client)
+      bucket = resource.bucket(ENV['bucket'])
+      bucket.object(file_name).upload_file(file_path, acl:'public-read')
 
-        render json: {}
-      end
+      File.delete file_path
+      render plain: "https://s3.amazonaws.com/#{ENV['bucket']}/#{file_name}"
     end
-  end
-
-  def dl_code
-
   end
 
   private

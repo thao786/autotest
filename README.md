@@ -1,6 +1,7 @@
 Thuy:
 - add back SUITE EDIT
-- block record steps when test is running
+- prefill form in /suites
+- add some animation while code is being generated
 - top banner resize when screen resize
 - paginations
 - split editing click into 2 side by side forms

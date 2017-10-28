@@ -106,4 +106,12 @@ module TestsHelper
 
     Draft.where(session_id: session_id).destroy_all
   end
+
+  def generate_ruby(file_path, test)
+    f = File.new(file_path, "a")
+    test.steps.each { |step|
+      f.puts("write your stuff here")
+    }
+    f.close
+  end
 end
