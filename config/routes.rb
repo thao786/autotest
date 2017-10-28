@@ -35,6 +35,8 @@ Rails.application.routes.draw do
   root to: 'doc#intro'
   get '/doc', to: 'doc#doc'
 
+  match 'dashboard/save_setting', to: 'dashboard#save_setting', via: [:post]
+
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   resources :users, :suites, :tests
 end

@@ -4,15 +4,15 @@
 <div class="col-sm-10 col-sm-offset-1">
 <h2 class="h2-title">All Suites  - <small>You have created <b><%= @suites.count %></b> suites in total</small></h2>
 
-  <p id="notice"><%= notice %></p>
-  <a class="add-suite-modal pointer inline-btn btn btn-default btn-lg">
-      <span class="glyphicon glyphicon-plus"></span> Add Suite</a>
+<p id="notice"><%= notice %></p>
+<a class="add-suite-modal pointer inline-btn btn btn-default btn-lg">
+    <span class="glyphicon glyphicon-plus"></span> Add Suite</a>
 
 <div class="row">
   <div class="col-sm-4">
     <div class="content-wrap">
       <h4>Settings:</h4>
-        <form id="setting" action="/users/<%= current_user.id %>" method="PATCH">
+        <%= form_tag("/dashboard/save_setting", method: "post") do %>
           <div class="form-group">
             <label>Default Language to Generate Code: </label>
             <select name="language" class="form-control" required="true">
@@ -22,7 +22,7 @@
           </div>
 
           <button type="submit" class="btn btn-primary">Save</button>
-        </form>
+        <% end %>
     </div>
   </div>
 
