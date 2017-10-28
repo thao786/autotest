@@ -142,7 +142,7 @@ module TestsHelper
                   when 'partialLink' # link text
                     driver.find_elements(:partial_link_text => selector)[eq]
                   when 'href'
-                    driver.find_elements(:css => "a[href='#{selector}']")[eq]
+                    file.puts "driver.find_elements(:css => \"a[href='#{selector}']\")[eq]"
                   when 'partialHref'
                     driver.find_elements(:css => "a[href*='#{selector}']")[eq]
                   when 'button' # use XPath
