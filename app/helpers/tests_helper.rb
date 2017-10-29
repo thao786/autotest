@@ -21,6 +21,8 @@ module TestsHelper
         90001
       when 'id' # maybe only prioritize elements with less than 3 children
         80000 + (10000 - selector[:childrenCount] * 3000)
+      when 'class'
+        65000 + (10000 - selector[:childrenCount])
       when 'css'
         60000 + (10000 - selector[:childrenCount])
       when 'tag' # prioritize inline elements like img,span, h1
@@ -110,7 +112,7 @@ module TestsHelper
   def generate_step(file, step)
     return unless step.complete?
 
-    case current_user.language
+    case current_user.language.downcase
       when 'ruby'
           case step.action_type
             when 'pageload'
@@ -130,11 +132,10 @@ module TestsHelper
                     file.puts "driver.find_element(:id, #{selector})"
                   when 'class'
                     if selector.include? ' '
-                      selector_str = selector.split.join('.')
-                      driver.find_elements(:css => selector_str)[eq]
-                    else
-                      driver.find_elements(:class => selector)[eq]
+                      selector = selector.split.join('.')
                     end
+
+                    driver.find_elements(:class => selector)[eq]
                   when 'tag'
                     driver.find_elements(:tag_name => selector)[eq]
                   when 'name'
@@ -146,9 +147,13 @@ module TestsHelper
                   when 'partialHref'
                     driver.find_elements(:css => "a[href*='#{selector}']")[eq]
                   when 'button' # use XPath
-                    driver.find_elements(:xpath, "//button[text()[contains(.,'#{selector}')]]")[eq]
+                    file.puts "driver.find_elements(:xpath, \"//button[text()[contains(.,'#{selector}')]]\")[#{eq}]"
                   when 'css'
-                    driver.find_elements(:css => selector)[eq]
+                    if eq > 0
+                      file.puts "driver.find_elements(:css => #{selector})[#{eq}]"
+                    else
+                      file.puts "driver.find_element(:css, #{selector})"
+                    end
                   when 'coordination'
                     elem = driver.find_elements(:tag_name => 'body').first
                     driver.action.move_to(elem, step.selector[:x], step.selector[:y]).click.perform

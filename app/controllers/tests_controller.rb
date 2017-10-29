@@ -14,10 +14,6 @@ class TestsController < ApplicationController
   # GET /tests/1
   def show
     @test = Test.find(params[:id])
-    @result = nil
-    if Result.where(test: @test).count > 0
-      @result = Result.where(test: @test).order("id DESC").first
-    end
   end
 
   # GET /tests/new
@@ -131,15 +127,15 @@ class TestsController < ApplicationController
   end
 
   def generate_code
-    hash = Digest::MD5.hexdigest "#{ENV['RDS_HOSTNAME']}-#{data}"
-    languages = {'ruby'=>'rb', 'python'=>'py', 'java'=>'java', 'javascript'=>js}
-    file_name = "#{hash}.#{languages[current_user.language]}"
+    hash = Digest::MD5.hexdigest "#{ENV['RDS_HOSTNAME']}-#{@test.id}"
+    languages = {'ruby'=>'rb', 'python'=>'py', 'java'=>'java', 'javascript'=>'js'}
+    file_name = "#{hash}.#{languages[current_user.language.downcase]}"
     file_path = "#{ENV['picDir']}/#{file_name}"
     if File.exist? file_path
       render plain: 'already generating', :status => 404
     else
       file = File.new(file_path, "a")
-      test.steps.each { |step|
+      @test.steps.each { |step|
         helpers.generate_step(file, step)
       }
       file.close

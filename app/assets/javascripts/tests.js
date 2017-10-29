@@ -524,13 +524,14 @@ function modalFunction() {
     $('.modal.fade .chosen-container').css('width', '100%');
 }
 
-$(document).on("click", "#dl_code", function(e) {
+$(document).on("click", "#generate_code", function(e) {
     $.ajax({
         type: "GET",
         url: '/tests/generate_code',
         data: {test_id: test_id},
         success: function(html, status, xhr) {
-            window.open(html, '_blank');
+            // create dl button
+
         },
         complete: function(result, status, xhr) {
         }
