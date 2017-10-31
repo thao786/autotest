@@ -5,13 +5,13 @@
 
 <% if params[:suite_id] %>
       <% suite = Suite.find params[:suite_id] %>
-    <h2 class="h2-title">View Test in Suite <b><%= suite.name %></b></h2>
+    <h2 class="h2-title">View Test in Suite <b><%= suite.title %></b></h2>
 <% else %>
     <h2 class="h2-title">All Tests - <small>You have created <b><%= testCount %></b> tests in total</small></h2>
 <% end %>
 
 <% if current_user.suites.count > 0 %>
-    <a class="add-test-modal pointer inline-btn btn btn-default btn-lg">
+    <a <%= suite ? "data-suite=#{suite.id}" : nil %> class="add-test-modal pointer inline-btn btn btn-default btn-lg">
       <span class="glyphicon glyphicon-plus"></span> Add Test</a>
 <% else %>
     You do not have any suite yet. Please
