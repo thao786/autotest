@@ -148,6 +148,11 @@ class TestsController < ApplicationController
     else
       file = File.new(file_path, "a")
       # insert boilerplate code
+      file.puts "require 'selenium-webdriver'
+driver = Selenium::WebDriver.for :chrome"
+
+      first_step = Step.where(test: @test).first
+      file.puts "driver.manage.window.resize_to(#{first_step.screenwidth}, #{first_step.screenheight})" if first_step.screenwidth
 
       @test.steps.each { |step|
         helpers.generate_step(file, step)

@@ -112,8 +112,11 @@ module TestsHelper
   def generate_step(file, step)
     return unless step.complete?
 
-    case current_user.language.downcase
+    case current_user.language
       when 'ruby'
+          # write comments
+          file.puts "\n# Step #{step.order}: #{Step.web_step_types[step.action_type]}, #{step.webpage}"
+
           case step.action_type
             when 'pageload'
               file.puts "driver.get '#{escape_javascript step.webpage}'"
