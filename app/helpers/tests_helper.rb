@@ -116,32 +116,32 @@ module TestsHelper
       when 'ruby'
           case step.action_type
             when 'pageload'
-              file.puts "driver.get #{step.webpage}"
+              file.puts "driver.get '#{escape_javascript step.webpage}'"
             when 'scroll'
               file.puts "driver.execute_script 'scroll(#{step.scrollLeft}, #{step.scrollTop})'"
             when 'keypress'
-              file.puts "driver.action.send_keys('#{step.typed}').perform"
+              file.puts "driver.action.send_keys('#{escape_javascript step.typed}').perform"
             when 'resize'
               file.puts "driver.manage.window.resize_to(#{step.screenwidth}, #{step.screenheight})"
             when 'click'
               type = step.selector[:selectorType]
-              selector = step.selector[:selector].strip
+              selector = escape_javascript step.selector[:selector].strip
               eq = step.selector[:eq].to_i
               case type # first, find DOM with WebDriver
                   when 'id'
-                    file.puts "driver.find_element(:id, #{selector})"
+                    file.puts "driver.find_element(:id, '#{selector}')"
                   when 'class'
                     if selector.include? ' '
-                      selector = selector.split.join('.')
+                      selector = ".#{selector.split.join('.')}"
                     end
 
-                    file.puts "driver.find_elements(:class => #{selector})[#{eq}]"
+                    file.puts "driver.find_elements(:class => '#{selector}')[#{eq}]"
                   when 'tag'
-                    file.puts "driver.find_elements(:tag_name => #{selector})[#{eq}]"
+                    file.puts "driver.find_elements(:tag_name => '#{selector}')[#{eq}]"
                   when 'name'
-                    file.puts "driver.find_elements(:name => #{selector})[#{eq}]"
+                    file.puts "driver.find_elements(:name => '#{selector}')[#{eq}]"
                   when 'partialLink' # link text
-                    file.puts "driver.find_elements(:partial_link_text => #{selector})[#{eq}]"
+                    file.puts "driver.find_elements(:partial_link_text => '#{selector}')[#{eq}]"
                   when 'href'
                     file.puts "driver.find_elements(:css => \"a[href='#{selector}']\")[#{eq}]"
                   when 'partialHref'
@@ -150,9 +150,9 @@ module TestsHelper
                     file.puts "driver.find_elements(:xpath, \"//button[text()[contains(.,'#{selector}')]]\")[#{eq}]"
                   when 'css'
                     if eq > 0
-                      file.puts "driver.find_elements(:css => #{selector})[#{eq}]"
+                      file.puts "driver.find_elements(:css => '#{selector}')[#{eq}]"
                     else
-                      file.puts "driver.find_element(:css, #{selector})"
+                      file.puts "driver.find_element(:css, '#{selector}')"
                     end
                   when 'coordination'
                     file.puts "elem = driver.find_elements(:tag_name => 'body').first"
