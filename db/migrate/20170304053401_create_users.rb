@@ -6,7 +6,6 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string :uid
       t.string :image
       t.string :language
-      t.references :plan, foreign_key: true
 
       t.timestamps
     end

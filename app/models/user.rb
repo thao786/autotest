@@ -4,7 +4,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  belongs_to :plan
   has_many :suites
 
   devise :omniauthable, omniauth_providers: [:google_oauth2]

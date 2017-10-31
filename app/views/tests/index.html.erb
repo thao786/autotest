@@ -4,7 +4,8 @@
 <div class="col-sm-10 col-sm-offset-1">
 
 <% if params[:suite_id] %>
-    <h2 class="h2-title">View Test in Suite <b><%= @tests.first.suite.name %></b></h2>
+      <% suite = Suite.find params[:suite_id] %>
+    <h2 class="h2-title">View Test in Suite <b><%= suite.name %></b></h2>
 <% else %>
     <h2 class="h2-title">All Tests - <small>You have created <b><%= testCount %></b> tests in total</small></h2>
 <% end %>
@@ -18,11 +19,6 @@
       <span class="glyphicon glyphicon-plus"></span> Add Suite</a>
     before adding tests.
 <% end %><br>
-
-<!--<div class="form-inline">-->
-  <!--<input type="text" class="form-control" id="filter-test" name="filter-test">-->
-  <!--<button id="filter-test-btn">Filter Test</button>-->
-<!--</div><br>-->
 
   <table class="table table-bordered">
     <thead>

@@ -13,6 +13,7 @@ class SuitesController < ApplicationController
   # GET /suites/1
   def show
     @suite = Suite.find_by(name: params[:id], user: current_user)
+    redirect_to "/tests?suite_id=#{@suite.id}"
   end
 
   # GET /suites/new
