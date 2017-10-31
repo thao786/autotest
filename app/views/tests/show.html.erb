@@ -23,6 +23,13 @@
           </strong>
         </p>
 
+        <% if @test.code_generated_at %>
+          <p>Code Last Generated:
+            <strong><%= @test.code_generated_at %></strong>
+          </p>
+        <% end %>
+
+
         <% if @test.description.present? %>
             <p>Description: <strong><%= @test.description %></strong></p>
         <% end %>
@@ -83,8 +90,9 @@
           <button id="generate_code" class="btn-default btn btn-lg"><span class="glyphicon glyphicon-download"></span> Generate Code</button>
       <% end %>
 
-      <% if @test.steps.count > 0 %>
-          <a id="dl_code" href="" class="btn-default btn btn-lg" download="<%= @test.name %>"><span class="glyphicon glyphicon-download"></span> Download Code</a>
+      <% if @test.code_generated_at %>
+          <a download="<%= @test.name %>.rb" id="dl_code" href="<%= @test.code_url current_user.language %>" class="btn-default btn btn-lg" target="_blank" title="generated at <%= @test.code_generated_at %>">
+            <span class="glyphicon glyphicon-download"></span> Download Code</a>
       <% end %>
     </div><br><br>
 

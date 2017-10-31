@@ -525,15 +525,26 @@ function modalFunction() {
 }
 
 $(document).on("click", "#generate_code", function(e) {
+    $('#dl_code').hide();
+    var generate_btn = $('#generate_code');
+    generate_btn.html('Generating');
+    generate_btn.toggleClass('btn-danger');
+    generate_btn.toggleClass('btn-default');
+
     $.ajax({
         type: "GET",
         url: '/tests/generate_code',
         data: {test_id: test_id},
         success: function(html, status, xhr) {
-            // create dl button
-
+            if(html != 'ok') {
+                alert('Code is generating. Please allow a few minutes and try again.');
+            }
         },
         complete: function(result, status, xhr) {
+            $('#dl_code').show();
+            generate_btn.html('Generate Code');
+            generate_btn.toggleClass('btn-danger');
+            generate_btn.toggleClass('btn-default');
         }
     });
 });

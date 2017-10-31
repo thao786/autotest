@@ -95,8 +95,7 @@ class TestsController < ApplicationController
 
   # deactivate a test by setting expiry date to 24 hour ago
   def stopSession
-    @test.session_expired_at=Time.now - 24*60*60
-    @test.save
+    @test.update(session_expired_at: Time.now - 24*60*60)
 
     # consolidate drafts into steps
     helpers.parseDraft(@test.session_id)
@@ -127,12 +126,10 @@ class TestsController < ApplicationController
   end
 
   def generate_code
-    hash = Digest::MD5.hexdigest "#{ENV['RDS_HOSTNAME']}-#{@test.id}"
-    languages = {'ruby'=>'rb', 'python'=>'py', 'java'=>'java', 'javascript'=>'js'}
-    file_name = "#{hash}.#{languages[current_user.language.downcase]}"
+    file_name = @test.code_file_name current_user.language
     file_path = "#{ENV['picDir']}/#{file_name}"
     if File.exist? file_path
-      render plain: 'already generating', :status => 404
+      render plain: 'already generating'
     else
       file = File.new(file_path, "a")
       @test.steps.each { |step|
@@ -146,7 +143,8 @@ class TestsController < ApplicationController
       bucket.object(file_name).upload_file(file_path, acl:'public-read')
 
       File.delete file_path
-      render plain: "https://s3.amazonaws.com/#{ENV['bucket']}/#{file_name}"
+      @test.update(code_generated_at: Time.now+1)
+      render plain: "ok"
     end
   end
 

@@ -14,8 +14,10 @@ class Step < ApplicationRecord
   def self.web_step_types
       {'pageload' => 'load url in browser',
        # 'pageloadCurl' => 'load page with Curl',
-       'scroll' => 'scroll', 'keypress' => 'type',
-       'click' => 'click', 'resize' => 'Resize'}
+       'scroll' => 'scroll',
+       'keypress' => 'type',
+       'click' => 'click',
+       'resize' => 'Resize'}
   end
 
   after_initialize :set_defaults, unless: :persisted? # The set_defaults will only work if the object is new
@@ -59,10 +61,5 @@ class Step < ApplicationRecord
     end
 
     action + noun
-  end
-
-  def screenShot(runId)
-    filename = Digest::MD5.hexdigest "#{runId}-#{order}"
-    "https://s3.amazonaws.com/#{ENV['bucket']}/#{filename}.png"
   end
 end
