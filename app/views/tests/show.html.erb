@@ -91,9 +91,9 @@
       <% end %>
 
       <% if @test.code_generated_at %>
-          <a download="<%= @test.name %>.rb" id="dl_code" href="<%= @test.code_url current_user.language %>" class="btn-default btn btn-lg" target="_blank" title="generated at <%= @test.code_generated_at %>">
+          <a download="<%= @test.name %>.rb" id="dl_code" href="<%= @test.code_url current_user.language %>" class="btn-default btn btn-lg" target="_blank">
             <span class="glyphicon glyphicon-download"></span> Download Code</a>
-      <% end %>
+    <% end %>
     </div><br><br>
 
       <div id="step-list">

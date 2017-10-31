@@ -80,12 +80,6 @@ class TestsController < ApplicationController
     sessionId = SecureRandom.base58(24)
     @test.update(session_id: sessionId)
 
-    while !@test.save
-      sessionId = SecureRandom.base58(24)
-      @test.session_id=sessionId
-      @test.save
-    end
-
     # set expiry date to 15 minutes from now
     @test.session_expired_at=Time.now + 15*60
     @test.save

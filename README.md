@@ -1,4 +1,5 @@
 Thuy:
+- test recording is valid until HOURS ONLY
 - add back SUITE EDIT
 - prefill form in /suites
 - add some animation while code is being generated

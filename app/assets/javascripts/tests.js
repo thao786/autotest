@@ -538,6 +538,9 @@ $(document).on("click", "#generate_code", function(e) {
         success: function(html, status, xhr) {
             if(html != 'ok') {
                 alert('Code is generating. Please allow a few minutes and try again.');
+            } else {
+                $('#dl_code').show();
+                $('#dl_code').click();
             }
         },
         complete: function(result, status, xhr) {
