@@ -50,13 +50,7 @@
     <br><br>
 
     <div class="content-wrap">
-      <div>
-        Define your <a href="/doc#testParam" target="_blank">test parameters</a><br>
-        <div id="test_params"><%= render "tests/test_params" %></div>
-          <button id="add-test-params" class="btn-primary btn inline-btn"> Add Test Params</button>
-      </div>
-
-        <div><br>
+        <div>
           <a href="/doc#assertion" target="_blank">Assertions</a>:
           <% if @test.assertions.count > 0 %>
               <div id="assertion-list">

@@ -173,4 +173,32 @@ module TestsHelper
         true
     end
   end
+
+  def generate_assertion(file, assertion)
+    condition = assertion.condition
+    case current_user.language
+      when 'ruby'
+        file.puts "\n# #{Assertion.assertion_types[assertion.assertion_type]}: #{condition}"
+        file.puts "condition = '#{escape_javascript condition}'"
+
+        case assertion.assertion_type
+           when 'text-in-page'
+             file.puts "text = driver.execute_script 'return document.body.textContent'"
+             file.puts "puts \#{text.include? condition}"
+           when 'html-in-page'
+             file.puts "source = driver.execute_script 'return document.documentElement.outerHTML'"
+             file.puts "puts \#{source.include? condition}"
+           when 'page-title'
+             file.puts "passed = driver.execute_script('return document.title').include? condition"
+             file.puts "puts passed"
+          else # self-enter JS command
+            file.puts "driver.execute_script \"return \#{condition}\""
+        end
+      when 'java'
+      when 'python'
+      when 'javascript'
+      else
+        true
+    end
+  end
 end

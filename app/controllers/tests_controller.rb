@@ -157,6 +157,10 @@ driver = Selenium::WebDriver.for :chrome"
       @test.steps.each { |step|
         helpers.generate_step(file, step)
       }
+
+      @test.assertions.each { |assertion|
+        helpers.generate_assertion(file, assertion)
+      }
       file.close
 
       client = Aws::S3::Client.new(region: 'us-east-1')
