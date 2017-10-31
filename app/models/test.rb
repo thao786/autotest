@@ -13,7 +13,6 @@ class Test < ApplicationRecord
   validates :session_id, uniqueness: true, if: 'session_id.present?'
 
   serialize :cachesteps, Hash
-  # serialize :params, Hash
 
   def url
     "/test/#{name}/#{id}"

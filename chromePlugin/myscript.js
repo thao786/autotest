@@ -146,9 +146,9 @@ function analyzeClick(obj) {
 
         var objArray = $(selectorClass).toArray();
         eq = objArray.indexOf(obj[0]);
-        data.selector = selectorClass;
+        data.selector = classes;
         data.eq = eq;
-        data.selectorType = 'css';
+        data.selectorType = 'class';
     }
     else { // report tag, search by text
         if (data.tag_name == 'html' || data.tag_name == 'body')

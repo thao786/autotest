@@ -21,6 +21,8 @@ module TestsHelper
         90001
       when 'id' # maybe only prioritize elements with less than 3 children
         80000 + (10000 - selector[:childrenCount] * 3000)
+      when 'class'
+        65000 + (10000 - selector[:childrenCount])
       when 'css'
         60000 + (10000 - selector[:childrenCount])
       when 'tag' # prioritize inline elements like img,span, h1
@@ -105,5 +107,68 @@ module TestsHelper
     end
 
     Draft.where(session_id: session_id).destroy_all
+  end
+
+  def generate_step(file, step)
+    return unless step.complete?
+
+    case current_user.language.downcase
+      when 'ruby'
+          case step.action_type
+            when 'pageload'
+              file.puts "driver.get #{step.webpage}"
+            when 'scroll'
+              file.puts "driver.execute_script 'scroll(#{step.scrollLeft}, #{step.scrollTop})'"
+            when 'keypress'
+              file.puts "driver.action.send_keys('#{step.typed}').perform"
+            when 'resize'
+              file.puts "driver.manage.window.resize_to(#{step.screenwidth}, #{step.screenheight})"
+            when 'click'
+              type = step.selector[:selectorType]
+              selector = step.selector[:selector].strip
+              eq = step.selector[:eq].to_i
+              case type # first, find DOM with WebDriver
+                  when 'id'
+                    file.puts "driver.find_element(:id, #{selector})"
+                  when 'class'
+                    if selector.include? ' '
+                      selector = selector.split.join('.')
+                    end
+
+                    driver.find_elements(:class => selector)[eq]
+                  when 'tag'
+                    driver.find_elements(:tag_name => selector)[eq]
+                  when 'name'
+                    driver.find_elements(:name => selector)[eq]
+                  when 'partialLink' # link text
+                    driver.find_elements(:partial_link_text => selector)[eq]
+                  when 'href'
+                    file.puts "driver.find_elements(:css => \"a[href='#{selector}']\")[eq]"
+                  when 'partialHref'
+                    driver.find_elements(:css => "a[href*='#{selector}']")[eq]
+                  when 'button' # use XPath
+                    file.puts "driver.find_elements(:xpath, \"//button[text()[contains(.,'#{selector}')]]\")[#{eq}]"
+                  when 'css'
+                    if eq > 0
+                      file.puts "driver.find_elements(:css => #{selector})[#{eq}]"
+                    else
+                      file.puts "driver.find_element(:css, #{selector})"
+                    end
+                  when 'coordination'
+                    elem = driver.find_elements(:tag_name => 'body').first
+                    driver.action.move_to(elem, step.selector[:x], step.selector[:y]).click.perform
+                    elem
+                  else
+                    nil
+              end
+            else
+              true
+          end
+      when 'java'
+      when 'python'
+      when 'javascript'
+      else
+        true
+    end
   end
 end

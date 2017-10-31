@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get 'tests/add_new_param', to: 'tests#add_new_param'
   get 'tests/generateSession', to: 'tests#generateSession'
   get 'tests/stopSession', to: 'tests#stopSession'
-  get 'tests/dl_code', to: 'tests#dl_code'
+  get 'tests/generate_code', to: 'tests#generate_code'
 
   get 'assertions/newAssertionView', to: 'assertions#newAssertionView'
   match 'assertions/addAssertion', to: 'assertions#addAssertion', via: [:post]
@@ -35,6 +35,8 @@ Rails.application.routes.draw do
   root to: 'doc#intro'
   get '/doc', to: 'doc#doc'
 
+  match 'dashboard/save_setting', to: 'dashboard#save_setting', via: [:post]
+
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
-  resources :users, :plans, :suites, :tests, :results
+  resources :users, :suites, :tests
 end

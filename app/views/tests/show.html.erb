@@ -80,7 +80,11 @@
       <% end %>
 
       <% if @test.steps.count > 0 %>
-          <button id="dl_code" class="btn-default btn btn-lg"><span class="glyphicon glyphicon-download"></span> Download Code</button>
+          <button id="generate_code" class="btn-default btn btn-lg"><span class="glyphicon glyphicon-download"></span> Generate Code</button>
+      <% end %>
+
+      <% if @test.steps.count > 0 %>
+          <a id="dl_code" href="" class="btn-default btn btn-lg" download="<%= @test.name %>"><span class="glyphicon glyphicon-download"></span> Download Code</a>
       <% end %>
     </div><br><br>
 

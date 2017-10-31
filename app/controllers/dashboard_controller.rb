@@ -1,9 +1,7 @@
 class DashboardController < ApplicationController
-
-  def billing
-  end
-
-  def index
-    @tests = Test.joins(:suite).where(suites: {users: current_user})
+  def save_setting
+    current_user.update(language: params[:language])
+    flash[:notice] = "Your settings have been saved."
+    redirect_to '/suites'
   end
 end

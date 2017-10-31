@@ -523,3 +523,19 @@ function modalFunction() {
     $(".modal.fade .chosen-select").chosen();
     $('.modal.fade .chosen-container').css('width', '100%');
 }
+
+$(document).on("click", "#generate_code", function(e) {
+    $.ajax({
+        type: "GET",
+        url: '/tests/generate_code',
+        data: {test_id: test_id},
+        success: function(html, status, xhr) {
+            // create dl button
+
+        },
+        complete: function(result, status, xhr) {
+        }
+    });
+});
+
+
