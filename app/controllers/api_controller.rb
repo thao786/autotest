@@ -26,10 +26,9 @@ class ApiController < ActionController::Base
         draft = Draft.create(params.require(:draft).permit(:webpage, :stamp, :apk, :activity, :action_type, :session_id, :typed, :screenwidth, :screenheight, :scrollTop, :scrollLeft, :x, :y, :tabId, :windowId))
 
         draft.update(selector: {selector: params[:selector], eq: params[:eq].to_i, selectorType: params[:selectorType], childrenCount: params[:childrenCount].to_i})
-        render json: {}
-      else
-        render json: {}, :status => 404
       end
+
+      render json: {}
     end
   end
 end

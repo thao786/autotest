@@ -135,17 +135,17 @@ module TestsHelper
                       selector = selector.split.join('.')
                     end
 
-                    driver.find_elements(:class => selector)[eq]
+                    file.puts "driver.find_elements(:class => #{selector})[#{eq}]"
                   when 'tag'
-                    driver.find_elements(:tag_name => selector)[eq]
+                    file.puts "driver.find_elements(:tag_name => #{selector})[#{eq}]"
                   when 'name'
-                    driver.find_elements(:name => selector)[eq]
+                    file.puts "driver.find_elements(:name => #{selector})[#{eq}]"
                   when 'partialLink' # link text
-                    driver.find_elements(:partial_link_text => selector)[eq]
+                    file.puts "driver.find_elements(:partial_link_text => #{selector})[#{eq}]"
                   when 'href'
-                    file.puts "driver.find_elements(:css => \"a[href='#{selector}']\")[eq]"
+                    file.puts "driver.find_elements(:css => \"a[href='#{selector}']\")[#{eq}]"
                   when 'partialHref'
-                    driver.find_elements(:css => "a[href*='#{selector}']")[eq]
+                    file.puts "driver.find_elements(:css => \"a[href*='#{selector}']\")[#{eq}]"
                   when 'button' # use XPath
                     file.puts "driver.find_elements(:xpath, \"//button[text()[contains(.,'#{selector}')]]\")[#{eq}]"
                   when 'css'
@@ -155,9 +155,8 @@ module TestsHelper
                       file.puts "driver.find_element(:css, #{selector})"
                     end
                   when 'coordination'
-                    elem = driver.find_elements(:tag_name => 'body').first
-                    driver.action.move_to(elem, step.selector[:x], step.selector[:y]).click.perform
-                    elem
+                    file.puts "elem = driver.find_elements(:tag_name => 'body').first"
+                    file.puts "driver.action.move_to(elem, #{step.selector[:x]}, #{step.selector[:y]}).click.perform"
                   else
                     nil
               end

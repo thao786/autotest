@@ -147,6 +147,8 @@ class TestsController < ApplicationController
       render plain: 'already generating'
     else
       file = File.new(file_path, "a")
+      # insert boilerplate code
+
       @test.steps.each { |step|
         helpers.generate_step(file, step)
       }

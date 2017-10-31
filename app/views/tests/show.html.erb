@@ -98,7 +98,6 @@
 
       <div id="step-list">
           <% if @test.steps.count > 0 %>
-              <% sumTime = 0 %>
             <div class="effect2">Test length: <strong><%= @test.steps.inject(0){|sum,step| sum + step.wait} %> millisec</strong>, <strong><%= @test.steps.count %> steps.</strong>
             </div>
               <% @test.steps.order('steps.order').each_with_index do |step, index| %>
