@@ -2,7 +2,6 @@ class Test < ApplicationRecord
   belongs_to :suite
   has_many :steps, dependent: :destroy
   has_many :assertions, dependent: :destroy
-  has_many :results, dependent: :destroy
   has_many :test_params, dependent: :destroy
 
   has_many :prep_tests, dependent: :destroy

@@ -103,8 +103,7 @@ class TestsController < ApplicationController
     @test.update(session_id: sessionId)
 
     # set expiry date to 15 minutes from now
-    @test.session_expired_at=Time.now + 15*60
-    @test.save
+    @test.update(session_expired_at: Time.now + 15*60)
 
     render json: sessionId
   end

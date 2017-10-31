@@ -18,7 +18,7 @@ $('#startRecording').click(function() {
             dataType: "text",
             data: {test_id: test_id},
             success: function (result, status, xhr) {
-                sessionId = result;
+                sessionId = result; console.log(sessionId);
                 $('#notice').html('All your activities on Chrome will be recorded. Please make sure chrome extension is installed.');
 
                 // activate the Chrome Plugin

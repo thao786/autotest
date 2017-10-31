@@ -3,16 +3,16 @@ class ApiController < ActionController::Base
     if Test.find_by(session_id: params[:session_id])
       render json: true
     else
-      render json: false
+      render json: false, :status => 404
     end
   end
 
   # save this event to draft and update test's cache response
   def saveEvent
     if params[:action_type] == 'pageload' and params[:webpage] =~ %r|http(.*)google(.*)/_/chrome/newtab|
-      render json: {}, :status => 404
+      render json: {}
     elsif Rails.env.development? and params[:webpage] =~ %r|localhost:3000|
-      render json: {}, :status => 404
+      render json: {}
     else
       test = Test.find_by(session_id: params[:session_id])
 

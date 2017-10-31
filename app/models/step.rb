@@ -3,7 +3,6 @@ class Step < ApplicationRecord
   serialize :selector
   serialize :config
   has_many :extracts, dependent: :destroy
-  has_many :results, dependent: :destroy
 
   validates :wait, numericality: true
   validates :action_type, presence: true

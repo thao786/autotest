@@ -1,6 +1,3 @@
-var acceptedOrigins = ["https://uichecks.com",
-    "https://test.uichecks.com"];
-
 var origin = '';
 var sessionId = '';
 var tabId = 0;
@@ -38,8 +35,7 @@ chrome.storage.local.get(function(data) {
 // start/stop recording sessions
 window.addEventListener("message", function(event) {
     // We only accept messages from Autotest site
-    if (!acceptedOrigins.includes(event.origin)  ||
-            event.data.type != 'FROM_PAGE')
+    if (event.data.type != 'FROM_PAGE')
     {
         return;
     }
@@ -78,9 +74,8 @@ window.addEventListener("message", function(event) {
 
 }, false);
 
-function reportEvent(data) { // dont take actions from localhost:3000
-    if (acceptedOrigins.includes(window.location.origin) > 0 ||
-        (data.action_type == 'click' && !data.valid))
+function reportEvent(data) {
+    if (data.action_type == 'click' && !data.valid)
         return;
 
     data.session_id = sessionId;
