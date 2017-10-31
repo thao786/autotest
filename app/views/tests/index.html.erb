@@ -53,3 +53,21 @@
 </div>
 </div>
 </div>
+
+<% if params[:page] %>
+    <% if @current_page != 1 %>
+        <span><a href="?page=<%= params[:page].to_i - 1 %>">Previous</a></span>
+    <% end %>
+    <%(1..@num_page).each do |pg| %>
+        <% if pg == @current_page %>
+            <span>Current Page (<%= params[:page] %>)</span>
+        <% else %>
+            <span><a href="?page=<%= pg %>"><%= pg %></a></span>
+        <% end %>
+    <% end %>
+    <% if @current_page != @num_page %>
+        <span><a href="?page=<%= params[:page].to_i + 1 %>">Next</a></span>
+    <% end %>
+<% end %>
+
+<br><br><br>
