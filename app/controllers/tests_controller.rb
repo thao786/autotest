@@ -3,12 +3,34 @@ class TestsController < ApplicationController
 
   # GET /tests
   def index
-    if params[:suite_id]     
-        @tests = Test.where(suite_id: params[:suite_id]).order(created_at: :desc)
-    else             
-        @tests = Test.joins(:suite).where(suites: {user: current_user})
-                 .order(created_at: :desc)
+    @per_page = 8
+    if Test.count/@per_page.floor == Test.count/Float(@per_page)
+      @num_page = Test.count/@per_page.floor
+    else
+      @num_page = Test.count/@per_page.floor + 1
     end
+    @current_page = params[:page].to_i
+    if params[:page] &&  @current_page <= @num_page && @current_page > 0
+      @tests = Test.offset((@current_page - 1)*@per_page).limit(@per_page).order(created_at: :desc)
+    else
+      if params[:suite_id]
+          @tests = Test.where(suite_id: params[:suite_id]).order(created_at: :desc)
+      else
+          @tests = Test.joins(:suite).where(suites: {user: current_user})
+                   .order(created_at: :desc)
+      end
+    end
+  end
+
+  def paginate
+    @per_page = 8
+    if Test.count/@per_page.floor == Test.count/Float(@per_page)
+      @num_page = Test.count/@per_page.floor
+    else
+      @num_page = Test.count/@per_page.floor + 1
+    end
+    @current_page = params[:page].to_i
+
   end
 
   # GET /tests/1
