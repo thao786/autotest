@@ -8,6 +8,10 @@ class User < ApplicationRecord
 
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 
+  def set_defaults
+    self.language ||= 'ruby'
+  end
+
   def self.from_omniauth(access_token)
     data = access_token.info
     user = User.where(email: data['email']).first
@@ -19,7 +23,8 @@ class User < ApplicationRecord
            password: Devise.friendly_token[0,20],
            provider: access_token.provider,
            uid: access_token.uid,
-           image: data['image']
+           image: data['image'],
+           language: 'ruby'
         )
     end
     user
