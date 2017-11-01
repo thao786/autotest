@@ -136,9 +136,10 @@ module TestsHelper
                   when 'class'
                     if selector.include? ' '
                       selector = ".#{selector.split.join('.')}"
+                      file.puts "driver.find_elements(:css => '#{selector}')[#{eq}]"
+                    else # 1 single class
+                      file.puts "driver.find_elements(:class => '#{selector}')[#{eq}]"
                     end
-
-                    file.puts "driver.find_elements(:class => '#{selector}')[#{eq}]"
                   when 'tag'
                     file.puts "driver.find_elements(:tag_name => '#{selector}')[#{eq}]"
                   when 'name'
