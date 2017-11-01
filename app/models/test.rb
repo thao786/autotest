@@ -17,13 +17,13 @@ class Test < ApplicationRecord
     "/test/#{name}/#{id}"
   end
 
-  def code_file_name(language)
+  def code_file_name(language = 'ruby')
     hash = Digest::MD5.hexdigest "#{ENV['RDS_HOSTNAME']}-#{id}"
     languages = {'ruby'=>'rb', 'python'=>'py', 'java'=>'java', 'javascript'=>'js'}
     "#{hash}.#{languages[language.downcase]}"
   end
 
-  def code_url(language)
+  def code_url(language = 'ruby')
     "https://s3.amazonaws.com/#{ENV['bucket']}/#{code_file_name language}"
   end
 end
