@@ -142,7 +142,7 @@ class TestsController < ApplicationController
 
   def generate_code
     file_name = @test.code_file_name current_user.language
-    file_path = "#{ENV['picDir']}/#{file_name}"
+    file_path = "#{ENV['HOME']}/#{ENV['dir']}/#{file_name}"
     if File.exist? file_path
       render plain: 'already generating'
     else
