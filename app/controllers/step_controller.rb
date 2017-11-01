@@ -1,5 +1,5 @@
 class StepController < ApplicationController
-  skip_before_filter :verify_authenticity_token
+  skip_before_action :verify_authenticity_token
 
   before_action :set_step, :set_test
   before_action :authorize?
