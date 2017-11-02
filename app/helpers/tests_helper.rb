@@ -185,13 +185,13 @@ module TestsHelper
         case assertion.assertion_type
            when 'text-in-page'
              file.puts "text = driver.execute_script 'return document.body.textContent'"
-             file.puts "puts \#{text.include? condition}"
+             file.puts 'puts "#{text.include? condition}"'
            when 'html-in-page'
              file.puts "source = driver.execute_script 'return document.documentElement.outerHTML'"
-             file.puts "puts \#{source.include? condition}"
+             file.puts 'puts "#{source.include? condition}"'
            when 'page-title'
              file.puts "passed = driver.execute_script('return document.title').include? condition"
-             file.puts "puts passed"
+             file.puts 'puts "assertion: #{passed}"'
           else # self-enter JS command
             file.puts "driver.execute_script \"return \#{condition}\""
         end
