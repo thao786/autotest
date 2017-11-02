@@ -112,10 +112,10 @@ module TestsHelper
   def generate_step(file, step)
     return unless step.complete?
 
+    comment = "Step #{step.order}: #{Step.web_step_types[step.action_type]}, #{step.webpage}"
     case current_user.language
       when 'ruby'
-          # write comments
-          file.puts "\n# Step #{step.order}: #{Step.web_step_types[step.action_type]}, #{step.webpage}"
+          file.puts "\n# #{comment}"
 
           case step.action_type
             when 'pageload'
@@ -168,6 +168,58 @@ module TestsHelper
               true
           end
       when 'java'
+          file.puts "\n// #{comment}"
+
+          case step.action_type
+            when 'pageload'
+              file.puts "driver.get '#{escape_javascript step.webpage}'"
+            when 'scroll'
+              file.puts "driver.execute_script 'scroll(#{step.scrollLeft}, #{step.scrollTop})'"
+            when 'keypress'
+              file.puts "driver.action.send_keys('#{escape_javascript step.typed}').perform"
+            when 'resize'
+              file.puts "driver.manage.window.resize_to(#{step.screenwidth}, #{step.screenheight})"
+            when 'click'
+              type = step.selector[:selectorType]
+              selector = escape_javascript step.selector[:selector].strip
+              eq = step.selector[:eq].to_i
+              case type # first, find DOM with WebDriver
+                when 'id'
+                  file.puts "driver.find_element(:id, '#{selector}')"
+                when 'class'
+                  if selector.include? ' '
+                    selector = ".#{selector.split.join('.')}"
+                    file.puts "driver.find_elements(:css => '#{selector}')[#{eq}]"
+                  else # 1 single class
+                    file.puts "driver.find_elements(:class => '#{selector}')[#{eq}]"
+                  end
+                when 'tag'
+                  file.puts "driver.find_elements(:tag_name => '#{selector}')[#{eq}]"
+                when 'name'
+                  file.puts "driver.find_elements(:name => '#{selector}')[#{eq}]"
+                when 'partialLink' # link text
+                  file.puts "driver.find_elements(:partial_link_text => '#{selector}')[#{eq}]"
+                when 'href'
+                  file.puts "driver.find_elements(:css => \"a[href='#{selector}']\")[#{eq}]"
+                when 'partialHref'
+                  file.puts "driver.find_elements(:css => \"a[href*='#{selector}']\")[#{eq}]"
+                when 'button' # use XPath
+                  file.puts "driver.find_elements(:xpath, \"//button[text()[contains(.,'#{selector}')]]\")[#{eq}]"
+                when 'css'
+                  if eq > 0
+                    file.puts "driver.find_elements(:css => '#{selector}')[#{eq}]"
+                  else
+                    file.puts "driver.find_element(:css, '#{selector}')"
+                  end
+                when 'coordination'
+                  file.puts "elem = driver.find_elements(:tag_name => 'body').first"
+                  file.puts "driver.action.move_to(elem, #{step.selector[:x]}, #{step.selector[:y]}).click.perform"
+                else
+                  nil
+              end
+            else
+              true
+          end
       when 'python'
       when 'javascript'
       else
@@ -179,7 +231,7 @@ module TestsHelper
     condition = assertion.condition
     case current_user.language
       when 'ruby'
-        file.puts "\n# #{Assertion.assertion_types[assertion.assertion_type]}: #{condition}"
+        file.puts "# #{Assertion.assertion_types[assertion.assertion_type]}: #{condition}"
         file.puts "condition = '#{escape_javascript condition}'"
 
         case assertion.assertion_type

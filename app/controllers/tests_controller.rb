@@ -154,6 +154,16 @@ driver = Selenium::WebDriver.for :chrome"
       first_step = Step.where(test: @test).first
       file.puts "driver.manage.window.resize_to(#{first_step.screenwidth}, #{first_step.screenheight})" if first_step.screenwidth
 
+      if @test.suite.prep_tests.count > 0
+        file.puts "# suite's pre-tests"
+        @test.suite.prep_tests.each { |test|
+          test.steps.each { |step|
+            helpers.generate_step(file, step)
+          }
+        }
+      end
+
+      file.puts "# Test's steps"
       @test.steps.each { |step|
         helpers.generate_step(file, step)
       }
