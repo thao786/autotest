@@ -1,7 +1,7 @@
 <div class="assertion" data-id="<%= assertion.id %>">
   <span class="glyphicon glyphicon-remove remove-assertion" title="Delete This Assertion"></span>
 
-  <span style="<%= assertion.test.steps.count > 1 ? 'text-decoration: line-through' : '' %>" >
+  <span>
       <%= Assertion.assertion_types[assertion.assertion_type]%>:
       <b><%= assertion.condition %></b>
   </span>
