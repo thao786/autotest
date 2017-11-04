@@ -113,10 +113,35 @@ module TestsHelper
     Draft.where(session_id: session_id).destroy_all
   end
 
+  def gen_comment(step)
+    Step.web_step_types[step.action_type] 
+
+    case step.action_type
+       when 'pageload'  
+          puts "#{step.webpage} \n" 
+          if step.screenwidth 
+            puts "Screen size = #{step.screenwidth}  x #{step.screenheight}"
+          end 
+
+        when 'scroll'
+          puts "to #{step.scrollLeft} px #{step.scrollTop} px"
+
+        when 'click' 
+          puts "on #{helper.translateClickSelector step.selector}"
+
+        when 'keypress'
+          puts "#{step.typed}"
+
+        when 'resize' 
+          puts "to #{step.screenwidth} x #{step.screenheight}"
+    end
+  end
+
   def generate_step(file, step)
     return unless step.complete?
 
-    comment = "Step #{step.order}: #{Step.web_step_types[step.action_type]}, #{step.webpage}"
+    # comment = "Step #{step.order}: #{Step.web_step_types[step.action_type]}, #{step.webpage}"
+    comment = gen_comment(step)
     case current_user.language
       when 'ruby'
           file.puts "\n# #{comment}"
@@ -277,6 +302,7 @@ module TestsHelper
               end
             else
               true
+          end
       else
         true
     end
