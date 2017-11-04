@@ -182,6 +182,12 @@ function bindEvents() {
 	});
 
 	// listen to typing actions
+    $(document).keypress(function(e) {
+        var data = {action_type: 'keypress'};
+        data.typed = String.fromCharCode(e.which);
+        reportEvent(data);
+    });
+
 	$(document).keydown(function(e) {
         var data = {};
         var code = e.keyCode || e.which;
@@ -202,8 +208,7 @@ function bindEvents() {
                 data.action_type = 'hit_caps';
                 break;
             default:
-                data.action_type = 'keypress';
-                data.typed = String.fromCharCode(code);
+                return;
                 break;
         }
 

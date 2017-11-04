@@ -81,7 +81,7 @@ module TestsHelper
 
           # compress into 1 string
           typed = chunk.inject('') { |str, draft|
-            "#{str}#{draft.downcase.typed}"
+            "#{str}#{draft.typed}"
           }
           step.update(typed: typed)
         when 'hit_enter' # merge all typed into 1 string

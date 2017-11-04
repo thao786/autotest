@@ -1,6 +1,5 @@
 Thuy:
 - dont show Edit Step for new typed steps
-- better comment for code translate
 
 - test recording is valid until HOURS ONLY
 - add back SUITE EDIT
