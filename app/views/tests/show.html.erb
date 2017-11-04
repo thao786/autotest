@@ -23,6 +23,10 @@
           </strong>
         </p>
 
+        <p>Language:
+            <strong><%= current_user.language.capitalize %></strong>
+        </p>
+
         <% if @test.code_generated_at %>
           <p>Code Last Generated:
             <strong><%= @test.code_generated_at %></strong>

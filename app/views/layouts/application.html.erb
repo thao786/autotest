@@ -25,10 +25,9 @@
     <% if user_signed_in? %>
     <div class="menu-item">
     <ul>
-      <li><%= link_to 'All Suites', suites_path %></li>
+      <li><%= link_to 'Suites and Settings', suites_path %></li>
       <li><%= link_to 'All Tests', tests_path %></li>
       <li><a href="/doc">User Guide</a></li>
-      <li><a href="https://chrome.google.com/webstore/detail/uichecks-chrome-plugin/iicllodpmefpegdgkbjcknpbnehadokb" target="_blank">Chrome Extension</a></li>
       <li>Hi <b><%= current_user.email %></b></li>
       <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
     </ul>
