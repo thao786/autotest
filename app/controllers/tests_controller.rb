@@ -140,6 +140,11 @@ class TestsController < ApplicationController
     render json: @test.id
   end
 
+  def clear_steps
+    Step.where(test: @test).destroy_all
+    redirect_to @test.url
+  end
+
   def generate_code
     file_name = @test.code_file_name current_user.language
     file_path = "#{ENV['HOME']}/#{ENV['dir']}/#{file_name}"
