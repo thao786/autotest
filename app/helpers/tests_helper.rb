@@ -84,14 +84,28 @@ module TestsHelper
             "#{str}#{draft.typed}"
           }
           step.update(typed: typed)
+
         when 'hit_enter' # merge all typed into 1 string
           chunk = Draft.where("id < ?", next_id)
                       .where(session_id: session_id, action_type: 'hit_enter')
           step.update(action_type: 'hit_enter')
+        when 'hit_tab' # merge all typed into 1 string
+          chunk = Draft.where("id < ?", next_id)
+                      .where(session_id: session_id, action_type: 'hit_tab')
+          step.update(action_type: 'hit_tab')
+        when 'hit_caps' # merge all typed into 1 string
+          chunk = Draft.where("id < ?", next_id)
+                      .where(session_id: session_id, action_type: 'hit_caps')
+          step.update(action_type: 'hit_caps')
+        when 'hit_backspace' # merge all typed into 1 string
+          chunk = Draft.where("id < ?", next_id)
+                      .where(session_id: session_id, action_type: 'hit_backspace')
+          step.update(action_type: 'hit_backspace')
+
         when 'click'
           # this can be a double click, need to check for time interval
           chunk = Draft.where("id < ?", next_id)
-                        .where(session_id: session_id, action_type: 'click')
+                        .where(session_id: session_id, action_type: 'click', x: first_event.x, y: first_event.y)
 
           # sort selectors in order: href, button, id, class, tag
           selectors = chunk.collect { |click| click.selector }.uniq.compact
@@ -113,35 +127,35 @@ module TestsHelper
     Draft.where(session_id: session_id).destroy_all
   end
 
-  def gen_comment(step)
-    Step.web_step_types[step.action_type] 
+  def get_comment(step)
+    action = Step.web_step_types[step.action_type]
 
     case step.action_type
-       when 'pageload'  
-          puts "#{step.webpage} \n" 
-          if step.screenwidth 
-            puts "Screen size = #{step.screenwidth}  x #{step.screenheight}"
-          end 
-
+        when 'pageload'
+          "#{action} #{step.webpage}, screen size = #{step.screenwidth} x #{step.screenheight}"
         when 'scroll'
-          puts "to #{step.scrollLeft} px #{step.scrollTop} px"
-
-        when 'click' 
-          puts "on #{helper.translateClickSelector step.selector}"
-
+          "#{action} to #{step.scrollLeft} px #{step.scrollTop} px"
+        when 'click'
+          "#{action} on #{helper.translateClickSelector step.selector}"
         when 'keypress'
-          puts "#{step.typed}"
-
-        when 'resize' 
-          puts "to #{step.screenwidth} x #{step.screenheight}"
+          "#{action} #{step.typed}"
+        when 'hit_enter'
+          'hit Enter'
+        when 'hit_tab'
+          'hit Tab'
+        when 'hit_backspace'
+          'hit BackSpace'
+        when 'hit_caps'
+          'hit Caps Lock'
+        when 'resize'
+          "#{action} to #{step.screenwidth} x #{step.screenheight}"
     end
   end
 
   def generate_step(file, step)
     return unless step.complete?
 
-    # comment = "Step #{step.order}: #{Step.web_step_types[step.action_type]}, #{step.webpage}"
-    comment = gen_comment(step)
+    comment = escape_javascript get_comment(step)
     case current_user.language
       when 'ruby'
           file.puts "\n# #{comment}"

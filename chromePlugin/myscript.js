@@ -185,7 +185,9 @@ function bindEvents() {
     $(document).keypress(function(e) {
         var data = {action_type: 'keypress'};
         data.typed = String.fromCharCode(e.which);
-        reportEvent(data);
+        var blacklisted = [13, 9, 8, 20];
+        if (!blacklisted.includes(data.typed))
+            reportEvent(data);
     });
 
 	$(document).keydown(function(e) {
