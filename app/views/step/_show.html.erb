@@ -15,8 +15,9 @@
 
       <% when 'click' %> on <strong><%= translateClickSelector step.selector %></strong>
 
-      <% when 'keypress' %>
-          <b><%= step.typed %></b>
+      <% when 'keypress' %> <b><%= step.typed %></b>
+
+      <% when 'hit_enter' %> hit Enter
 
       <% when 'resize' %> to <span><%= step.screenwidth %> x <%= step.screenheight %></span>
       <% else %>

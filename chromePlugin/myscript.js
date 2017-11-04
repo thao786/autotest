@@ -182,9 +182,31 @@ function bindEvents() {
 	});
 
 	// listen to typing actions
-	$(document).keypress(function(e) {
-        var data = {action_type: 'keypress'};
-        data.typed = String.fromCharCode(e.which);
+	$(document).keydown(function(e) {
+        var data = {};
+        var code = e.keyCode || e.which;
+        console.log(e.keyCode);
+        console.log(e.which);
+
+        switch (code) {
+            case 13:
+                data.action_type = 'hit_enter';
+                break;
+            case 9:
+                data.action_type = 'hit_tab';
+                break;
+            case 8:
+                data.action_type = 'hit_backspace';
+                break;
+            case 20:
+                data.action_type = 'hit_caps';
+                break;
+            default:
+                data.action_type = 'keypress';
+                data.typed = String.fromCharCode(code);
+                break;
+        }
+
         reportEvent(data);
 	});
 

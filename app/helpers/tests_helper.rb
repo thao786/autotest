@@ -81,9 +81,13 @@ module TestsHelper
 
           # compress into 1 string
           typed = chunk.inject('') { |str, draft|
-            "#{str}#{draft.typed}"
+            "#{str}#{draft.downcase.typed}"
           }
           step.update(typed: typed)
+        when 'hit_enter' # merge all typed into 1 string
+          chunk = Draft.where("id < ?", next_id)
+                      .where(session_id: session_id, action_type: 'hit_enter')
+          step.update(action_type: 'hit_enter')
         when 'click'
           # this can be a double click, need to check for time interval
           chunk = Draft.where("id < ?", next_id)
