@@ -30,7 +30,6 @@ class TestsController < ApplicationController
       @num_page = Test.count/@per_page.floor + 1
     end
     @current_page = params[:page].to_i
-
   end
 
   # GET /tests/1
@@ -98,7 +97,6 @@ class TestsController < ApplicationController
   
   # generate an unique session ID
   def generateSession
-    Step.where(test: @test).destroy_all
     sessionId = SecureRandom.base58(24)
     @test.update(session_id: sessionId)
 
@@ -138,6 +136,11 @@ class TestsController < ApplicationController
   def removeTestParams
     TestParam.where(test: @test, label: params[:key]).destroy_all
     render json: @test.id
+  end
+
+  def clear_steps
+    Step.where(test: @test).destroy_all
+    redirect_to @test.url
   end
 
   def generate_code
