@@ -172,48 +172,48 @@ module TestsHelper
 
           case step.action_type
             when 'pageload'
-              file.puts "driver.get '#{escape_javascript step.webpage}'"
+              file.puts "driver.get('#{escape_javascript step.webpage}');"
             when 'scroll'
-              file.puts "driver.execute_script 'scroll(#{step.scrollLeft}, #{step.scrollTop})'"
+              file.puts "driver.executeScript('scroll(#{step.scrollLeft}, #{step.scrollTop})');"
             when 'keypress'
-              file.puts "driver.action.send_keys('#{escape_javascript step.typed}').perform"
+              file.puts "driver.action().sendKeys('#{escape_javascript step.typed}').perform();"
             when 'resize'
-              file.puts "driver.manage.window.resize_to(#{step.screenwidth}, #{step.screenheight})"
+              file.puts "driver.manage().window.setSize(new Dimension(#{step.screenwidth}, #{step.screenheight}));"
             when 'click'
               type = step.selector[:selectorType]
               selector = escape_javascript step.selector[:selector].strip
               eq = step.selector[:eq].to_i
               case type # first, find DOM with WebDriver
                 when 'id'
-                  file.puts "driver.find_element(:id, '#{selector}')"
+                  file.puts "driver.findElement(By.id('#{selector}'));"
                 when 'class'
                   if selector.include? ' '
                     selector = ".#{selector.split.join('.')}"
-                    file.puts "driver.find_elements(:css => '#{selector}')[#{eq}]"
+                    file.puts "driver.findElements(By.cssSelector('#{selector}'))[#{eq}];"
                   else # 1 single class
-                    file.puts "driver.find_elements(:class => '#{selector}')[#{eq}]"
+                    file.puts "driver.findElements(By.className('#{selector}'))[#{eq}];"
                   end
                 when 'tag'
-                  file.puts "driver.find_elements(:tag_name => '#{selector}')[#{eq}]"
+                  file.puts "driver.findElements(By.tagName('#{selector}'))[#{eq}];"
                 when 'name'
-                  file.puts "driver.find_elements(:name => '#{selector}')[#{eq}]"
+                  file.puts "driver.findElements(By.name => '#{selector}')[#{eq}];"
                 when 'partialLink' # link text
-                  file.puts "driver.find_elements(:partial_link_text => '#{selector}')[#{eq}]"
+                  file.puts "driver.findElements(By.partialLinkText('#{selector}'))[#{eq}];"
                 when 'href'
-                  file.puts "driver.find_elements(:css => \"a[href='#{selector}']\")[#{eq}]"
+                  file.puts "driver.findElements(By.cssSelector(\"a[href='#{selector}']\"))[#{eq}];"
                 when 'partialHref'
-                  file.puts "driver.find_elements(:css => \"a[href*='#{selector}']\")[#{eq}]"
+                  file.puts "driver.findElements(By.cssSelector(\"a[href*='#{selector}']\"))[#{eq}];"
                 when 'button' # use XPath
-                  file.puts "driver.find_elements(:xpath, \"//button[text()[contains(.,'#{selector}')]]\")[#{eq}]"
+                  file.puts "driver.findElements(By.:xpath, \"//button[text()[contains(.,'#{selector}')]]\")[#{eq}]"
                 when 'css'
                   if eq > 0
-                    file.puts "driver.find_elements(:css => '#{selector}')[#{eq}]"
+                    file.puts "driver.findElements(By.cssSelector('#{selector}'))[#{eq}];"
                   else
-                    file.puts "driver.find_element(:css, '#{selector}')"
+                    file.puts "driver.findElement(By.cssSelector('#{selector}'));"
                   end
                 when 'coordination'
-                  file.puts "elem = driver.find_elements(:tag_name => 'body').first"
-                  file.puts "driver.action.move_to(elem, #{step.selector[:x]}, #{step.selector[:y]}).click.perform"
+                  file.puts "elem = driver.find_elements(By.tagName('body'))[0];"
+                  file.puts "driver.action().moveToElement(elem, #{step.selector[:x]}, #{step.selector[:y]}).click().perform();"
                 else
                   nil
               end
@@ -222,6 +222,57 @@ module TestsHelper
           end
       when 'python'
       when 'javascript'
+        file.puts "\n// #{comment}"
+
+          case step.action_type
+            when 'pageload'
+              file.puts "driver.get ('#{escape_javascript step.webpage}');"
+            when 'scroll'
+              file.puts "driver.executeScript('scroll(#{step.scrollLeft}, #{step.scrollTop})');"
+            when 'keypress'
+              file.puts "driver.action().sendKeys('#{escape_javascript step.typed}').perform();"
+            when 'resize'
+              file.puts "driver.manage().window().setSize(new Dimension(#{step.screenwidth}, #{step.screenheight});"
+            when 'click'
+              type = step.selector[:selectorType]
+              selector = escape_javascript step.selector[:selector].strip
+              eq = step.selector[:eq].to_i
+              case type # first, find DOM with WebDriver
+                when 'id'
+                  file.puts "driver.findElement(By.id('#{selector}'));"
+                when 'class'
+                  if selector.include? ' '
+                    selector = ".#{selector.split.join('.')}"
+                    file.puts "driver.findElements(By.css('#{selector}'))[#{eq}];"
+                  else # 1 single class
+                    file.puts "driver.findElements(By.className('#{selector}'))[#{eq}];"
+                  end
+                when 'tag'
+                  file.puts "driver.findElements(By.tagName('#{selector}'))[#{eq}];"
+                when 'name'
+                  file.puts "driver.findElements(By.name('#{selector}'))[#{eq}];"
+                when 'partialLink' # link text
+                  file.puts "driver.findElements(By.partialLinkText('#{selector}'))[#{eq}];"
+                when 'href'
+                  file.puts "driver.findElements(By.css(\"a[href='#{selector}']\"))[#{eq}];"
+                when 'partialHref'
+                  file.puts "driver.findElements((By.css(\"a[href*='#{selector}']\"))[#{eq}];"
+                when 'button' # use XPath
+                  file.puts "driver.findElements((By.xpath('\"//button[text()[contains(.,'#{selector}')]]\"))[#{eq}];"
+                when 'css'
+                  if eq > 0
+                    file.puts "driver.findElements(By.css('#{selector}'))[#{eq}];"
+                  else
+                    file.puts "driver.findElement(By.css('#{selector}'));"
+                  end
+                when 'coordination'
+                  file.puts "elem = driver.find_elements(By.tagName('body'))[0];"
+                  file.puts "driver.action().moveToElement(elem, #{step.selector[:x]}, #{step.selector[:y]}).click().perform();"
+                else
+                  nil
+              end
+            else
+              true
       else
         true
     end
