@@ -134,9 +134,9 @@ module TestsHelper
         when 'pageload'
           "#{action} #{step.webpage}, screen size = #{step.screenwidth} x #{step.screenheight}"
         when 'scroll'
-          "#{action} to #{step.scrollLeft} px #{step.scrollTop} px"
+          "#{action} to #{step.scrollLeft}px #{step.scrollTop}px"
         when 'click'
-          "#{action} on #{helper.translateClickSelector step.selector}"
+          "#{action} on #{translateClickSelector step.selector}"
         when 'keypress'
           "#{action} #{step.typed}"
         when 'hit_enter'
@@ -155,7 +155,7 @@ module TestsHelper
   def generate_step(file, step)
     return unless step.complete?
 
-    comment = escape_javascript get_comment(step)
+    comment = "Step #{step.order}: #{escape_javascript get_comment(step)}"
     case current_user.language
       when 'ruby'
           file.puts "\n# #{comment}"

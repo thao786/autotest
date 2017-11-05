@@ -166,9 +166,12 @@ driver = Selenium::WebDriver.for :chrome"
         }
       end
 
-      file.puts "# Test's steps"
       @test.steps.each { |step|
-        helpers.generate_step(file, step)
+        begin
+          helpers.generate_step(file, step)
+        rescue => e
+          e.message
+        end
       }
 
       @test.assertions.each { |assertion|
