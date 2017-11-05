@@ -15,9 +15,11 @@
         <%= form_tag("/dashboard/save_setting", method: "post") do %>
           <div class="form-group">
             <label>Default Language to Generate Code: </label>
-            <select name="language" class="form-control" required="true">
-              <option value="ruby">Ruby</option>
-              <option value="java">Java</option>
+            <select name="language" class="form-control">
+              <% languages.each do |lang| %>
+                  <option value="<%= lang %>" <%= current_user.language == lang ? 'selected' : nil %>>
+                    <%= lang.capitalize %></option>
+              <% end %>
             </select>
           </div>
 
