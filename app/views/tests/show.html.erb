@@ -13,7 +13,7 @@
             <%= link_to suite.title, controller: "suites", action: "show", id: suite.name %></strong>
         </p>
 
-        <p>Steps Last Recorded:
+        <p>Steps Recorded:
           <strong>
             <% if @test.steps.count > 0 %>
                 <%= @test.steps.first.created_at %>
@@ -28,7 +28,7 @@
         </p>
 
         <% if @test.code_generated_at %>
-          <p>Code Last Generated:
+          <p>Code Generated:
             <strong><%= @test.code_generated_at %></strong>
           </p>
         <% end %>

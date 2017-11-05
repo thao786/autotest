@@ -8,8 +8,9 @@ class User < ApplicationRecord
 
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 
+  before_create :set_defaults
   def set_defaults
-    self.language ||= 'ruby'
+    self.language = 'ruby'
   end
 
   def self.from_omniauth(access_token)
@@ -23,8 +24,7 @@ class User < ApplicationRecord
            password: Devise.friendly_token[0,20],
            provider: access_token.provider,
            uid: access_token.uid,
-           image: data['image'],
-           language: 'ruby'
+           image: data['image']
         )
     end
     user

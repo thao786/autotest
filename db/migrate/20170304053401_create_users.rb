@@ -5,7 +5,7 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string :provider
       t.string :uid
       t.string :image
-      t.string :language
+      t.string :language, :default => 'ruby'
 
       t.timestamps
     end
