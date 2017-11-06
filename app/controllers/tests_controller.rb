@@ -151,8 +151,7 @@ class TestsController < ApplicationController
     else
       file = File.new(file_path, "a")
       # insert boilerplate code
-      file.puts "require 'selenium-webdriver'
-driver = Selenium::WebDriver.for :chrome"
+      helpers.generate_boilerplate(@test, file)
 
       first_step = Step.where(test: @test).first
       file.puts "driver.manage.window.resize_to(#{first_step.screenwidth}, #{first_step.screenheight})" if first_step.screenwidth
@@ -177,6 +176,8 @@ driver = Selenium::WebDriver.for :chrome"
       @test.assertions.each { |assertion|
         helpers.generate_assertion(file, assertion)
       }
+
+      helpers.generate_ending_boilerplate(@test, file)
       file.close
 
       client = Aws::S3::Client.new(region: 'us-east-1')

@@ -8,8 +8,12 @@ rvm default
 
 
 
-
+# FOR LINUX
 wget https://chromedriver.storage.googleapis.com/2.33/chromedriver_linux64.zip
+
+# FOR MACS
+https://chromedriver.storage.googleapis.com/index.html?path=2.33/
+
 sudo apt update
 sudo apt install unzip
 unzip chromedriver_linux64.zip
