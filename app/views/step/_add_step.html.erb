@@ -10,6 +10,7 @@
       <div class="modal-body">
         <form id="new-step-form" action="/step/save_new_step" method="post">
             <input name="test_id" value="<%= @test.id %>" type="hidden">
+            <input name="step_id" value="<%= @step ? @step.id : nil %>" type="hidden">
 
             <div class="form-group">
               <label>Wait time in milliseconds:</label>

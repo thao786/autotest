@@ -18,7 +18,7 @@ REDESIGN
 
 
 Thao:
-- 2 consecutive clicks: check coordination and time
+- create template for each code
 - translate code to understand HIT ENTER
 
 
