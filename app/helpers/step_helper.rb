@@ -209,10 +209,10 @@ Language: #{language.capitalize}"
 
     case language
       when 'ruby'
-        file.puts "=begin #{title}\n"
+        file.puts "=begin
+#{title}\n=end\n"
         file.puts "require 'selenium-webdriver'
-driver = Selenium::WebDriver.for :chrome
-=end\n"
+driver = Selenium::WebDriver.for :chrome\n\n"
       when 'java'
         file.puts "/*
 #{title}
@@ -226,9 +226,9 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AutoTesting {
-public static void main(String[] args) {
-System.setProperty(\"webdriver.chrome.driver\", \"/Path/chromedriver\");
-WebDriver driver = new ChromeDriver();\n\n"
+  public static void main(String[] args) {
+    System.setProperty(\"webdriver.chrome.driver\", \"/Path/chromedriver\");
+    WebDriver driver = new ChromeDriver();\n\n"
       when 'javascript'
       else
         true
@@ -238,7 +238,7 @@ WebDriver driver = new ChromeDriver();\n\n"
   def generate_ending_boilerplate(test, file, language = current_user.language)
     case language
       when 'java'
-        file.puts '}
+        file.puts ' }
 }'
       when 'c#'
       else
