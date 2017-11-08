@@ -149,35 +149,15 @@ class TestsController < ApplicationController
     if File.exist? file_path
       render plain: 'already generating'
     else
-      file = File.new(file_path, "a")
-      # insert boilerplate code
-      helpers.generate_boilerplate(@test, file)
+      file = File.new(file_path, "a") # append mode
 
-      first_step = Step.where(test: @test).first
-      file.puts "driver.manage.window.resize_to(#{first_step.screenwidth}, #{first_step.screenheight})" if first_step.screenwidth
-
-      if @test.suite.prep_tests.count > 0
-        file.puts "# suite's pre-tests"
-        @test.suite.prep_tests.each { |test|
-          test.steps.each { |step|
-            helpers.generate_step(file, step)
-          }
-        }
-      end
-
-      @test.steps.each { |step|
-        begin
-          helpers.generate_step(file, step)
-        rescue => e
-          e.message
-        end
-      }
+      code = open("#{Rails.root.to_s}/doc/#{current_user.language.downcase}.rb").read
+      eval code
 
       @test.assertions.each { |assertion|
         helpers.generate_assertion(file, assertion)
       }
 
-      helpers.generate_ending_boilerplate(@test, file)
       file.close
 
       client = Aws::S3::Client.new(region: 'us-east-1')
