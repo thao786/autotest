@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :templates
   get 'step/delete_step', to: 'step#delete_step'
   match 'step/save_click', to: 'step#save_click', via: [:post]
   get 'step/edit_view', to: 'step#edit_view'

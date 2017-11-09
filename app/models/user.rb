@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :suites
+  has_many :templates
 
   devise :omniauthable, omniauth_providers: [:google_oauth2]
 

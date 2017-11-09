@@ -6,7 +6,8 @@ Assertion.create(id: 3, assertion_type: "report")
 Assertion.create(id: 4, assertion_type: "step-succeed")
 Assertion.create(id: 5, assertion_type: "match-url")
 
+Template.create(name: 'ruby')
+Template.create(name: 'java')
 
 ActiveRecord::Base.connection.execute("ALTER TABLE results CHANGE created_at created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
-ActiveRecord::Base.connection.execute("ALTER TABLE results CHANGE updated_at updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP")
 

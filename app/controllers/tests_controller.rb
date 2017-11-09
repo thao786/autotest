@@ -150,8 +150,11 @@ class TestsController < ApplicationController
       render plain: 'already generating'
     else
       file = File.new(file_path, "a") # append mode
-
-      code = open("#{Rails.root.to_s}/doc/#{current_user.language.downcase}.rb").read
+      # check if user has their own templates
+      template = Template.where(user: current_user, name: current_user.language.downcase).first
+      template ||= Template.where(user: nil, name: current_user.language.downcase).first
+      code = template.code
+      code ||= open("#{Rails.root.to_s}/app/views/templates/#{current_user.language.downcase}.rb").read
       eval code
 
       @test.assertions.each { |assertion|
@@ -166,8 +169,9 @@ class TestsController < ApplicationController
       bucket.object(file_name).upload_file(file_path, acl:'public-read')
 
       File.delete file_path
-      @test.update(code_generated_at: Time.now+1)
-      render plain: "ok"
+      event = GenerationEvent.where(template: template, test: @test).first_or_create
+      event.update(generated_at: Time.now)
+      render plain: 'ok'
     end
   end
 

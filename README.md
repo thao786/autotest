@@ -26,3 +26,5 @@ Thao:
 - make code url private. only show temporary url
 - make local do HTTPS
 
+rails generate model GenerationEvent test:references template:references
+

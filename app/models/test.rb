@@ -7,6 +7,7 @@ class Test < ApplicationRecord
   has_many :prep_tests, dependent: :destroy
   has_many :lead_steps, :through => :prep_tests, :source => :step
   has_many :lead_suites, :through => :prep_tests, :source => :suite
+  has_many :generation_events
 
   validates :title, :name, presence: true
   validates :session_id, uniqueness: true, if: 'session_id.present?'
