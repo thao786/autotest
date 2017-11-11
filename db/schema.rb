@@ -58,9 +58,10 @@ ActiveRecord::Schema.define(version: 20171108203704) do
   create_table "generation_events", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "test_id"
     t.integer  "template_id"
+    t.text     "code",         limit: 65535
     t.datetime "generated_at"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["template_id"], name: "index_generation_events_on_template_id", using: :btree
     t.index ["test_id"], name: "index_generation_events_on_test_id", using: :btree
   end

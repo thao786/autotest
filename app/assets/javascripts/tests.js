@@ -494,5 +494,3 @@ $(document).on("click", "#generate_code", function(e) {
         }
     });
 });
-
-

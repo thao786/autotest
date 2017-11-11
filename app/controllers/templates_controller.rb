@@ -2,13 +2,11 @@ class TemplatesController < ApplicationController
   before_action :set_template, only: [:show, :edit, :update, :destroy]
 
   # GET /templates
-  # GET /templates.json
   def index
     @templates = Template.all
   end
 
   # GET /templates/1
-  # GET /templates/1.json
   def show
   end
 
@@ -22,7 +20,6 @@ class TemplatesController < ApplicationController
   end
 
   # POST /templates
-  # POST /templates.json
   def create
     @template = Template.new(template_params)
 
@@ -38,7 +35,6 @@ class TemplatesController < ApplicationController
   end
 
   # PATCH/PUT /templates/1
-  # PATCH/PUT /templates/1.json
   def update
     respond_to do |format|
       if @template.update(template_params)
@@ -52,7 +48,6 @@ class TemplatesController < ApplicationController
   end
 
   # DELETE /templates/1
-  # DELETE /templates/1.json
   def destroy
     @template.destroy
     respond_to do |format|

@@ -144,35 +144,21 @@ class TestsController < ApplicationController
   end
 
   def generate_code
-    file_name = @test.code_file_name current_user.language
-    file_path = "#{ENV['HOME']}/#{ENV['dir']}/#{file_name}"
-    if File.exist? file_path
-      render plain: 'already generating'
-    else
-      file = File.new(file_path, "a") # append mode
-      # check if user has their own templates
-      template = Template.where(user: current_user, name: current_user.language.downcase).first
-      template ||= Template.where(user: nil, name: current_user.language.downcase).first
-      code = template.code
-      code ||= open("#{Rails.root.to_s}/app/views/templates/#{current_user.language.downcase}.rb").read
-      eval code
+    # check custom templates
+    lang = current_user.language.downcase
+    template = Template.where(user: current_user, name: lang).first
+    template ||= Template.where(user: nil, name: lang).first
+    code = template.code
+    code ||= open("#{Rails.root.to_s}/app/views/templates/#{lang}.rb").read
+    generated_code = eval code
 
-      @test.assertions.each { |assertion|
-        helpers.generate_assertion(file, assertion)
-      }
+    # @test.assertions.each { |assertion|
+    #   helpers.generate_assertion(file, assertion)
+    # }
 
-      file.close
-
-      client = Aws::S3::Client.new(region: 'us-east-1')
-      resource = Aws::S3::Resource.new(client: client)
-      bucket = resource.bucket(ENV['bucket'])
-      bucket.object(file_name).upload_file(file_path, acl:'public-read')
-
-      File.delete file_path
-      event = GenerationEvent.where(template: template, test: @test).first_or_create
-      event.update(generated_at: Time.now)
-      render plain: 'ok'
-    end
+    event = GenerationEvent.where(template: template, test: @test).first_or_create
+    event.update(code: generated_code)
+    render plain: generated_code
   end
 
   private

@@ -3,7 +3,7 @@ class CreateGenerationEvents < ActiveRecord::Migration[5.0]
     create_table :generation_events do |t|
       t.references :test, foreign_key: true
       t.references :template, foreign_key: true
-      t.datetime :generated_at
+      t. text :code
 
       t.timestamps
     end
