@@ -81,8 +81,8 @@
           <a class="btn-warning btn btn-lg" href="/tests/clear_steps?test_id=<%= @test.id %>">Clear Steps</a>
       <% end %>
 
-      <a download="<%= @test.name %>.rb" id="dl_code" href="<%= @test.code_url current_user.language %>" class="btn-default btn btn-lg" target="_blank">
-          <span class="glyphicon glyphicon-download"></span> Download Code</a>
+      <button id="generate_code" class="btn-default btn btn-lg">
+          <span class="glyphicon glyphicon-download"></span> Generate Code</button>
     </div><br><br>
 
 

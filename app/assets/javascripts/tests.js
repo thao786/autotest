@@ -468,7 +468,6 @@ function modalFunction() {
 }
 
 $(document).on("click", "#generate_code", function(e) {
-    $('#dl_code').hide();
     var generate_btn = $('#generate_code');
     generate_btn.html('Generating');
     generate_btn.toggleClass('btn-danger');
@@ -479,15 +478,17 @@ $(document).on("click", "#generate_code", function(e) {
         url: '/tests/generate_code',
         data: {test_id: test_id},
         success: function(html, status, xhr) {
-            if(html != 'ok') {
-                alert('Code is generating. Please allow a few minutes and try again.');
-            } else {
-                $('#dl_code').show();
-                $('#dl_code').click();
-            }
+
+            var a = window.document.createElement('a');
+            a.href = window.URL.createObjectURL(new Blob([html], { type: 'text/plain' }));
+            a.download = 'test.rb';
+
+            document.body.appendChild(a);
+            a.click();
+
+            document.body.removeChild(a);
         },
         complete: function(result, status, xhr) {
-            $('#dl_code').show();
             generate_btn.html('Generate Code');
             generate_btn.toggleClass('btn-danger');
             generate_btn.toggleClass('btn-default');

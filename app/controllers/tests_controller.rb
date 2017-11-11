@@ -148,13 +148,14 @@ class TestsController < ApplicationController
     lang = current_user.language.downcase
     template = Template.where(user: current_user, name: lang).first
     template ||= Template.where(user: nil, name: lang).first
-    code = template.code
-    code ||= open("#{Rails.root.to_s}/app/views/templates/#{lang}.rb").read
-    generated_code = eval code
-
-    # @test.assertions.each { |assertion|
-    #   helpers.generate_assertion(file, assertion)
-    # }
+    template_code = template.code
+    template_code ||= open("#{Rails.root.to_s}/app/views/templates/#{lang}.rb").read
+    begin
+      test = @test
+      generated_code = eval template_code
+    rescue Exception => error
+      a = 9
+    end
 
     event = GenerationEvent.where(template: template, test: @test).first_or_create
     event.update(code: generated_code)
