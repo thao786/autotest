@@ -37,7 +37,7 @@ def generate_step(step)
         when 'partialHref'
           "driver.findElements(By.cssSelector(\"a[href*='#{selector}']\"))[#{eq}];"
         when 'button' # use XPath
-          "driver.findElements(By.:xpath, \"//button[text()[contains(.,'#{selector}')]]\")[#{eq}]"
+          "driver.findElements(By.:xpath, \"//button[contains(.,'#{selector}')]\")[#{eq}]"
         when 'css'
           if eq > 0
             "driver.findElements(By.cssSelector('#{selector}'))[#{eq}];"

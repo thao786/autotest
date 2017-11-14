@@ -20,11 +20,22 @@ REDESIGN
 Thao:
 - create template for each code
 - translate code to understand HIT ENTER
+- detect ACCEPT ALERT BOX
 
 
 - when 500 happens, email Thao
-- make code url private. only show temporary url
 - make local do HTTPS
 
-rails generate model GenerationEvent test:references template:references
+
+
+
+Brandon's ideas
+- use cases
+- prefers onsite forms
+- help users set up whole project: download eclipse projects
+maybe turn whole suite into 1 project
+- developers want to translate code into steps
+admins n managers, business analyst want to understand selenium code => translate code into steps
+
+
 

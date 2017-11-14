@@ -36,7 +36,7 @@ def generate_step(step)
         when 'partialHref'
           "driver.find_elements(:css => \"a[href*='#{selector}']\")[#{eq}]"
         when 'button' # use XPath
-          "driver.find_elements(:xpath, \"//button[text()[contains(.,'#{selector}')]]\")[#{eq}]"
+          "driver.find_elements(:xpath, \"//button[contains(.,'#{selector}')]\")[#{eq}]"
         when 'css'
           if eq > 0
             "driver.find_elements(:css => '#{selector}')[#{eq}]"
