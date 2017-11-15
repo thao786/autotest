@@ -60,7 +60,6 @@ module TestsHelper
 
       case first_event.action_type
         when 'pageload' # not sure what to do
-          first_event.destroy!
         when 'resize'
           chunk = Draft.where("id < ?", next_id)
                       .where(session_id: session_id, action_type: 'resize')
@@ -86,22 +85,16 @@ module TestsHelper
           step.update(typed: typed)
 
         when 'hit_enter' # merge all typed into 1 string
-          chunk = Draft.where("id < ?", next_id)
-                      .where(session_id: session_id, action_type: 'hit_enter')
           step.update(action_type: 'hit_enter')
         when 'hit_tab' # merge all typed into 1 string
-          chunk = Draft.where("id < ?", next_id)
-                      .where(session_id: session_id, action_type: 'hit_tab')
           step.update(action_type: 'hit_tab')
         when 'hit_caps' # merge all typed into 1 string
-          chunk = Draft.where("id < ?", next_id)
-                      .where(session_id: session_id, action_type: 'hit_caps')
           step.update(action_type: 'hit_caps')
         when 'hit_backspace' # merge all typed into 1 string
-          chunk = Draft.where("id < ?", next_id)
-                      .where(session_id: session_id, action_type: 'hit_backspace')
           step.update(action_type: 'hit_backspace')
 
+        when 'alert'
+          step.update(action_type: 'alert')
         when 'click'
           # this can be a double click, need to check for time interval
           chunk = Draft.where("id < ?", next_id)
@@ -119,8 +112,12 @@ module TestsHelper
             order = order - 1
       end
 
+      # some actions dont come in chunks: hit enter, alert
+      # instead, only 1 draft event present
       if chunk.present?
         chunk.destroy_all
+      else
+        first_event.destroy
       end
     end
 

@@ -181,6 +181,48 @@ function bindEvents() {
         reportEvent(data);
 	});
 
+    // var script = document.createElement("script"); // Make a script DOM node
+    // script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js';
+    // document.head.appendChild(script);
+
+    // listen to activities inside frame
+    $('iframe').eq(0).contents().find('*').click(function(){
+        console.log('hello from iframe');
+    });
+
+    var isDragging = false;
+    $("*")
+        .mousedown(function() {
+            isDragging = false;
+        })
+        .mousemove(function() {
+            isDragging = true;
+        })
+        .mouseup(function() {
+            var wasDragging = isDragging;
+            isDragging = false;
+            if (wasDragging) {
+                console.log('wasDragging');
+            }
+        });
+
+    // listen to uploading file
+    $("input:file").change(function (){ // check if file input
+        console.log('uploaded');
+        var data = {action_type: 'upload'};
+        reportEvent(data);
+    });
+
+    // detect alert box
+    var _old_alert = window.alert;
+    window.alert = function() {
+        // run some code when the alert pops up
+        // document.body.innerHTML += "<br>taa";
+        _old_alert.apply(window,arguments);
+        var data = {action_type: 'alert'};
+        reportEvent(data);
+    };
+
 	// listen to typing actions
     $(document).keypress(function(e) {
         var data = {action_type: 'keypress'};
